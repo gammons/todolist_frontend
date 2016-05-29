@@ -1,12 +1,12 @@
 export default class TodoStore {
-  constructor(backend) {
-    this.backend = backend;
+  constructor() {
+    this.todos = []
   }
-
   load(todos) {
     this.todos = todos;
   }
 
   add(todo) {
+    this.todos.push(todo);
   }
 }

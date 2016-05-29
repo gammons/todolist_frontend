@@ -14,7 +14,7 @@ export default class TestBackend extends Backend {
 
   save() {
     let promise = new Promise((resolve, reject) => {
-      resolve(this);
+      resolve(this.todoStore);
     });
     return promise;
   }

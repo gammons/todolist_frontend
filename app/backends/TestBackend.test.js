@@ -3,7 +3,7 @@ import TodoStore from '../TodoStore'
 
 import expect from 'expect';
 
-describe('TodoStore', () => {
+describe('TestBackend', () => {
   let store = new TodoStore();
 
   it('load todos', (done) => {
