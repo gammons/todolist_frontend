@@ -26,8 +26,8 @@ class TodolistIconMenu extends React.Component {
 
         <IconButton iconStyle={{fill: "#ffffff"}} ><DoneAllIcon /></IconButton>
       </div>
-    )
+    );
   }
 }
 
-export default TodolistIconMenu
+export default TodolistIconMenu;

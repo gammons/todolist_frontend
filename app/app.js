@@ -5,7 +5,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Todolist from './components/Todolist';
 
-var injectTapEventPlugin = require("react-tap-event-plugin");
+const injectTapEventPlugin = require('react-tap-event-plugin');
 injectTapEventPlugin();
 
 const App = () => (
