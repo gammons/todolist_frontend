@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import {List, ListItem} from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import Checkbox from 'material-ui/Checkbox';
@@ -22,16 +23,21 @@ class Todo extends React.Component {
     return(
       <div>
         <ListItem
-          leftCheckbox={<Checkbox />}
-          rightIconButton={ this.rightIconMenu(this.props.todo.id) }
+          leftCheckbox={<Checkbox defaultChecked={this.props.todo.completed} onClick={this.handleCheck.bind(this)} />}
+          rightIconButton={ this.rightIconMenu() }
           rightIcon={<MoreVertIcon />}
           primaryText={this.props.todo.subject}
-          secondaryText={this.props.todo.due} />
+          secondaryText={this.formatDue()} />
         <Divider />
       </div>
     )
   }
-  rightIconMenu(id) {
+  formatDue() {
+    if (typeof(this.props.todo.due) != "undefined") {
+      return moment(this.props.todo.due).format("ddd MMM D");
+    }
+  }
+  rightIconMenu() {
     return(
       <IconMenu iconButtonElement={iconButtonElement}>
       <MenuItem>Reply</MenuItem>
@@ -39,6 +45,9 @@ class Todo extends React.Component {
       <MenuItem>Delete</MenuItem>
       </IconMenu>
     )
+  }
+  handleCheck() {
+    this.props.store.toggleComplete(this.props.todo.id);
   }
 }
 
