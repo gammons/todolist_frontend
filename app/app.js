@@ -21,9 +21,10 @@ class App extends React.Component {
 }
 
 const boot = () => {
-  let store = new TodoStore();
-  let backend = new TestBackend(store);
-  backend.load().then((store) => {
+  let backend = new TestBackend();
+  let store = new TodoStore(new TestBackend());
+  backend.load().then((todos) => {
+    store.load(todos);
     ReactDOM.render(
       <App store={store} />,
       document.getElementById('app')

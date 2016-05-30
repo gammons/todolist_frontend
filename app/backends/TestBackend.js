@@ -1,20 +1,16 @@
 import Backend from './Backend';
 
 export default class TestBackend extends Backend {
-  constructor(todoStore) {
-    super(todoStore);
-  }
   load() {
     let promise = new Promise((resolve, reject) => {
-      this.todoStore.load(this._fakeTodos());
-      resolve(this.todoStore);
+      resolve(this._fakeTodos());
     });
     return promise;
   }
 
   save() {
     let promise = new Promise((resolve, reject) => {
-      resolve(this.todoStore);
+      resolve();
     });
     return promise;
   }
