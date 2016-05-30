@@ -26,18 +26,18 @@ export default class TestBackend extends Backend {
       subject: 'call with @bob and @frank about +bigProject',
       projects: ['bigProject'],
       contexts: ['bob','frank'],
-      Due: '2016-04-23',
-      Completed: false,
-      Archived: false
+      due: '2016-04-23',
+      completed: false,
+      archived: false
     },
     {
       id: 2,
       subject: '+toVerify did @john call me back about the +testProject?',
       projects: ['testProject'],
       contexts: ['john'],
-      Due: '2016-04-28',
-      Completed: true,
-      Archived: false
+      due: '2016-04-28',
+      completed: true,
+      archived: false
     }
     ];
     return todos;

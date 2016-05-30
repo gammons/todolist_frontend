@@ -1,20 +1,33 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+
 import Todolist from './components/Todolist';
+import TodoStore from './TodoStore';
+import TestBackend from './backends/TestBackend';
 
 const injectTapEventPlugin = require('react-tap-event-plugin');
 injectTapEventPlugin();
 
-const App = () => (
-  <MuiThemeProvider muiTheme={getMuiTheme()}>
-    <Todolist />
-  </MuiThemeProvider>
-);
+class App extends React.Component {
+  render() {
+    return(
+      <MuiThemeProvider muiTheme={getMuiTheme()}>
+        <Todolist store={this.props.store} />
+      </MuiThemeProvider>
+    );
+  }
+}
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('app')
-);
+const boot = () => {
+  let store = new TodoStore();
+  let backend = new TestBackend(store);
+  backend.load().then((store) => {
+    ReactDOM.render(
+      <App store={store} />,
+      document.getElementById('app')
+    );
+  });
+}
+boot();
