@@ -4,12 +4,10 @@ import TodoStore from '../TodoStore'
 import expect from 'expect';
 
 describe('TestBackend', () => {
-  let store = new TodoStore();
-
   it('load todos', (done) => {
-    let backend = new TestBackend(store);
-    backend.load().then((store) => {
-      expect(store.todos.length).toEqual(2);
+    let backend = new TestBackend();
+    backend.load().then((todos) => {
+      expect(todos.length).toEqual(2);
       done();
     });
   });

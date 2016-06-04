@@ -3,8 +3,17 @@ import AppBar from 'material-ui/AppBar';
 
 import TodolistIconMenu from './topbar/TodolistIconMenu';
 import ListArea from './ListArea';
+import AddTodo from './AddTodo';
 
 class Todolist extends React.Component {
+  state = {
+    todos: this.props.store.todos
+  };
+
+  addTodo(subject, due) {
+    this.props.store.addTodo(subject, due);
+    this.setState({todos: this.props.store.todos});
+  }
 
   render() {
     return(
@@ -13,7 +22,8 @@ class Todolist extends React.Component {
           showMenuIconButton={false}
           iconElementRight={<TodolistIconMenu />}
         />
-        <ListArea store={this.props.store} />
+        <ListArea todos={this.state.todos} />
+        <AddTodo todos={this.state.todos} addTodo={this.addTodo.bind(this)} />
       </div>
     );
   }

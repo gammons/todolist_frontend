@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 export default class TodoStore {
   constructor(backend) {
     this.todos = []
@@ -7,15 +9,20 @@ export default class TodoStore {
     this.todos = todos;
   }
 
-  add(todo) {
+  addTodo(subject, due) {
+    let todo = {id: this._nextId(), subject: subject, due: due, projects: [], contexts: [], completed: false, archived: false}
     this.todos.push(todo);
-    backend.save();
+    this.backend.save();
   }
+
+  _nextId() {
+    let ids = _.map(this.todos, (todo) => { return todo.id })
+    return _.max(ids) + 1;
+  }
+
   toggleComplete(id) {
     let todo = this.findById(id);
-    console.log("todo is ", todo);
     todo.completed = !todo.completed;
-    console.log("todo completed is ", todo.completed);
     this.backend.save();
   }
 
