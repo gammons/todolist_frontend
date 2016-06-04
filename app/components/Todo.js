@@ -33,7 +33,7 @@ class Todo extends React.Component {
     )
   }
   formatDue() {
-    if (typeof(this.props.todo.due) != "undefined") {
+    if (this.props.todo.due != undefined) {
       return moment(this.props.todo.due).format("ddd MMM D");
     }
   }
@@ -47,7 +47,7 @@ class Todo extends React.Component {
     )
   }
   handleCheck() {
-    this.props.store.toggleComplete(this.props.todo.id);
+    this.props.toggleCompleteFn(this.props.todo.id);
   }
 }
 

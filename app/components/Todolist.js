@@ -15,6 +15,11 @@ class Todolist extends React.Component {
     this.setState({todos: this.props.store.todos});
   }
 
+  toggleCompleteFn(id) {
+    this.props.store.toggleComplete(id);
+    this.setState({todos: this.props.store.todos});
+  }
+
   render() {
     return(
       <div>
@@ -22,7 +27,7 @@ class Todolist extends React.Component {
           showMenuIconButton={false}
           iconElementRight={<TodolistIconMenu />}
         />
-        <ListArea todos={this.state.todos} />
+        <ListArea todos={this.state.todos} toggleCompleteFn={this.toggleCompleteFn.bind(this)} />
         <AddTodo todos={this.state.todos} addTodo={this.addTodo.bind(this)} />
       </div>
     );

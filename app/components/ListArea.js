@@ -11,7 +11,7 @@ class ListArea extends React.Component {
       <div>
         <Subheader>All todos</Subheader>
         <List>
-        {this.props.todos.map((todo) => { return <Todo key={todo.id} todo={todo} /> }) }
+        {this.props.todos.map((todo) => { return <Todo key={todo.id} todo={todo} toggleCompleteFn={this.props.toggleCompleteFn} /> }) }
         </List>
       </div>
     )

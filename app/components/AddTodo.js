@@ -41,7 +41,14 @@ class AddTodo extends React.Component {
 
   addTodo() {
     this.setState({open: false, snackbarOpen: true, subject: null, due: null});
-    this.props.addTodo(this.state.subject, moment(this.state.due).format("YYYY-MM-DD"));
+    this.props.addTodo(this.state.subject, this.systemFormattedDueDate());
+  }
+
+  systemFormattedDueDate() {
+    if ((this.state.due !== null)) {
+      return moment(this.state.due).format("YYYY-MM-DD");
+    }
+    return undefined;
   }
 
   formatDate(date) {
@@ -70,7 +77,6 @@ class AddTodo extends React.Component {
           />,
         ];
 
-    console.log("rerendering");
     return(
       <div>
         <Dialog title="Add todo"
