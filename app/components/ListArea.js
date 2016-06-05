@@ -7,12 +7,17 @@ import Subheader from 'material-ui/Subheader';
 
 class ListArea extends React.Component {
   render() {
+    console.log("todos is ", this.props.todos);
     return(
       <div>
-        <Subheader>All todos</Subheader>
-        <List>
-        {this.props.todos.map((todo) => { return <Todo key={todo.id} todo={todo} toggleCompleteFn={this.props.toggleCompleteFn} /> }) }
-        </List>
+        {this.props.todos.map((grouping) => {
+        return (<div>
+          <Subheader>{grouping.title}</Subheader>
+          <List>
+          {grouping.todos.map((todo) => { return <Todo key={todo.id} todo={todo} /> }) }
+          </List>
+          </div>);
+                                            })}
       </div>
     )
   }

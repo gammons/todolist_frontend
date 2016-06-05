@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import Grouper from "./Grouper";
 
 export default class TodoStore {
   constructor(backend) {
@@ -10,9 +10,19 @@ export default class TodoStore {
   }
 
   addTodo(subject, due) {
-    let todo = {id: this._nextId(), subject: subject, due: due, projects: [], contexts: [], completed: false, archived: false}
+    this.todo = {id: this._nextId(), subject: subject, due: due, projects: [], contexts: [], completed: false, archived: false}
     this.todos.push(todo);
     this.backend.save();
+  }
+
+  grouped(grouping) {
+    let grouper = new Grouper(this.todos);
+    if (grouping === "context") {
+      return grouper.byContext(this.todos);
+    } else if (grouping === "project") {
+      return grouper.byProject(this.todos);
+    }
+    return grouper.byAll(this.todos);
   }
 
   _nextId() {
