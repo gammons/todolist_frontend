@@ -9,6 +9,24 @@ import SearchIcon from 'material-ui/svg-icons/action/search';
 import DoneAllIcon from 'material-ui/svg-icons/action/done-all';
 
 class TodolistIconMenu extends React.Component {
+  state = {
+    grouping: "none"
+  }
+
+  handleNoGrouping() {
+    this.setState({grouping: "none"});
+    this.props.handleGroupChangeFn("none");
+  }
+
+  handleContextGrouping() {
+    this.setState({grouping: "context"});
+    this.props.handleGroupChangeFn("context");
+  }
+
+  handleProjectGrouping() {
+    this.setState({grouping: "project"});
+    this.props.handleGroupChangeFn("project");
+  }
   render() {
     return(
       <div>
@@ -19,9 +37,9 @@ class TodolistIconMenu extends React.Component {
           anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
           targetOrigin={{horizontal: 'right', vertical: 'top'}}
         >
-          <MenuItem primaryText="No grouping" />
-          <MenuItem primaryText="By Context" />
-          <MenuItem primaryText="By Project" />
+          <MenuItem primaryText="No grouping" onClick={this.handleNoGrouping.bind(this)} />
+          <MenuItem primaryText="By Context" onClick={this.handleContextGrouping.bind(this)} />
+          <MenuItem primaryText="By Project" onClick={this.handleProjectGrouping.bind(this)} />
         </IconMenu>
 
         <IconButton iconStyle={{fill: "#ffffff"}} ><DoneAllIcon /></IconButton>

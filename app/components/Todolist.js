@@ -7,7 +7,8 @@ import AddTodo from './AddTodo';
 
 class Todolist extends React.Component {
   state = {
-    todos: this.props.store.grouped()
+    todos: this.props.store.grouped(),
+    grouping: "none"
   };
 
   addTodo(subject, due) {
@@ -15,14 +16,23 @@ class Todolist extends React.Component {
     this.setState({todos: this.props.store.grouped()});
   }
 
+  handleGroupChange(grouping) {
+    this.setState({todos: this.props.store.grouped(grouping), grouping: grouping});
+  }
+
+  toggleComplete(id) {
+    this.props.store.toggleComplete(id);
+    this.setState({todos: this.props.store.grouped(this.state.grouping)});
+  }
+
   render() {
     return(
       <div>
         <AppBar title="Todolist"
           showMenuIconButton={false}
-          iconElementRight={<TodolistIconMenu />}
+          iconElementRight={<TodolistIconMenu handleGroupChangeFn={this.handleGroupChange.bind(this)} />}
         />
-        <ListArea todos={this.state.todos} />
+        <ListArea toggleCompleteFn={this.toggleComplete.bind(this)} todos={this.state.todos} />
         <AddTodo addTodoFn={this.addTodo.bind(this)} />
       </div>
     );

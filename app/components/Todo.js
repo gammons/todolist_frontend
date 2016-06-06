@@ -47,7 +47,7 @@ class Todo extends React.Component {
     )
   }
   handleCheck() {
-    this.props.store.toggleComplete(this.props.todo.id);
+    this.props.toggleCompleteFn(this.props.todo.id);
   }
 }
 

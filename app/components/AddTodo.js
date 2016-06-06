@@ -70,7 +70,6 @@ class AddTodo extends React.Component {
           />,
         ];
 
-    console.log("rerendering");
     return(
       <div>
         <Dialog title="Add todo"
