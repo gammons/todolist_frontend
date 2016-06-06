@@ -60,7 +60,7 @@ export default class Grouper {
     _.each(this.todos, (todo) => {
       _.each(todo.projects, (project) => {
         if (!_.includes(projects, project)) {
-          contexts.push(project)
+          projects.push(project)
         }
       });
     });
