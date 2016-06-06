@@ -3,10 +3,16 @@ import moment from 'moment';
 import {List, ListItem} from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import Checkbox from 'material-ui/Checkbox';
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
+
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import TodayIcon from 'material-ui/svg-icons/action/today';
+import PencilIcon from 'material-ui/svg-icons/editor/mode-edit';
+import ArchiveIcon from 'material-ui/svg-icons/content/archive';
+import DeleteIcon from 'material-ui/svg-icons/action/delete';
+
 
 const iconButtonElement = (
   <IconButton
@@ -39,10 +45,18 @@ class Todo extends React.Component {
   }
   rightIconMenu() {
     return(
-      <IconMenu iconButtonElement={iconButtonElement}>
-      <MenuItem>Reply</MenuItem>
-      <MenuItem>Forward</MenuItem>
-      <MenuItem>Delete</MenuItem>
+      <IconMenu
+        iconButtonElement={iconButtonElement}
+        anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+        targetOrigin={{horizontal: 'right', vertical: 'top'}}
+      >
+      <MenuItem leftIcon={<TodayIcon />}>Due today</MenuItem>
+      <MenuItem leftIcon={<TodayIcon />}>Due tomorrow</MenuItem>
+      <Divider />
+      <MenuItem leftIcon={<PencilIcon />}>Edit</MenuItem>
+      <MenuItem leftIcon={<ArchiveIcon />}>Archive</MenuItem>
+      <Divider />
+      <MenuItem leftIcon={<DeleteIcon />}>Delete</MenuItem>
       </IconMenu>
     )
   }
