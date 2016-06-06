@@ -10,7 +10,7 @@ class ListArea extends React.Component {
     return(
       <div>
         {this.props.todos.map((grouping) => {
-        return (<div>
+        return (<div key={grouping.title}>
           <Subheader>{grouping.title}</Subheader>
           <List>
           {grouping.todos.map((todo) => { return <Todo key={todo.id} toggleCompleteFn={this.props.toggleCompleteFn} todo={todo} /> }) }
