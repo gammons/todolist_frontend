@@ -10,7 +10,9 @@ export default class TodoStore {
   }
 
   addTodo(subject, due) {
-    this.todo = {id: this._nextId(), subject: subject, due: due, projects: [], contexts: [], completed: false, archived: false}
+    let todo = {id: this._nextId(), subject: subject, due: due, projects: [], contexts: [], completed: false, archived: false}
+    todo.contexts = _getContexts(todo);
+    todo.projects = _getProjects(todo);
     this.todos.push(todo);
     this.backend.save();
   }
@@ -25,11 +27,6 @@ export default class TodoStore {
     return grouper.byAll(this.todos);
   }
 
-  _nextId() {
-    let ids = _.map(this.todos, (todo) => { return todo.id })
-    return _.max(ids) + 1;
-  }
-
   toggleComplete(id) {
     let todo = this.findById(id);
     todo.completed = !todo.completed;
@@ -41,5 +38,28 @@ export default class TodoStore {
       if (todo.id === id) { return todo; }
     }
     return null;
+  }
+
+  _nextId() {
+    let ids = _.map(this.todos, (todo) => { return todo.id })
+    return _.max(ids) + 1;
+  }
+
+  _getContexts(subject) {
+    let regex = /\@\w+/g;
+    let matches = subject.match(regex);
+    if (matches === null) {
+      return [];
+    }
+    return _.map(matches, (match) => { return match.replace(/\@/,""); });
+  }
+
+  _getProjects(subject) {
+    let regex = /\+\w+/g;
+    let matches = subject.match(regex);
+    if (matches === null) {
+      return [];
+    }
+    return _.map(matches, (match) => { return match.replace(/\+/,""); });
   }
 }
