@@ -11,8 +11,8 @@ export default class TodoStore {
 
   addTodo(subject, due) {
     let todo = {id: this._nextId(), subject: subject, due: due, projects: [], contexts: [], completed: false, archived: false}
-    todo.contexts = _getContexts(todo);
-    todo.projects = _getProjects(todo);
+    todo.contexts = this._getContexts(todo.subject);
+    todo.projects = this._getProjects(todo.subject);
     this.todos.push(todo);
     this.backend.save();
   }

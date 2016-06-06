@@ -13,7 +13,7 @@ class Todolist extends React.Component {
 
   addTodo(subject, due) {
     this.props.store.addTodo(subject, due);
-    this.setState({todos: this.props.store.grouped()});
+    this.setState({todos: this.props.store.grouped(this.state.grouping)});
   }
 
   handleGroupChange(grouping) {
