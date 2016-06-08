@@ -1,6 +1,6 @@
 import Grouper from "./Grouper";
 
-export default class TodoStore {
+export default class TodoRepo {
   constructor(backend) {
     this.todos = []
     this.backend = backend;

@@ -7,6 +7,7 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 import TextField from 'material-ui/TextField';
 import Snackbar from 'material-ui/Snackbar';
 import DatePicker from 'material-ui/DatePicker';
+import TodoActionCreators from '../actions/TodoActionCreators';
 
 const style = {
     margin: 0,
@@ -41,7 +42,7 @@ class AddTodo extends React.Component {
 
   addTodo() {
     this.setState({open: false, snackbarOpen: true, subject: null, due: null});
-    this.props.addTodoFn(this.state.subject, moment(this.state.due).format("YYYY-MM-DD"));
+    TodoActionCreators.createTodo(this.state.subject, moment(this.state.due).format("YYYY-MM-DD"));
   }
 
   formatDate(date) {
