@@ -37,6 +37,15 @@ describe('TodoRepo', () => {
       expect(store._getProjects("chat about +project1 and +project2")).toEqual(["project1","project2"]);
     });
   });
+  describe("deleteTodo", () => {
+    it("deletes a todo", () => {
+      let backend = new TestBackend();
+      let store = new TodoRepo(backend);
+      store.todos = [{id: 1, subject: 'test1'}, {id: 2, subject: 'test2'}];
+      store.deleteTodo(1);
+      expect(store.todos).toEqual([{id: 2, subject: 'test2'}]);
+    });
+  });
 });
 
 

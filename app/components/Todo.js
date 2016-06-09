@@ -28,7 +28,10 @@ const iconButtonElement = (
 
 class Todo extends React.Component {
   state = {
-    archivedAlertOpen: false,
+    archiveAlertOpen: false,
+    deleteAlertOpen: false,
+    alertOpen: false,
+    alertMessage: "",
     snackbarOpen: false,
     snackbarMessage: ""
   };
@@ -38,21 +41,30 @@ class Todo extends React.Component {
   }
   handleArchive() {
     TodoActionCreators.toggleArchived(this.props.todo.id);
-    this.setState({snackbarOpen: true, snackbarMessage: "Todo has been archived.", archivedAlertOpen: false});
-  }
-  openArchiveAlert() {
-    this.setState({snackbarOpen: false, archivedAlertOpen: true});
-  }
-  cancelArchiveAlert() {
-    this.setState({archivedAlertOpen: false});
+    this.setState({snackbarOpen: true, snackbarMessage: "Todo has been archived.", archiveAlertOpen: false});
   }
   handleDelete() {
+    TodoActionCreators.delete(this.props.todo.id);
+    this.setState({snackbarOpen: true, snackbarMessage: "Todo has been deleted.", deleteAlertOpen: false});
+  }
+  openArchiveAlert() {
+    this.setState({snackbarOpen: false, archiveAlertOpen: true});
+  }
+  openDeleteAlert() {
+    this.setState({snackbarOpen: false, deleteAlertOpen: true});
+  }
+  cancelArchiveAlert() {
+    this.setState({snackbarOpen: false, archiveAlertOpen: false});
+  }
+  cancelDeleteAlert() {
+    this.setState({snackbarOpen: false, deleteAlertOpen: false});
   }
 
   render() {
     return(
       <div>
-        <Alert msg="Are you sure you wish to archive this todo?" open={this.state.archivedAlertOpen} onOk={this.handleArchive.bind(this)} onCancel={this.cancelArchiveAlert.bind(this)} />
+        <Alert msg="Are you sure you wish to archive this todo?" open={this.state.archiveAlertOpen} onOk={this.handleArchive.bind(this)} onCancel={this.cancelArchiveAlert.bind(this)} />
+        <Alert msg="Are you sure you wish to delete this todo?" open={this.state.deleteAlertOpen} onOk={this.handleDelete.bind(this)} onCancel={this.cancelDeleteAlert.bind(this)} />
         <Snackbar
            open={this.state.snackbarOpen}
            message={this.state.snackbarMessage}
@@ -86,7 +98,7 @@ class Todo extends React.Component {
       <MenuItem leftIcon={<PencilIcon />}>Edit</MenuItem>
       <MenuItem onClick={this.openArchiveAlert.bind(this)} leftIcon={<ArchiveIcon />}>Archive</MenuItem>
       <Divider />
-      <MenuItem onClick={this.handleDelete.bind(this)} leftIcon={<DeleteIcon />}>Delete</MenuItem>
+      <MenuItem onClick={this.openDeleteAlert.bind(this)} leftIcon={<DeleteIcon />}>Delete</MenuItem>
       </IconMenu>
     )
   }

@@ -21,6 +21,12 @@ export default class TodoRepo {
     this.todos.push(todo);
     this.backend.save();
   }
+
+  deleteTodo(id) {
+    this.todos = _.filter(this.todos, (todo) => { return todo.id != id });
+    this.backend.save();
+  }
+
   toggleArchived(id) {
     let todo = this.findById(id);
     todo.archived = !todo.archived;
