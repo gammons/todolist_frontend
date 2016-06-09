@@ -1,4 +1,6 @@
 import Grouper from "./Grouper";
+import Groupings from "./Constants/Groupings";
+import moment from "moment";
 
 export default class TodoRepo {
   constructor(backend) {
@@ -10,6 +12,9 @@ export default class TodoRepo {
   }
 
   addTodo(subject, due) {
+    if (due != null) {
+      due = moment(due).format("YYYY-MM-DD");
+    }
     let todo = {id: this._nextId(), subject: subject, due: due, projects: [], contexts: [], completed: false, archived: false}
     todo.contexts = this._getContexts(todo.subject);
     todo.projects = this._getProjects(todo.subject);
@@ -19,9 +24,9 @@ export default class TodoRepo {
 
   grouped(grouping) {
     let grouper = new Grouper(this.todos);
-    if (grouping === "context") {
+    if (grouping === Groupings.BY_CONTEXT) {
       return grouper.byContext(this.todos);
-    } else if (grouping === "project") {
+    } else if (grouping === Groupings.BY_PROJECT) {
       return grouper.byProject(this.todos);
     }
     return grouper.byAll(this.todos);

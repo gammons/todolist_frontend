@@ -42,7 +42,7 @@ class Todo extends React.Component {
     )
   }
   formatDue() {
-    if (typeof(this.props.todo.due) != "undefined") {
+    if (this.props.todo.due != null) {
       return moment(this.props.todo.due).format("ddd MMM D");
     }
   }

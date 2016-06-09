@@ -41,8 +41,8 @@ class AddTodo extends React.Component {
   }
 
   addTodo() {
+    TodoActionCreators.create(this.state.subject, this.state.due);
     this.setState({open: false, snackbarOpen: true, subject: null, due: null});
-    TodoActionCreators.createTodo(this.state.subject, moment(this.state.due).format("YYYY-MM-DD"));
   }
 
   formatDate(date) {
