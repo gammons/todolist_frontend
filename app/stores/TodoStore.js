@@ -3,11 +3,13 @@ import { EventEmitter } from "events";
 import TodoRepo from "../TodoRepo";
 import TestBackend from "../backends/TestBackend";
 import Constants from "../constants/Constants";
+import Groupings from "../constants/Groupings";
 
 const CHANGE_EVENT = "change_event";
 
 let backend = new TestBackend();
 let todoRepo = new TodoRepo(backend);
+let grouping = Groupings.NONE;
 
 const TodoStore = Object.assign(EventEmitter.prototype, {
   emitChange() {
@@ -20,7 +22,7 @@ const TodoStore = Object.assign(EventEmitter.prototype, {
     this.removeListener(CHANGE_EVENT, callback);
   },
   grouped() {
-    return todoRepo.grouped();
+    return todoRepo.grouped(grouping);
   }
 });
 
@@ -32,6 +34,10 @@ AppDispatcher.register((action) => {
       break;
     case Constants.TOGGLE_COMPLETE_TODO:
       todoRepo.toggleComplete(action.id);
+      TodoStore.emitChange();
+      break;
+    case Constants.CHANGE_GROUPING:
+      grouping = action.grouping;
       TodoStore.emitChange();
       break;
   }

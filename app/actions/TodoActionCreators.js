@@ -17,6 +17,13 @@ var TodoActions = {
       id: id
     }
     AppDispatcher.dispatch(action);
+  },
+  changeGrouping(grouping) {
+    let action = {
+      actionType: Constants.CHANGE_GROUPING,
+      grouping: grouping
+    }
+    AppDispatcher.dispatch(action);
   }
 }
 
