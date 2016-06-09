@@ -1,5 +1,5 @@
 import TestBackend from './TestBackend'
-import TodoStore from '../TodoStore'
+import TodoRepo from '../TodoRepo'
 
 import expect from 'expect';
 
