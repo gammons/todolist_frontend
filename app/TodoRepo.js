@@ -1,5 +1,5 @@
 import Grouper from "./Grouper";
-import Groupings from "./Constants/Groupings";
+import Constants from "./Constants/Constants";
 import moment from "moment";
 
 export default class TodoRepo {
@@ -21,12 +21,17 @@ export default class TodoRepo {
     this.todos.push(todo);
     this.backend.save();
   }
+  toggleArchived(id) {
+    let todo = this.findById(id);
+    todo.archived = !todo.archived;
+    this.backend.save();
+  }
 
   grouped(grouping) {
     let grouper = new Grouper(this.todos);
-    if (grouping === Groupings.BY_CONTEXT) {
+    if (grouping === Constants.BY_CONTEXT) {
       return grouper.byContext(this.todos);
-    } else if (grouping === Groupings.BY_PROJECT) {
+    } else if (grouping === Constants.BY_PROJECT) {
       return grouper.byProject(this.todos);
     }
     return grouper.byAll(this.todos);

@@ -9,27 +9,27 @@ import SearchIcon from 'material-ui/svg-icons/action/search';
 import DoneAllIcon from 'material-ui/svg-icons/action/done-all';
 
 import TodoActionCreators from "../../actions/TodoActionCreators";
-import Groupings from "../../constants/Groupings";
+import Constants from "../../constants/Constants";
 import Checked from 'material-ui/svg-icons/navigation/check';
 
 class TodolistIconMenu extends React.Component {
   state = {
-    grouping: Groupings.NONE
+    grouping: Constants.NONE
   }
 
   handleNoGrouping() {
-    this.setState({grouping: Groupings.NONE});
-    TodoActionCreators.changeGrouping(Groupings.NONE);
+    this.setState({grouping: Constants.NONE});
+    TodoActionCreators.changeGrouping(Constants.NONE);
   }
 
   handleContextGrouping() {
-    this.setState({grouping: Groupings.BY_CONTEXT});
-    TodoActionCreators.changeGrouping(Groupings.BY_CONTEXT);
+    this.setState({grouping: Constants.BY_CONTEXT});
+    TodoActionCreators.changeGrouping(Constants.BY_CONTEXT);
   }
 
   handleProjectGrouping() {
-    this.setState({grouping: Groupings.BY_PROJECT});
-    TodoActionCreators.changeGrouping(Groupings.BY_PROJECT);
+    this.setState({grouping: Constants.BY_PROJECT});
+    TodoActionCreators.changeGrouping(Constants.BY_PROJECT);
   }
 
   leftIcon(grouping) {
@@ -48,9 +48,9 @@ class TodolistIconMenu extends React.Component {
           anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
           targetOrigin={{horizontal: 'right', vertical: 'top'}}
         >
-          <MenuItem leftIcon={this.leftIcon(Groupings.NONE)} primaryText="No grouping" onClick={this.handleNoGrouping.bind(this)} />
-          <MenuItem leftIcon={this.leftIcon(Groupings.BY_CONTEXT)} primaryText="By Context" onClick={this.handleContextGrouping.bind(this)} />
-          <MenuItem leftIcon={this.leftIcon(Groupings.BY_PROJECT)} primaryText="By Project" onClick={this.handleProjectGrouping.bind(this)} />
+          <MenuItem leftIcon={this.leftIcon(Constants.NONE)} primaryText="No grouping" onClick={this.handleNoGrouping.bind(this)} />
+          <MenuItem leftIcon={this.leftIcon(Constants.BY_CONTEXT)} primaryText="By Context" onClick={this.handleContextGrouping.bind(this)} />
+          <MenuItem leftIcon={this.leftIcon(Constants.BY_PROJECT)} primaryText="By Project" onClick={this.handleProjectGrouping.bind(this)} />
         </IconMenu>
 
         <IconButton iconStyle={{fill: "#ffffff"}} ><DoneAllIcon /></IconButton>

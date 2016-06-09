@@ -3,13 +3,12 @@ import { EventEmitter } from "events";
 import TodoRepo from "../TodoRepo";
 import TestBackend from "../backends/TestBackend";
 import Constants from "../constants/Constants";
-import Groupings from "../constants/Groupings";
 
 const CHANGE_EVENT = "change_event";
 
 let backend = new TestBackend();
 let todoRepo = new TodoRepo(backend);
-let grouping = Groupings.NONE;
+let grouping = Constants.NONE;
 
 const TodoStore = Object.assign(EventEmitter.prototype, {
   emitChange() {
@@ -38,6 +37,10 @@ AppDispatcher.register((action) => {
       break;
     case Constants.CHANGE_GROUPING:
       grouping = action.grouping;
+      TodoStore.emitChange();
+      break;
+    case Constants.TOGGLE_ARCHIVE_TODO:
+      todoRepo.toggleArchived(action.id);
       TodoStore.emitChange();
       break;
   }

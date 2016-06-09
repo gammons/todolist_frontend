@@ -24,6 +24,13 @@ var TodoActions = {
       grouping: grouping
     }
     AppDispatcher.dispatch(action);
+  },
+  toggleArchived(id) {
+    let action = {
+      actionType: Constants.TOGGLE_ARCHIVE_TODO,
+      id: id
+    }
+    AppDispatcher.dispatch(action);
   }
 }
 
