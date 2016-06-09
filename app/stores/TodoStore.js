@@ -30,6 +30,10 @@ AppDispatcher.register((action) => {
       todoRepo.addTodo(action.subject, action.due);
       TodoStore.emitChange();
       break;
+    case Constants.TOGGLE_COMPLETE_TODO:
+      todoRepo.toggleComplete(action.id);
+      TodoStore.emitChange();
+      break;
   }
 });
 

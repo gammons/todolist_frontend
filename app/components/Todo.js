@@ -12,7 +12,7 @@ import TodayIcon from 'material-ui/svg-icons/action/today';
 import PencilIcon from 'material-ui/svg-icons/editor/mode-edit';
 import ArchiveIcon from 'material-ui/svg-icons/content/archive';
 import DeleteIcon from 'material-ui/svg-icons/action/delete';
-
+import TodoActionCreators from "../actions/TodoActionCreators";
 
 const iconButtonElement = (
   <IconButton
@@ -25,6 +25,9 @@ const iconButtonElement = (
 )
 
 class Todo extends React.Component {
+  handleCheck() {
+    TodoActionCreators.toggleComplete(this.props.todo.id);
+  }
   render() {
     return(
       <div>
@@ -59,9 +62,6 @@ class Todo extends React.Component {
       <MenuItem leftIcon={<DeleteIcon />}>Delete</MenuItem>
       </IconMenu>
     )
-  }
-  handleCheck() {
-    this.props.toggleCompleteFn(this.props.todo.id);
   }
 }
 
