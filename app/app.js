@@ -12,7 +12,7 @@ class App extends React.Component {
   render() {
     return(
       <MuiThemeProvider muiTheme={getMuiTheme()}>
-        <Todolist store={this.props.store} />
+        <Todolist />
       </MuiThemeProvider>
     );
   }
