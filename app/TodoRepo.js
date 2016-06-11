@@ -42,6 +42,10 @@ export default class TodoRepo {
     this.backend.save();
   }
 
+  unarchivedTodos() {
+    return _.filter(this.todos, (todo) => { return !todo.archived });
+  }
+
   grouped(grouping) {
     let grouper = new Grouper(this.todos);
     if (grouping === Constants.BY_CONTEXT) {
@@ -49,7 +53,7 @@ export default class TodoRepo {
     } else if (grouping === Constants.BY_PROJECT) {
       return grouper.byProject(this.todos);
     }
-    return grouper.byAll(this.todos);
+    return grouper.byAll(this.unarchivedTodos());
   }
 
   toggleComplete(id) {
