@@ -22,6 +22,15 @@ export default class TodoRepo {
     this.backend.save();
   }
 
+  updateTodo(id, subject, due) {
+    let todo = this.findById(id);
+    todo.subject = subject;
+    todo.contexts = this._getContexts(todo.subject);
+    todo.projects = this._getProjects(todo.subject);
+    todo.due = due;
+    this.backend.save();
+  }
+
   deleteTodo(id) {
     this.todos = _.filter(this.todos, (todo) => { return todo.id != id });
     this.backend.save();

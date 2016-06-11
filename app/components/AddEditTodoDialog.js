@@ -6,25 +6,32 @@ import TextField from 'material-ui/TextField';
 import DatePicker from 'material-ui/DatePicker';
 import Snackbar from 'material-ui/Snackbar';
 
+
+
 export default class AddEditTodoDialog extends React.Component {
   state = {
-    subject: this.props.subject,
-    due: this.props.due,
     snackbarOpen: false
-  }
+  };
+
+  actions = [
+    <FlatButton
+      label="Cancel"
+      primary={false}
+      onTouchTap={this.props.onCancel.bind(this)}
+    />,
+    <FlatButton
+      label="Submit"
+      primary={true}
+      keyboardFocused={true}
+      onTouchTap={this.onSubmit.bind(this)}
+    />
+  ];
 
   componentDidUpdate() {
     if (this.props.open) {
       let focus = () => { this.refs.subject.focus() }
-      setTimeout(focus.bind(this), 100);
+      setTimeout(focus.bind(this), 200);
     }
-  }
-
-  handleDueChange(proxy,val) {
-    this.setState({due: val});
-  }
-  handleSubjectChange(proxy,val) {
-    this.setState({subject: val});
   }
 
   formatDate(date) {
@@ -32,44 +39,37 @@ export default class AddEditTodoDialog extends React.Component {
   }
 
   onSubmit() {
-    this.props.onSubmit(this.state.subject, this.state.due);
-    this.setState({snackbarOpen: true, subject: "", due: ""});
+    this.props.onSubmit(this.refs.subject.getValue(), this.refs.due.getDate());
+    this.setState({snackbarOpen: true});
+  }
+
+  dueDate() {
+    if (this.props.due == undefined) {
+      return new Date();
+    } else {
+      return new Date(`${this.props.due} 05:00:00 GMT-${new Date().getTimezoneOffset() / 60}`);
+    }
   }
 
   render() {
-    const actions = [
-          <FlatButton
-            label="Cancel"
-            primary={false}
-            onTouchTap={this.props.onCancel.bind(this)}
-          />,
-          <FlatButton
-            label="Submit"
-            primary={true}
-            keyboardFocused={true}
-            onTouchTap={this.onSubmit.bind(this)}
-          />,
-        ];
-
     return(
       <div>
         <Dialog title={this.props.title}
                 modal={false}
-                actions={actions}
+                actions={this.actions}
                 open={this.props.open}
                 onRequestClose={this.props.onCancel.bind(this)}>
 
           <TextField ref="subject"
             hintText="Description"
             fullWidth={true}
-            value={this.state.subject}
-            onChange={this.handleSubjectChange.bind(this)}
+            defaultValue={this.props.subject}
           />
 
           <DatePicker
+            ref="due"
             hintText="Due date"
-            value={this.state.due}
-            onChange={this.handleDueChange.bind(this)}
+            defaultDate={this.dueDate()}
             firstDayOfWeek={0}
             formatDate={this.formatDate.bind(this)}
           />

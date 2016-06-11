@@ -15,6 +15,7 @@ import ArchiveIcon from 'material-ui/svg-icons/content/archive';
 import DeleteIcon from 'material-ui/svg-icons/action/delete';
 import TodoActionCreators from "../actions/TodoActionCreators";
 import Alert from "./Alert";
+import AddEditTodoDialog from "./AddEditTodoDialog";
 
 const iconButtonElement = (
   <IconButton
@@ -30,6 +31,7 @@ class Todo extends React.Component {
   state = {
     archiveAlertOpen: false,
     deleteAlertOpen: false,
+    editOpen: false,
     alertOpen: false,
     alertMessage: "",
     snackbarOpen: false,
@@ -53,11 +55,21 @@ class Todo extends React.Component {
   openDeleteAlert() {
     this.setState({snackbarOpen: false, deleteAlertOpen: true});
   }
+  openEditDialog() {
+    this.setState({editOpen: true});
+  }
   cancelArchiveAlert() {
     this.setState({snackbarOpen: false, archiveAlertOpen: false});
   }
   cancelDeleteAlert() {
     this.setState({snackbarOpen: false, deleteAlertOpen: false});
+  }
+  handleEditDialogClose() {
+    this.setState({editOpen: false});
+  }
+  editTodo(subject, due) {
+    TodoActionCreators.update(this.props.todo.id, subject, due);
+    this.setState({editOpen: false});
   }
 
   render() {
@@ -70,6 +82,17 @@ class Todo extends React.Component {
            message={this.state.snackbarMessage}
            autoHideDuration={3000}
          />
+
+        <AddEditTodoDialog
+          open={this.state.editOpen}
+          subject={this.props.todo.subject}
+          due={this.props.todo.due}
+          title="Edit todo"
+          snackbarMessage="Todo has been updated."
+          onCancel={this.handleEditDialogClose.bind(this)}
+          onSubmit={this.editTodo.bind(this)}
+        />
+
         <ListItem
           leftCheckbox={<Checkbox defaultChecked={this.props.todo.completed} onClick={this.handleCheck.bind(this)} />}
           rightIconButton={ this.rightIconMenu() }
@@ -95,7 +118,7 @@ class Todo extends React.Component {
       <MenuItem leftIcon={<TodayIcon />}>Due today</MenuItem>
       <MenuItem leftIcon={<TodayIcon />}>Due tomorrow</MenuItem>
       <Divider />
-      <MenuItem leftIcon={<PencilIcon />}>Edit</MenuItem>
+      <MenuItem onClick={this.openEditDialog.bind(this)} leftIcon={<PencilIcon />}>Edit</MenuItem>
       <MenuItem onClick={this.openArchiveAlert.bind(this)} leftIcon={<ArchiveIcon />}>Archive</MenuItem>
       <Divider />
       <MenuItem onClick={this.openDeleteAlert.bind(this)} leftIcon={<DeleteIcon />}>Delete</MenuItem>

@@ -31,6 +31,10 @@ AppDispatcher.register((action) => {
       todoRepo.addTodo(action.subject, action.due);
       TodoStore.emitChange();
       break;
+    case Constants.UPDATE_TODO:
+      todoRepo.updateTodo(action.id, action.subject, action.due);
+      TodoStore.emitChange();
+      break;
     case Constants.DELETE_TODO:
       todoRepo.deleteTodo(action.id);
       TodoStore.emitChange();
@@ -57,4 +61,3 @@ backend.load().then((todos) => {
 });
 
 export default TodoStore;
-

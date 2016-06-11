@@ -33,10 +33,18 @@ var TodoActions = {
     AppDispatcher.dispatch(action);
   },
   delete(id) {
-    console.log("delete with id ", id);
     let action = {
       actionType: Constants.DELETE_TODO,
       id: id
+    }
+    AppDispatcher.dispatch(action);
+  },
+  update(id, subject, due) {
+    let action = {
+      actionType: Constants.UPDATE_TODO,
+      id: id,
+      subject: subject,
+      due: due
     }
     AppDispatcher.dispatch(action);
   }
