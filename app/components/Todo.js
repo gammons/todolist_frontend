@@ -68,8 +68,18 @@ class Todo extends React.Component {
     this.setState({editOpen: false});
   }
   editTodo(subject, due) {
+    console.log("due is ", due);
     TodoActionCreators.update(this.props.todo.id, subject, due);
     this.setState({editOpen: false});
+  }
+
+  dueToday() {
+    TodoActionCreators.update(this.props.todo.id, this.props.todo.subject, new Date().toString());
+  }
+
+  dueTomorrow() {
+    let tomorrow = moment().add(1, "day");
+    TodoActionCreators.update(this.props.todo.id, this.props.todo.subject, tomorrow.toString());
   }
 
   render() {
@@ -115,8 +125,8 @@ class Todo extends React.Component {
         anchorOrigin={{horizontal: 'right', vertical: 'top'}}
         targetOrigin={{horizontal: 'right', vertical: 'top'}}
       >
-      <MenuItem leftIcon={<TodayIcon />}>Due today</MenuItem>
-      <MenuItem leftIcon={<TodayIcon />}>Due tomorrow</MenuItem>
+      <MenuItem onClick={this.dueToday.bind(this)} leftIcon={<TodayIcon />}>Due today</MenuItem>
+      <MenuItem onClick={this.dueTomorrow.bind(this)} leftIcon={<TodayIcon />}>Due tomorrow</MenuItem>
       <Divider />
       <MenuItem onClick={this.openEditDialog.bind(this)} leftIcon={<PencilIcon />}>Edit</MenuItem>
       <MenuItem onClick={this.openArchiveAlert.bind(this)} leftIcon={<ArchiveIcon />}>Archive</MenuItem>
