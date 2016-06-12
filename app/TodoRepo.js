@@ -28,6 +28,9 @@ export default class TodoRepo {
     todo.subject = subject;
     todo.contexts = this._getContexts(todo.subject);
     todo.projects = this._getProjects(todo.subject);
+    if (due != null) {
+      due = moment(due).format("YYYY-MM-DD");
+    }
     todo.due = due;
     this.backend.save(this.todos);
   }
