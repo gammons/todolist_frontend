@@ -1,12 +1,12 @@
 import AppDispatcher from "../dispatchers/AppDispatcher";
 import { EventEmitter } from "events";
 import TodoRepo from "../TodoRepo";
-import TestBackend from "../backends/TestBackend";
+import LocalBackend from "../backends/LocalBackend";
 import Constants from "../constants/Constants";
 
 const CHANGE_EVENT = "change_event";
 
-let backend = new TestBackend();
+let backend = new LocalBackend();
 let todoRepo = new TodoRepo(backend);
 let grouping = Constants.NONE;
 
@@ -55,8 +55,8 @@ AppDispatcher.register((action) => {
 });
 
 //load the initial repo
-backend.load().then((todos) => {
-  todoRepo.load(todos);
+backend.load().then((json) => {
+  todoRepo.load(json);
   TodoStore.emitChange();
 });
 

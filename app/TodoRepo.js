@@ -9,6 +9,7 @@ export default class TodoRepo {
   }
   load(todos) {
     this.todos = todos;
+    _.each(this.todos, (todo) => { if (todo.due == "") todo.due = null });
   }
 
   addTodo(subject, due) {
@@ -19,7 +20,7 @@ export default class TodoRepo {
     todo.contexts = this._getContexts(todo.subject);
     todo.projects = this._getProjects(todo.subject);
     this.todos.push(todo);
-    this.backend.save();
+    this.backend.save(this.todos);
   }
 
   updateTodo(id, subject, due) {
@@ -28,18 +29,18 @@ export default class TodoRepo {
     todo.contexts = this._getContexts(todo.subject);
     todo.projects = this._getProjects(todo.subject);
     todo.due = due;
-    this.backend.save();
+    this.backend.save(this.todos);
   }
 
   deleteTodo(id) {
     this.todos = _.filter(this.todos, (todo) => { return todo.id != id });
-    this.backend.save();
+    this.backend.save(this.todos);
   }
 
   toggleArchived(id) {
     let todo = this.findById(id);
     todo.archived = !todo.archived;
-    this.backend.save();
+    this.backend.save(this.todos);
   }
 
   unarchivedTodos() {
@@ -59,7 +60,7 @@ export default class TodoRepo {
   toggleComplete(id) {
     let todo = this.findById(id);
     todo.completed = !todo.completed;
-    this.backend.save();
+    this.backend.save(this.todos);
   }
 
   findById(id) {

@@ -68,7 +68,6 @@ class Todo extends React.Component {
     this.setState({editOpen: false});
   }
   editTodo(subject, due) {
-    console.log("due is ", due);
     TodoActionCreators.update(this.props.todo.id, subject, due);
     this.setState({editOpen: false});
   }
