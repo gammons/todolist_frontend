@@ -1,12 +1,12 @@
 import AppDispatcher from "../dispatchers/AppDispatcher";
 import { EventEmitter } from "events";
 import TodoRepo from "../TodoRepo";
-import LocalBackend from "../backends/LocalBackend";
+import Backend from "../backends/LocalBackend";
 import Constants from "../constants/Constants";
 
 const CHANGE_EVENT = "change_event";
 
-let backend = new LocalBackend();
+let backend = new Backend();
 let todoRepo = new TodoRepo(backend);
 let grouping = Constants.NONE;
 
