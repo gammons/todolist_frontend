@@ -11,10 +11,12 @@ import DoneAllIcon from 'material-ui/svg-icons/action/done-all';
 import TodoActionCreators from "../../actions/TodoActionCreators";
 import Constants from "../../constants/Constants";
 import Checked from 'material-ui/svg-icons/navigation/check';
+import Divider from 'material-ui/Divider';
 
 class TodolistIconMenu extends React.Component {
   state = {
-    grouping: Constants.NONE
+    grouping: Constants.NONE,
+    show: Constants.SHOW_UNARCHIVED
   }
 
   handleNoGrouping() {
@@ -31,9 +33,22 @@ class TodolistIconMenu extends React.Component {
     this.setState({grouping: Constants.BY_PROJECT});
     TodoActionCreators.changeGrouping(Constants.BY_PROJECT);
   }
+  handleShowArchived() {
+    this.setState({show: Constants.SHOW_ARCHIVED});
+    TodoActionCreators.changeShow(Constants.SHOW_ARCHIVED);
+  }
+  handleShowUnarchived() {
+    this.setState({show: Constants.SHOW_UNARCHIVED});
+    TodoActionCreators.changeShow(Constants.SHOW_UNARCHIVED);
+  }
 
-  leftIcon(grouping) {
+  groupingIcon(grouping) {
     if (this.state.grouping == grouping) {
+      return (<Checked />);
+    }
+  }
+  showIcon(show) {
+    if (this.state.show == show) {
       return (<Checked />);
     }
   }
@@ -48,9 +63,12 @@ class TodolistIconMenu extends React.Component {
           anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
           targetOrigin={{horizontal: 'right', vertical: 'top'}}
         >
-          <MenuItem leftIcon={this.leftIcon(Constants.NONE)} primaryText="No grouping" onClick={this.handleNoGrouping.bind(this)} />
-          <MenuItem leftIcon={this.leftIcon(Constants.BY_CONTEXT)} primaryText="By Context" onClick={this.handleContextGrouping.bind(this)} />
-          <MenuItem leftIcon={this.leftIcon(Constants.BY_PROJECT)} primaryText="By Project" onClick={this.handleProjectGrouping.bind(this)} />
+          <MenuItem leftIcon={this.groupingIcon(Constants.NONE)} insetChildren={true} primaryText="No grouping" onClick={this.handleNoGrouping.bind(this)} />
+          <MenuItem leftIcon={this.groupingIcon(Constants.BY_CONTEXT)} insetChildren={true} primaryText="By Context" onClick={this.handleContextGrouping.bind(this)} />
+          <MenuItem leftIcon={this.groupingIcon(Constants.BY_PROJECT)} insetChildren={true} primaryText="By Project" onClick={this.handleProjectGrouping.bind(this)} />
+          <Divider />
+          <MenuItem leftIcon={this.showIcon(Constants.SHOW_UNARCHIVED)} insetChildren={true} primaryText="Unarchived" onClick={this.handleShowUnarchived.bind(this)} />
+          <MenuItem leftIcon={this.showIcon(Constants.SHOW_ARCHIVED)} insetChildren={true} primaryText="Archived" onClick={this.handleShowArchived.bind(this)} />
         </IconMenu>
 
         <IconButton iconStyle={{fill: "#ffffff"}} ><DoneAllIcon /></IconButton>

@@ -25,6 +25,13 @@ var TodoActions = {
     }
     AppDispatcher.dispatch(action);
   },
+  changeShow(show) {
+    let action = {
+      actionType: Constants.CHANGE_SHOW,
+      show: show
+    }
+    AppDispatcher.dispatch(action);
+  },
   toggleArchived(id) {
     let action = {
       actionType: Constants.TOGGLE_ARCHIVE_TODO,

@@ -46,19 +46,31 @@ export default class TodoRepo {
     this.backend.save(this.todos);
   }
 
-  unarchivedTodos() {
-    return _.filter(this.todos, (todo) => { return !todo.archived });
+  grouped(grouping, show) {
+    let grouper = new Grouper(this._todosByType(show));
+    if (grouping === Constants.BY_CONTEXT) {
+      return grouper.byContext(this._todosByType(show));
+    } else if (grouping === Constants.BY_PROJECT) {
+      return grouper.byProject(this._todosByType(show));
+    }
+    return grouper.byAll();
   }
 
-  grouped(grouping) {
-    let grouper = new Grouper(this.unarchivedTodos());
-    if (grouping === Constants.BY_CONTEXT) {
-      return grouper.byContext(this.todos);
-    } else if (grouping === Constants.BY_PROJECT) {
-      return grouper.byProject(this.todos);
+  _todosByType(show) {
+    if (show === Constants.SHOW_UNARCHIVED) {
+      return this._unarchivedTodos();
+    } else {
+      return this._archivedTodos();
     }
-    return grouper.byAll(this.unarchivedTodos());
   }
+
+  _unarchivedTodos() {
+    return _.filter(this.todos, (todo) => { return !todo.archived });
+  }
+  _archivedTodos() {
+    return _.filter(this.todos, (todo) => { return todo.archived });
+  }
+
 
   toggleComplete(id) {
     let todo = this.findById(id);

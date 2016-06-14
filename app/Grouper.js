@@ -13,7 +13,7 @@ export default class Grouper {
     return grouped;
   }
 
-  byProject(todos) {
+  byProject() {
     let grouped = [];
     _.map(this._getProjects(), (project) => {
       grouped.push({title: project, todos: this._todosWithProject(project) });
@@ -21,8 +21,8 @@ export default class Grouper {
     return grouped;
   }
 
-  byAll(todos) {
-    return [{title: "All todos", todos: todos}];
+  byAll() {
+    return [{title: "All todos", todos: this.todos}];
   }
 
   _todosWithContext(context) {

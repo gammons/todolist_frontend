@@ -9,6 +9,7 @@ const CHANGE_EVENT = "change_event";
 let backend = new Backend();
 let todoRepo = new TodoRepo(backend);
 let grouping = Constants.NONE;
+let show = Constants.SHOW_UNARCHIVED;
 
 const TodoStore = Object.assign(EventEmitter.prototype, {
   emitChange() {
@@ -21,7 +22,7 @@ const TodoStore = Object.assign(EventEmitter.prototype, {
     this.removeListener(CHANGE_EVENT, callback);
   },
   grouped() {
-    return todoRepo.grouped(grouping);
+    return todoRepo.grouped(grouping, show);
   }
 });
 
@@ -45,6 +46,10 @@ AppDispatcher.register((action) => {
       break;
     case Constants.CHANGE_GROUPING:
       grouping = action.grouping;
+      TodoStore.emitChange();
+      break;
+    case Constants.CHANGE_SHOW:
+      show = action.show;
       TodoStore.emitChange();
       break;
     case Constants.TOGGLE_ARCHIVE_TODO:
