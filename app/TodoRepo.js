@@ -51,7 +51,7 @@ export default class TodoRepo {
   }
 
   grouped(grouping) {
-    let grouper = new Grouper(this.todos);
+    let grouper = new Grouper(this.unarchivedTodos());
     if (grouping === Constants.BY_CONTEXT) {
       return grouper.byContext(this.todos);
     } else if (grouping === Constants.BY_PROJECT) {
