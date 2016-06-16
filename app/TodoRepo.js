@@ -1,4 +1,5 @@
 import Grouper from "./Grouper";
+import DateFilter from "./DateFilter";
 import Constants from "./constants/Constants";
 import moment from "moment";
 
@@ -46,12 +47,14 @@ export default class TodoRepo {
     this.backend.save(this.todos);
   }
 
-  grouped(grouping, show) {
-    let grouper = new Grouper(this._todosByType(show));
+  fetch(grouping, show, dueFilter) {
+    let dateFilter = new DateFilter(this._todosByType(show));
+    let grouper = new Grouper(dateFilter.filterBy(dueFilter));
+
     if (grouping === Constants.BY_CONTEXT) {
-      return grouper.byContext(this._todosByType(show));
+      return grouper.byContext();
     } else if (grouping === Constants.BY_PROJECT) {
-      return grouper.byProject(this._todosByType(show));
+      return grouper.byProject();
     }
     return grouper.byAll();
   }

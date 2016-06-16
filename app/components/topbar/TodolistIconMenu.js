@@ -8,7 +8,7 @@ import SortIcon from 'material-ui/svg-icons/content/sort';
 import SearchIcon from 'material-ui/svg-icons/action/search';
 import DoneAllIcon from 'material-ui/svg-icons/action/done-all';
 
-import TodoActionCreators from "../../actions/TodoActionCreators";
+import FilterActions from "../../actions/FilterActions";
 import Constants from "../../constants/Constants";
 import Checked from 'material-ui/svg-icons/navigation/check';
 import Divider from 'material-ui/Divider';
@@ -21,25 +21,25 @@ class TodolistIconMenu extends React.Component {
 
   handleNoGrouping() {
     this.setState({grouping: Constants.NONE});
-    TodoActionCreators.changeGrouping(Constants.NONE);
+    FilterActions.changeGrouping(Constants.NONE);
   }
 
   handleContextGrouping() {
     this.setState({grouping: Constants.BY_CONTEXT});
-    TodoActionCreators.changeGrouping(Constants.BY_CONTEXT);
+    FilterActions.changeGrouping(Constants.BY_CONTEXT);
   }
 
   handleProjectGrouping() {
     this.setState({grouping: Constants.BY_PROJECT});
-    TodoActionCreators.changeGrouping(Constants.BY_PROJECT);
+    FilterActions.changeGrouping(Constants.BY_PROJECT);
   }
   handleShowArchived() {
     this.setState({show: Constants.SHOW_ARCHIVED});
-    TodoActionCreators.changeShow(Constants.SHOW_ARCHIVED);
+    FilterActions.changeShow(Constants.SHOW_ARCHIVED);
   }
   handleShowUnarchived() {
     this.setState({show: Constants.SHOW_UNARCHIVED});
-    TodoActionCreators.changeShow(Constants.SHOW_UNARCHIVED);
+    FilterActions.changeShow(Constants.SHOW_UNARCHIVED);
   }
 
   groupingIcon(grouping) {

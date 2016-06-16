@@ -8,8 +8,10 @@ const CHANGE_EVENT = "change_event";
 
 let backend = new Backend();
 let todoRepo = new TodoRepo(backend);
+
 let grouping = Constants.NONE;
 let show = Constants.SHOW_UNARCHIVED;
+let dueFilter = Constants.ALL;
 
 const TodoStore = Object.assign(EventEmitter.prototype, {
   emitChange() {
@@ -21,8 +23,8 @@ const TodoStore = Object.assign(EventEmitter.prototype, {
   removeChangeListener(callback) {
     this.removeListener(CHANGE_EVENT, callback);
   },
-  grouped() {
-    return todoRepo.grouped(grouping, show);
+  getTodos() {
+    return todoRepo.fetch(grouping, show, dueFilter);
   }
 });
 
@@ -50,6 +52,10 @@ AppDispatcher.register((action) => {
       break;
     case Constants.CHANGE_SHOW:
       show = action.show;
+      TodoStore.emitChange();
+      break;
+    case Constants.CHANGE_DUE_FILTER:
+      dueFilter = action.filter;
       TodoStore.emitChange();
       break;
     case Constants.TOGGLE_ARCHIVE_TODO:

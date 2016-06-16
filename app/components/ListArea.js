@@ -8,10 +8,10 @@ import TodoStore from "../stores/TodoStore";
 
 class ListArea extends React.Component {
   state = {
-    todos: TodoStore.grouped()
+    todos: TodoStore.getTodos()
   }
   onChange = () => {
-    this.setState({todos: TodoStore.grouped()});
+    this.setState({todos: TodoStore.getTodos()});
   }
   componentDidMount() {
     TodoStore.addChangeListener(this.onChange);
