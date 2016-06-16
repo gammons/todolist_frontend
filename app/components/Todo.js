@@ -29,6 +29,7 @@ const iconButtonElement = (
 
 class Todo extends React.Component {
   state = {
+    completed: this.props.todo.completed,
     archiveAlertOpen: false,
     deleteAlertOpen: false,
     editOpen: false,
@@ -39,8 +40,8 @@ class Todo extends React.Component {
   };
 
   handleCheck() {
-    TodoActionCreators.toggleComplete(this.props.todo.id);
-    this.setState({snackbarOpen: true, snackbarMessage: "Todo has been saved."});
+    setTimeout(() => { TodoActionCreators.toggleComplete(this.props.todo.id) }, 1000);
+    this.setState({snackbarOpen: true, snackbarMessage: "Todo has been saved.", completed: !this.state.completed});
   }
   handleArchive() {
     TodoActionCreators.toggleArchived(this.props.todo.id);
@@ -108,7 +109,7 @@ class Todo extends React.Component {
         />
 
         <ListItem
-          leftCheckbox={<Checkbox defaultChecked={this.props.todo.completed} onClick={this.handleCheck.bind(this)} />}
+          leftCheckbox={<Checkbox defaultChecked={this.state.completed} onClick={this.handleCheck.bind(this)} />}
           rightIconButton={ this.rightIconMenu() }
           rightIcon={<MoreVertIcon />}
           primaryText={this.props.todo.subject}
