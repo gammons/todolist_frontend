@@ -118,11 +118,27 @@ class Todo extends React.Component {
       </div>
     )
   }
+
   formatDue() {
     if (this.props.todo.due != null) {
-      return moment(this.props.todo.due).format("ddd MMM D");
+      let due = moment(this.props.todo.due).startOf("day");
+      let today = moment().startOf("day");
+
+      if (due.isBefore(today)) {
+        return (<div className='red'>{due.format("ddd MMM D")}</div>);
+      }
+      if (today.isSame(due)) {
+        return (<div className='blue'>{due.format("ddd MMM D")}</div>);
+      }
+
+      let tomorrow = moment().add(1,"day").startOf("day");
+      if (due.isSame(tomorrow)) {
+        return (<div className='blue'>{due.format("ddd MMM D")}</div>);
+      }
+      return due.format("ddd MMM D");
     }
   }
+
   rightIconMenu() {
     return(
       <IconMenu
