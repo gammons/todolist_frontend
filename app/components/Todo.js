@@ -40,6 +40,7 @@ class Todo extends React.Component {
 
   handleCheck() {
     TodoActionCreators.toggleComplete(this.props.todo.id);
+    this.setState({snackbarOpen: true, snackbarMessage: "Todo has been saved."});
   }
   handleArchive() {
     TodoActionCreators.toggleArchived(this.props.todo.id);
@@ -71,6 +72,9 @@ class Todo extends React.Component {
     TodoActionCreators.update(this.props.todo.id, subject, due);
     this.setState({editOpen: false});
   }
+  closeSnackbar() {
+    this.setState({snackbarOpen: false});
+  }
 
   dueToday() {
     TodoActionCreators.update(this.props.todo.id, this.props.todo.subject, new Date().toString());
@@ -88,6 +92,7 @@ class Todo extends React.Component {
         <Alert msg="Are you sure you wish to delete this todo?" open={this.state.deleteAlertOpen} onOk={this.handleDelete.bind(this)} onCancel={this.cancelDeleteAlert.bind(this)} />
         <Snackbar
            open={this.state.snackbarOpen}
+           onRequestClose={this.closeSnackbar.bind(this)}
            message={this.state.snackbarMessage}
            autoHideDuration={3000}
          />
