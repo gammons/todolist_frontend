@@ -1,5 +1,5 @@
 import Grouper from "./Grouper";
-import Constants from "./Constants/Constants";
+import Constants from "./constants/Constants";
 import moment from "moment";
 
 export default class TodoRepo {
