@@ -21,9 +21,11 @@ export default class DateFilter {
 
   _filterByDay(due = moment()) {
     return _.filter(this.todos, (todo) => {
-      if (todo.completed === false && moment(todo.due).isSameOrBefore(moment(due))) {
+      let todoDue = moment(todo.due).clone().startOf('day');
+      let dateDue = moment(due).clone().startOf('day');
+      if (todo.completed === false && todoDue.isBefore(dateDue)) {
         return true;
-      } else if (moment(todo.due).isSame(moment(due))) {
+      } else if (todoDue.isSame(dateDue)) {
         return true;
       }
       return false;
