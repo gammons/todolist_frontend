@@ -22,6 +22,13 @@ var FilterActions = {
       filter: filter
     }
     AppDispatcher.dispatch(action);
+  },
+  search(term) {
+    let action = {
+      actionType: Constants.SEARCH,
+      term: term
+    }
+    AppDispatcher.dispatch(action);
   }
 }
 export default FilterActions;

@@ -12,6 +12,7 @@ let todoRepo = new TodoRepo(backend);
 let grouping = Constants.NONE;
 let show = Constants.SHOW_UNARCHIVED;
 let dueFilter = Constants.ALL;
+let searchTerm = null;
 
 const TodoStore = Object.assign(EventEmitter.prototype, {
   emitChange() {
@@ -24,7 +25,7 @@ const TodoStore = Object.assign(EventEmitter.prototype, {
     this.removeListener(CHANGE_EVENT, callback);
   },
   getTodos() {
-    return todoRepo.fetch(grouping, show, dueFilter);
+    return todoRepo.fetch(grouping, show, dueFilter, searchTerm);
   }
 });
 
@@ -60,6 +61,10 @@ AppDispatcher.register((action) => {
       break;
     case Constants.TOGGLE_ARCHIVE_TODO:
       todoRepo.toggleArchived(action.id);
+      TodoStore.emitChange();
+      break;
+    case Constants.SEARCH:
+      searchTerm = action.term;
       TodoStore.emitChange();
       break;
   }

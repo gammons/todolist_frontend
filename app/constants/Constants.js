@@ -15,7 +15,9 @@ export default {
   TODAY: "TODAY",
   TOMORROW: "TOMORROW",
   THIS_WEEK: "THIS_WEEK",
-  ALL: "ALL"
+  ALL: "ALL",
+
+  SEARCH: "SEARCH"
 
 }
 

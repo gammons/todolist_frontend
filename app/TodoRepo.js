@@ -47,9 +47,15 @@ export default class TodoRepo {
     this.backend.save(this.todos);
   }
 
-  fetch(grouping, show, dueFilter) {
+  fetch(grouping, show, dueFilter, searchTerm) {
     let dateFilter = new DateFilter(this._todosByType(show));
-    let grouper = new Grouper(dateFilter.filterBy(dueFilter));
+    let filtered = dateFilter.filterBy(dueFilter);
+
+    if (searchTerm != null) {
+      filtered = this._filterBySearchTerm(filtered, searchTerm);
+    }
+
+    let grouper = new Grouper(filtered);
 
     if (grouping === Constants.BY_CONTEXT) {
       return grouper.byContext();
@@ -57,6 +63,10 @@ export default class TodoRepo {
       return grouper.byProject();
     }
     return grouper.byAll();
+  }
+
+  _filterBySearchTerm(todos, searchTerm) {
+    return _.filter(todos, (todo) => { return todo.subject.includes(searchTerm) });
   }
 
   _todosByType(show) {
