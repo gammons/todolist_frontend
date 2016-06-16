@@ -37,5 +37,19 @@ describe('Grouper', () => {
     ]
     expect(grouper.byContext()).toEqual(expected);
   });
+
+  it("byContext includes todos with no contexts", () => {
+    let todos = [
+      {contexts: ["one","two"]},
+      {contexts: []}
+    ];
+    let grouper = new Grouper(todos);
+    let expected = [
+      {title: "one", todos: [{contexts: ["one","two"]}]},
+      {title: "two", todos: [{contexts: ["one","two"]}]},
+      {title: "No contexts", todos: [{contexts: []}]}
+    ]
+    expect(grouper.byContext()).toEqual(expected);
+  });
 });
 

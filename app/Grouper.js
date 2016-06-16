@@ -10,6 +10,10 @@ export default class Grouper {
     _.map(this._getContexts(), (context) => {
       grouped.push({title: context, todos: this._todosWithContext(context) });
     });
+    let contextLengths = _.map(this.todos, (todo) => { return todo.contexts.length });
+    if (_.some(contextLengths, (l) => { return l == 0 })) {
+      grouped.push({title: "No contexts", todos: this._todosWithNoContext()})
+    }
     return grouped;
   }
 
@@ -18,6 +22,10 @@ export default class Grouper {
     _.map(this._getProjects(), (project) => {
       grouped.push({title: project, todos: this._todosWithProject(project) });
     });
+    let projectLengths = _.map(this.todos, (todo) => { return todo.projects.length });
+    if (_.some(projectLengths, (l) => { return l == 0 })) {
+      grouped.push({title: "No projects", todos: this._todosWithNoProject()})
+    }
     return grouped;
   }
 
@@ -34,6 +42,11 @@ export default class Grouper {
     });
     return ret;
   }
+
+  _todosWithNoContext() {
+    return _.filter(this.todos, (todo) => { return todo.contexts.length === 0 });
+  }
+
   _todosWithProject(project) {
     let ret = [];
     _.each(this.todos, (todo) => {
@@ -42,6 +55,10 @@ export default class Grouper {
       }
     });
     return ret;
+  }
+
+  _todosWithNoProject() {
+    return _.filter(this.todos, (todo) => { return todo.projects.length === 0 });
   }
 
   _getContexts() {
