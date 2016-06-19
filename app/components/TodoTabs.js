@@ -4,11 +4,11 @@ import TodayIcon from 'material-ui/svg-icons/action/today';
 import AllIcon from 'material-ui/svg-icons/places/all-inclusive';
 
 import Constants from "../constants/Constants";
-import FilterActions from "../actions/FilterActions";
+import FilterActionCreators from "../actions/FilterActionCreators";
 
 export default class TodoTabs extends React.Component {
   handleChange(value) {
-    FilterActions.changeDueFilter(value)
+    FilterActionCreators.changeDueFilter(value)
   }
 
   render() {

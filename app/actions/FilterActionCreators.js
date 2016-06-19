@@ -1,7 +1,7 @@
 import AppDispatcher from "../dispatchers/AppDispatcher";
 import Constants from "../constants/Constants";
 
-var FilterActions = {
+var FilterActionCreators = {
   changeGrouping(grouping) {
     let action = {
       actionType: Constants.CHANGE_GROUPING,
@@ -31,4 +31,4 @@ var FilterActions = {
     AppDispatcher.dispatch(action);
   }
 }
-export default FilterActions;
+export default FilterActionCreators;
