@@ -6,15 +6,16 @@ import Constants from "../constants/Constants";
 
 const CHANGE_EVENT = "change_event";
 
-let backend = new Backend();
-let todoRepo = new TodoRepo(backend);
-
-let grouping = Constants.NONE;
-let show = Constants.SHOW_UNARCHIVED;
-let dueFilter = Constants.ALL;
-let searchTerm = null;
-
 const TodoStore = Object.assign(EventEmitter.prototype, {
+  repo: new TodoRepo(),
+  backend: new Backend(),
+  backendFailed: false,
+  backendMsg: "",
+  grouping: Constants.NONE,
+  show: Constants.SHOW_UNARCHIVED,
+  dueFilter: Constants.ALL,
+  searchTerm: null,
+
   emitChange() {
     this.emit(CHANGE_EVENT);
   },
@@ -25,42 +26,88 @@ const TodoStore = Object.assign(EventEmitter.prototype, {
     this.removeListener(CHANGE_EVENT, callback);
   },
   getTodos() {
-    return todoRepo.fetch(grouping, show, dueFilter, searchTerm);
+    return this.repo.fetch(this.grouping, this.show, this.dueFilter, this.searchTerm);
+  },
+  failureState() {
+    return {backendFailed: this.backendFailed, backendMsg: this.backendMsg};
+  },
+  addTodo(subject, due) {
+    let newRepo = _.cloneDeep(this.repo);
+    newRepo.addTodo(subject, due);
+    this._save(newRepo);
+  },
+  updateTodo(id, subject, due) {
+    let newRepo = _.cloneDeep(this.repo);
+    newRepo.updateTodo(id, subject, due);
+    this._save(newRepo);
+  },
+  deleteTodo(id) {
+    let newRepo = _.cloneDeep(this.repo);
+    newRepo.deleteTodo(id);
+    this._save(newRepo);
+  },
+  toggleComplete(id) {
+    let newRepo = _.cloneDeep(this.repo);
+    newRepo.toggleComplete(id);
+    this._save(newRepo);
+  },
+  toggleArchived(id) {
+    let newRepo = _.cloneDeep(this.repo);
+    newRepo.toggleArchived(id);
+    this._save(newRepo);
+  },
+  load() {
+    this.backend.load().then((todos) => {
+      this.backendFailed = false;
+      this.repo.load(todos);
+      this.emitChange();
+    }).catch((reason) => {
+      this.backendFailed = true;
+      this.backendMsg = "Could not communicate with the backend.";
+      this.emitChange();
+    });
+  },
+  _save(repo) {
+    this.backend.save(repo.todos).then(() => {
+      this.repo = repo;
+      this.emitChange();
+    }).catch((error) => {
+      this.backendFailed = true;
+      this.backendMsg = "Could not communicate with the backend.";
+      this.emitChange();
+    });
   }
 });
 
 AppDispatcher.register((action) => {
   switch(action.actionType) {
     case Constants.ADD_TODO:
-      todoRepo.addTodo(action.subject, action.due);
-      TodoStore.emitChange();
+      TodoStore.addTodo(action.subject, action.due);
       break;
     case Constants.UPDATE_TODO:
-      todoRepo.updateTodo(action.id, action.subject, action.due);
-      TodoStore.emitChange();
+      TodoStore.updateTodo(action.id, action.subject, action.due);
       break;
     case Constants.DELETE_TODO:
-      todoRepo.deleteTodo(action.id);
-      TodoStore.emitChange();
+      TodoStore.deleteTodo(action.id);
       break;
     case Constants.TOGGLE_COMPLETE_TODO:
-      todoRepo.toggleComplete(action.id);
+      TodoStore.toggleComplete(action.id);
       TodoStore.emitChange();
       break;
     case Constants.CHANGE_GROUPING:
-      grouping = action.grouping;
+      TodoStore.grouping = action.grouping;
       TodoStore.emitChange();
       break;
     case Constants.CHANGE_SHOW:
-      show = action.show;
+      TodoStore.show = action.show;
       TodoStore.emitChange();
       break;
     case Constants.CHANGE_DUE_FILTER:
-      dueFilter = action.filter;
+      TodoStore.dueFilter = action.filter;
       TodoStore.emitChange();
       break;
     case Constants.TOGGLE_ARCHIVE_TODO:
-      todoRepo.toggleArchived(action.id);
+      TodoStore.toggleComplete(action.id);
       TodoStore.emitChange();
       break;
     case Constants.SEARCH:
@@ -70,10 +117,6 @@ AppDispatcher.register((action) => {
   }
 });
 
-//load the initial repo
-backend.load().then((json) => {
-  todoRepo.load(json);
-  TodoStore.emitChange();
-});
+TodoStore.load();
 
 export default TodoStore;

@@ -8,7 +8,6 @@ var TodoActions = {
       subject: subject,
       due: due
     };
-
     AppDispatcher.dispatch(action);
   },
   toggleComplete(id) {
@@ -44,5 +43,3 @@ var TodoActions = {
 }
 
 export default TodoActions;
-
-

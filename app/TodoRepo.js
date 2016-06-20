@@ -4,9 +4,8 @@ import Constants from "./constants/Constants";
 import moment from "moment";
 
 export default class TodoRepo {
-  constructor(backend) {
+  constructor() {
     this.todos = []
-    this.backend = backend;
   }
   load(todos) {
     this.todos = todos;
@@ -21,7 +20,6 @@ export default class TodoRepo {
     todo.contexts = this._getContexts(todo.subject);
     todo.projects = this._getProjects(todo.subject);
     this.todos.push(todo);
-    this.backend.save(this.todos);
   }
 
   updateTodo(id, subject, due) {
@@ -33,18 +31,15 @@ export default class TodoRepo {
       due = moment(due).format("YYYY-MM-DD");
     }
     todo.due = due;
-    this.backend.save(this.todos);
   }
 
   deleteTodo(id) {
     this.todos = _.filter(this.todos, (todo) => { return todo.id != id });
-    this.backend.save(this.todos);
   }
 
   toggleArchived(id) {
     let todo = this.findById(id);
     todo.archived = !todo.archived;
-    this.backend.save(this.todos);
   }
 
   fetch(grouping, show, dueFilter, searchTerm) {
@@ -88,7 +83,6 @@ export default class TodoRepo {
   toggleComplete(id) {
     let todo = this.findById(id);
     todo.completed = !todo.completed;
-    this.backend.save(this.todos);
   }
 
   findById(id) {

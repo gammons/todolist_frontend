@@ -6,6 +6,7 @@ import ListArea from './ListArea';
 import AddTodo from './AddTodo';
 import SearchBar from './SearchBar';
 import TodoTabs from './TodoTabs';
+import FailWhale from './FailWhale';
 
 class Todolist extends React.Component {
   render() {
@@ -20,6 +21,7 @@ class Todolist extends React.Component {
         <SearchBar />
         <ListArea />
         <AddTodo />
+        <FailWhale />
       </div>
     );
   }
