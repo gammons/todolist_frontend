@@ -7,6 +7,7 @@ import AddTodo from './AddTodo';
 import SearchBar from './SearchBar';
 import TodoTabs from './TodoTabs';
 import FailWhale from './FailWhale';
+import DialogPrompt from './DialogPrompt';
 
 class Todolist extends React.Component {
   render() {
@@ -22,6 +23,7 @@ class Todolist extends React.Component {
         <ListArea />
         <AddTodo />
         <FailWhale />
+        <DialogPrompt />
       </div>
     );
   }

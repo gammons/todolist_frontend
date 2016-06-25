@@ -30,29 +30,19 @@ const iconButtonElement = (
 class Todo extends React.Component {
   state = {
     completed: this.props.todo.completed,
-    archiveAlertOpen: false,
-    deleteAlertOpen: false,
     editOpen: false,
-    alertOpen: false,
-    alertMessage: "",
-    snackbarOpen: false,
-    snackbarMessage: ""
   };
 
   handleCheck() {
     setTimeout(() => { TodoActionCreators.toggleComplete(this.props.todo.id) }, 1000);
     this.setState({snackbarOpen: true, snackbarMessage: "Todo has been saved.", completed: !this.state.completed});
   }
-  handleArchive() {
-    TodoActionCreators.toggleArchived(this.props.todo.id);
-    this.setState({snackbarOpen: true, snackbarMessage: "Todo has been archived.", archiveAlertOpen: false});
-  }
   handleDelete() {
     TodoActionCreators.delete(this.props.todo.id);
     this.setState({snackbarOpen: true, snackbarMessage: "Todo has been deleted.", deleteAlertOpen: false});
   }
   openArchiveAlert() {
-    this.setState({snackbarOpen: false, archiveAlertOpen: true});
+    TodoActionCreators.promptArchived(this.props.todo.id);
   }
   openDeleteAlert() {
     this.setState({snackbarOpen: false, deleteAlertOpen: true});
@@ -73,9 +63,6 @@ class Todo extends React.Component {
     TodoActionCreators.update(this.props.todo.id, subject, due);
     this.setState({editOpen: false});
   }
-  closeSnackbar() {
-    this.setState({snackbarOpen: false});
-  }
 
   dueToday() {
     TodoActionCreators.update(this.props.todo.id, this.props.todo.subject, new Date().toString());
@@ -89,14 +76,7 @@ class Todo extends React.Component {
   render() {
     return(
       <div>
-        <Alert msg="Are you sure you wish to archive this todo?" open={this.state.archiveAlertOpen} onOk={this.handleArchive.bind(this)} onCancel={this.cancelArchiveAlert.bind(this)} />
         <Alert msg="Are you sure you wish to delete this todo?" open={this.state.deleteAlertOpen} onOk={this.handleDelete.bind(this)} onCancel={this.cancelDeleteAlert.bind(this)} />
-        <Snackbar
-           open={this.state.snackbarOpen}
-           onRequestClose={this.closeSnackbar.bind(this)}
-           message={this.state.snackbarMessage}
-           autoHideDuration={3000}
-         />
 
         <AddEditTodoDialog
           open={this.state.editOpen}

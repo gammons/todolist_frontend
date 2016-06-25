@@ -17,6 +17,16 @@ var TodoActions = {
     }
     AppDispatcher.dispatch(action);
   },
+  promptArchived(id) {
+    let action = {
+      actionType: Constants.NOTIFICATION,
+      notificationPrompt: "Are you sure you wish to archive this todo?",
+      snackbarPrompt: "The todo has been archived.",
+      successFn: this.toggleArchived,
+      id: id
+    }
+    AppDispatcher.dispatch(action);
+  },
   toggleArchived(id) {
     let action = {
       actionType: Constants.TOGGLE_ARCHIVE_TODO,

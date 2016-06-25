@@ -107,7 +107,7 @@ AppDispatcher.register((action) => {
       TodoStore.emitChange();
       break;
     case Constants.TOGGLE_ARCHIVE_TODO:
-      TodoStore.toggleComplete(action.id);
+      TodoStore.toggleArchived(action.id);
       TodoStore.emitChange();
       break;
     case Constants.SEARCH:
