@@ -37,24 +37,14 @@ class Todo extends React.Component {
     setTimeout(() => { TodoActionCreators.toggleComplete(this.props.todo.id) }, 1000);
     this.setState({snackbarOpen: true, snackbarMessage: "Todo has been saved.", completed: !this.state.completed});
   }
-  handleDelete() {
-    TodoActionCreators.delete(this.props.todo.id);
-    this.setState({snackbarOpen: true, snackbarMessage: "Todo has been deleted.", deleteAlertOpen: false});
-  }
   openArchiveAlert() {
-    TodoActionCreators.promptArchived(this.props.todo.id);
+    TodoActionCreators.promptArchive(this.props.todo.id);
   }
   openDeleteAlert() {
-    this.setState({snackbarOpen: false, deleteAlertOpen: true});
+    TodoActionCreators.promptDelete(this.props.todo.id);
   }
   openEditDialog() {
     this.setState({editOpen: true});
-  }
-  cancelArchiveAlert() {
-    this.setState({snackbarOpen: false, archiveAlertOpen: false});
-  }
-  cancelDeleteAlert() {
-    this.setState({snackbarOpen: false, deleteAlertOpen: false});
   }
   handleEditDialogClose() {
     this.setState({editOpen: false});
@@ -76,8 +66,6 @@ class Todo extends React.Component {
   render() {
     return(
       <div>
-        <Alert msg="Are you sure you wish to delete this todo?" open={this.state.deleteAlertOpen} onOk={this.handleDelete.bind(this)} onCancel={this.cancelDeleteAlert.bind(this)} />
-
         <AddEditTodoDialog
           open={this.state.editOpen}
           subject={this.props.todo.subject}

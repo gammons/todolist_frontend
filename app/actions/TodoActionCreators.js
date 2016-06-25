@@ -17,7 +17,7 @@ var TodoActions = {
     }
     AppDispatcher.dispatch(action);
   },
-  promptArchived(id) {
+  promptArchive(id) {
     let action = {
       actionType: Constants.NOTIFICATION,
       notificationPrompt: "Are you sure you wish to archive this todo?",
@@ -30,6 +30,16 @@ var TodoActions = {
   toggleArchived(id) {
     let action = {
       actionType: Constants.TOGGLE_ARCHIVE_TODO,
+      id: id
+    }
+    AppDispatcher.dispatch(action);
+  },
+  promptDelete(id) {
+    let action = {
+      actionType: Constants.NOTIFICATION,
+      notificationPrompt: "Are you sure you wish to delete this todo?",
+      snackbarPrompt: "The todo has been deleted.",
+      successFn: this.delete,
       id: id
     }
     AppDispatcher.dispatch(action);
