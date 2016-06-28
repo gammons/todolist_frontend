@@ -44,6 +44,19 @@ var TodoActions = {
     }
     AppDispatcher.dispatch(action);
   },
+
+  promptEdit(id, subject, due) {
+    let action = {
+      actionType: Constants.ADD_EDIT_NOTIFICATION,
+      snackbarPrompt: "The todo has been updated.",
+      successFn: this.update,
+      subject: subject,
+      due: due,
+      id: id
+    }
+    AppDispatcher.dispatch(action);
+  },
+
   delete(id) {
     let action = {
       actionType: Constants.DELETE_TODO,

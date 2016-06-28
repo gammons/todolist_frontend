@@ -43,11 +43,8 @@ class Todo extends React.Component {
   openDeleteAlert() {
     TodoActionCreators.promptDelete(this.props.todo.id);
   }
-  openEditDialog() {
-    this.setState({editOpen: true});
-  }
-  handleEditDialogClose() {
-    this.setState({editOpen: false});
+  openEditTodoDialog() {
+    TodoActionCreators.promptEdit(this.props.todo.id, this.props.todo.subject, this.props.todo.due);
   }
   editTodo(subject, due) {
     TodoActionCreators.update(this.props.todo.id, subject, due);
@@ -66,16 +63,6 @@ class Todo extends React.Component {
   render() {
     return(
       <div>
-        <AddEditTodoDialog
-          open={this.state.editOpen}
-          subject={this.props.todo.subject}
-          due={this.props.todo.due}
-          title="Edit todo"
-          snackbarMessage="Todo has been updated."
-          onCancel={this.handleEditDialogClose.bind(this)}
-          onSubmit={this.editTodo.bind(this)}
-        />
-
         <ListItem
           leftCheckbox={<Checkbox defaultChecked={this.state.completed} onClick={this.handleCheck.bind(this)} />}
           rightIconButton={ this.rightIconMenu() }
@@ -117,7 +104,7 @@ class Todo extends React.Component {
       <MenuItem onClick={this.dueToday.bind(this)} leftIcon={<TodayIcon />}>Due today</MenuItem>
       <MenuItem onClick={this.dueTomorrow.bind(this)} leftIcon={<TodayIcon />}>Due tomorrow</MenuItem>
       <Divider />
-      <MenuItem onClick={this.openEditDialog.bind(this)} leftIcon={<PencilIcon />}>Edit</MenuItem>
+      <MenuItem onClick={this.openEditTodoDialog.bind(this)} leftIcon={<PencilIcon />}>Edit</MenuItem>
       <MenuItem onClick={this.openArchiveAlert.bind(this)} leftIcon={<ArchiveIcon />}>Archive</MenuItem>
       <Divider />
       <MenuItem onClick={this.openDeleteAlert.bind(this)} leftIcon={<DeleteIcon />}>Delete</MenuItem>
@@ -127,4 +114,3 @@ class Todo extends React.Component {
 }
 
 export default Todo;
-

@@ -4,12 +4,13 @@ import Constants from "../constants/Constants";
 
 const CHANGE_EVENT = "change_event";
 
-const NotificationStore = Object.assign({}, EventEmitter.prototype, {
+const AddEditNotificationStore = Object.assign({}, EventEmitter.prototype, {
   open: false,
   snackbarOpen: false,
   successFn: null,
   id: null,
-  notificationPrompt: null,
+  subject: null,
+  due: null,
   snackbarPrompt: null,
 
   emitChange() {
@@ -21,9 +22,9 @@ const NotificationStore = Object.assign({}, EventEmitter.prototype, {
   removeChangeListener(callback) {
     this.removeListener(CHANGE_EVENT, callback);
   },
-  doSuccess() {
+  doSuccess(subject, due) {
     this.open = false;
-    this.successFn(this.id);
+    this.successFn(this.id, subject, due);
     if (this.snackbarPrompt != null) {
       this.snackbarOpen = true;
     }
@@ -40,7 +41,8 @@ const NotificationStore = Object.assign({}, EventEmitter.prototype, {
   getState() {
     return {
       id: this.id,
-      notificationPrompt: this.notificationPrompt,
+      subject: this.subject,
+      due: this.due,
       successFn: this.doSuccess.bind(this),
       cancelFn: this.doCancel.bind(this),
       open: this.open,
@@ -49,9 +51,10 @@ const NotificationStore = Object.assign({}, EventEmitter.prototype, {
       snackbarPrompt: this.snackbarPrompt
     };
   },
-  openPrompt(id, msg, successFn, snackbarPrompt) {
+  openPrompt(id, subject, due, successFn, snackbarPrompt) {
     this.id = id;
-    this.notificationPrompt = msg;
+    this.subject = subject;
+    this.due = due;
     this.successFn = successFn;
     this.open = true;
     this.snackbarPrompt = snackbarPrompt;
@@ -61,10 +64,10 @@ const NotificationStore = Object.assign({}, EventEmitter.prototype, {
 
 AppDispatcher.register((action) => {
   switch(action.actionType) {
-    case Constants.NOTIFICATION:
-      NotificationStore.openPrompt(action.id, action.notificationPrompt, action.successFn, action.snackbarPrompt);
+    case Constants.ADD_EDIT_NOTIFICATION:
+      AddEditNotificationStore.openPrompt(action.id, action.subject, action.due, action.successFn, action.snackbarPrompt);
       break;
   }
 });
 
-export default NotificationStore;;
+export default AddEditNotificationStore;

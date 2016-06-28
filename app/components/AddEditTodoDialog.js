@@ -6,24 +6,31 @@ import TextField from 'material-ui/TextField';
 import DatePicker from 'material-ui/DatePicker';
 import Snackbar from 'material-ui/Snackbar';
 
-
+import AddEditNotificationStore from "../stores/AddEditStore";
 
 export default class AddEditTodoDialog extends React.Component {
-  state = {
-    snackbarOpen: false
-  };
+  state = AddEditNotificationStore.getState();
+  onChange = () => {
+    this.setState(AddEditNotificationStore.getState());
+  }
+  componentDidMount() {
+    AddEditNotificationStore.addChangeListener(this.onChange);
+  }
+  componentWillUnmount() {
+    AddEditNotificationStore.removeChangeListener(this.onChange);
+  }
 
   actions = [
     <FlatButton
       label="Cancel"
       primary={false}
-      onTouchTap={this.props.onCancel.bind(this)}
+      onTouchTap={this.state.cancelFn}
     />,
     <FlatButton
       label="Submit"
       primary={true}
       keyboardFocused={true}
-      onTouchTap={this.onSubmit.bind(this)}
+      onTouchTap={this.handleSubmit.bind(this)}
     />
   ];
 
@@ -34,36 +41,35 @@ export default class AddEditTodoDialog extends React.Component {
     }
   }
 
+  handleSubmit() {
+    this.state.successFn(this.refs.subject.getValue(), this.refs.due.getDate());
+  }
+
   formatDate(date) {
     return moment(date).format("ddd MMM D");
   }
 
-  onSubmit() {
-    this.props.onSubmit(this.refs.subject.getValue(), this.refs.due.getDate());
-    this.setState({snackbarOpen: true});
-  }
-
   dueDate() {
-    if (this.props.due == undefined) {
+    if (this.state.due == undefined) {
       return new Date();
     } else {
-      return new Date(`${this.props.due} 05:00:00 GMT-${new Date().getTimezoneOffset() / 60}`);
+      return new Date(`${this.state.due} 05:00:00 GMT-${new Date().getTimezoneOffset() / 60}`);
     }
   }
 
   render() {
     return(
       <div>
-        <Dialog title={this.props.title}
+        <Dialog title={this.state.id === null ? "Add Todo" : "Edit Todo" }
                 modal={false}
                 actions={this.actions}
-                open={this.props.open}
-                onRequestClose={this.props.onCancel.bind(this)}>
+                open={this.state.open}
+                onRequestClose={this.state.cancelFn}>
 
           <TextField ref="subject"
             hintText="Description"
             fullWidth={true}
-            defaultValue={this.props.subject}
+            defaultValue={this.state.subject}
           />
 
           <DatePicker
@@ -77,7 +83,8 @@ export default class AddEditTodoDialog extends React.Component {
 
         <Snackbar
            open={this.state.snackbarOpen}
-           message={this.props.snackbarMessage}
+           message={this.state.snackbarPrompt || ""}
+           onRequestClose={this.state.closeSnackbarFn}
            autoHideDuration={3000}
          />
        </div>

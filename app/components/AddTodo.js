@@ -34,14 +34,6 @@ class AddTodo extends React.Component {
   render() {
     return(
       <div>
-        <AddEditTodoDialog
-          open={this.state.open}
-          title="Add todo"
-          snackbarMessage="Todo has been added."
-          onCancel={this.handleDialogClose.bind(this)}
-          onSubmit={this.addTodo.bind(this)}
-        />
-
         <FloatingActionButton style={style} onClick={this.handleDialogOpen.bind(this)}>
           <ContentAdd />
         </FloatingActionButton>
