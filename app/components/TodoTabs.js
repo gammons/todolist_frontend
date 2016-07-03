@@ -13,7 +13,7 @@ export default class TodoTabs extends React.Component {
 
   render() {
     return(
-      <Tabs ref="tabs" initialSelectedIndex={3} onChange={this.handleChange.bind(this)}>
+      <Tabs ref="tabs" initialSelectedIndex={0} onChange={this.handleChange.bind(this)}>
         <Tab
           icon={<TodayIcon />}
           label="Today"

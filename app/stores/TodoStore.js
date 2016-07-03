@@ -13,7 +13,7 @@ const TodoStore = Object.assign({}, EventEmitter.prototype, {
   backendMsg: "",
   grouping: Constants.NONE,
   show: Constants.SHOW_UNARCHIVED,
-  dueFilter: Constants.ALL,
+  dueFilter: Constants.TODAY,
   searchTerm: null,
 
   emitChange() {
