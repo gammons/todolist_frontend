@@ -77,13 +77,15 @@ class Todo extends React.Component {
 
   formatSubject() {
     let ret = [];
+    let index = 0;
     for(let word of this.props.todo.subject.split(" ")) {
+      index += 1;
       if (this._isContext(word)) {
-        ret.push(<span className={styles.red}>{word + " "}</span>)
+        ret.push(<span key={index} className={styles.red}>{word + " "}</span>)
       } else if (this._isProject(word)) {
-        ret.push(<span className={styles.purple}>{word + " "}</span>)
+        ret.push(<span key={index} className={styles.purple}>{word + " "}</span>)
       } else {
-        ret.push(<span>{word + " "}</span>)
+        ret.push(<span key={index}>{word + " "}</span>)
       }
     }
     return(<div>{ret}</div>)
