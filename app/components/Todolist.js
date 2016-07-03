@@ -9,6 +9,7 @@ import TodoTabs from './TodoTabs';
 import FailWhale from './FailWhale';
 import DialogPrompt from './DialogPrompt';
 import AddEditTodoDialog from './AddEditTodoDialog';
+import Demo from './Demo';
 
 class Todolist extends React.Component {
   render() {
@@ -26,6 +27,7 @@ class Todolist extends React.Component {
         <FailWhale />
         <DialogPrompt />
         <AddEditTodoDialog />
+        <Demo open={false} />
       </div>
     );
   }
