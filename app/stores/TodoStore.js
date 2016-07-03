@@ -1,7 +1,7 @@
 import AppDispatcher from "../dispatchers/AppDispatcher";
 import { EventEmitter } from "events";
 import TodoRepo from "../TodoRepo";
-import Backend from "../backends/TestBackend";
+import Backend from "../backends/LocalBackend";
 import Constants from "../constants/Constants";
 
 const CHANGE_EVENT = "change_event";
