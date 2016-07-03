@@ -7,7 +7,7 @@ describe('TestBackend', () => {
   it('load todos', (done) => {
     let backend = new TestBackend();
     backend.load().then((todos) => {
-      expect(todos.length).toEqual(2);
+      expect(todos.length).toEqual(6);
       done();
     });
   });
