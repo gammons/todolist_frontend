@@ -16,6 +16,7 @@ import DeleteIcon from 'material-ui/svg-icons/action/delete';
 import TodoActionCreators from "../actions/TodoActionCreators";
 import Alert from "./Alert";
 import AddEditTodoDialog from "./AddEditTodoDialog";
+import styles from "./styles.css";
 
 const iconButtonElement = (
   <IconButton
@@ -67,11 +68,34 @@ class Todo extends React.Component {
           leftCheckbox={<Checkbox defaultChecked={this.state.completed} onClick={this.handleCheck.bind(this)} />}
           rightIconButton={ this.rightIconMenu() }
           rightIcon={<MoreVertIcon />}
-          primaryText={this.props.todo.subject}
+          primaryText={this.formatSubject()}
           secondaryText={this.formatDue()} />
         <Divider />
       </div>
     )
+  }
+
+  formatSubject() {
+    let ret = [];
+    for(let word of this.props.todo.subject.split(" ")) {
+      if (this._isContext(word)) {
+        ret.push(<span className={styles.red}>{word + " "}</span>)
+      } else if (this._isProject(word)) {
+        ret.push(<span className={styles.purple}>{word + " "}</span>)
+      } else {
+        ret.push(<span>{word + " "}</span>)
+      }
+    }
+    return(<div>{ret}</div>)
+  }
+
+  _isContext(word) {
+      let regex = /\@\w+/g;
+      return regex.test(word);
+  }
+  _isProject(word) {
+      let regex = /\+\w+/g;
+      return regex.test(word);
   }
 
   formatDue() {
