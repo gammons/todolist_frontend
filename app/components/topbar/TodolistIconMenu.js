@@ -7,7 +7,7 @@ import IconButton from 'material-ui/IconButton';
 import SortIcon from 'material-ui/svg-icons/content/sort';
 import DoneAllIcon from 'material-ui/svg-icons/action/done-all';
 
-import FilterActionCreatorss from "../../actions/FilterActionCreators";
+import FilterActionCreators from "../../actions/FilterActionCreators";
 import Constants from "../../constants/Constants";
 import Checked from 'material-ui/svg-icons/navigation/check';
 import Divider from 'material-ui/Divider';
