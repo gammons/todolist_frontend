@@ -111,7 +111,7 @@ AppDispatcher.register((action) => {
       TodoStore.emitChange();
       break;
     case Constants.SEARCH:
-      searchTerm = action.term;
+      TodoStore.searchTerm = action.term;
       TodoStore.emitChange();
       break;
   }
