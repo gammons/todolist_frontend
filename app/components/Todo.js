@@ -83,12 +83,12 @@ class Todo extends React.Component {
         return (<div className='red'>{due.format("ddd MMM D")}</div>);
       }
       if (today.isSame(due)) {
-        return (<div className='blue'>{due.format("ddd MMM D")}</div>);
+        return (<div className='blue'>Today</div>);
       }
 
       let tomorrow = moment().add(1,"day").startOf("day");
       if (due.isSame(tomorrow)) {
-        return (<div className='blue'>{due.format("ddd MMM D")}</div>);
+        return (<div className='blue'>Tomorrow</div>);
       }
       return due.format("ddd MMM D");
     }
