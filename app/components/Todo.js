@@ -104,15 +104,15 @@ class Todo extends React.Component {
       let today = moment().startOf("day");
 
       if (due.isBefore(today)) {
-        return (<div className='red'>{due.format("ddd MMM D")}</div>);
+        return (<div className={styles.red}>{due.format("ddd MMM D")}</div>);
       }
       if (today.isSame(due)) {
-        return (<div className='blue'>Today</div>);
+        return (<div className={styles.blue}>Today</div>);
       }
 
       let tomorrow = moment().add(1,"day").startOf("day");
       if (due.isSame(tomorrow)) {
-        return (<div className='blue'>Tomorrow</div>);
+        return (<div className={styles.blue}>Tomorrow</div>);
       }
       return due.format("ddd MMM D");
     }
