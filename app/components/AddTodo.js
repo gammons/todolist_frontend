@@ -14,21 +14,8 @@ const style = {
 };
 
 class AddTodo extends React.Component {
-  state = {
-    open: false
-  };
-
   handleDialogOpen() {
-    this.setState({open: true});
-  }
-
-  handleDialogClose() {
-    this.setState({open: false});
-  }
-
-  addTodo(subject, due) {
-    TodoActionCreators.create(subject, due);
-    this.setState({open: false});
+    TodoActionCreators.promptAdd();
   }
 
   render() {

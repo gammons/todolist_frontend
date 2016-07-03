@@ -2,7 +2,7 @@ import AppDispatcher from "../dispatchers/AppDispatcher";
 import Constants from "../constants/Constants";
 
 var TodoActions = {
-  create(subject, due) {
+  create(id, subject, due) {
     let action = {
       actionType: Constants.ADD_TODO,
       subject: subject,
@@ -53,6 +53,15 @@ var TodoActions = {
       subject: subject,
       due: due,
       id: id
+    }
+    AppDispatcher.dispatch(action);
+  },
+
+  promptAdd() {
+    let action = {
+      actionType: Constants.ADD_EDIT_NOTIFICATION,
+      snackbarPrompt: "The todo has been added.",
+      successFn: this.create
     }
     AppDispatcher.dispatch(action);
   },

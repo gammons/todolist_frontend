@@ -20,22 +20,8 @@ export default class AddEditTodoDialog extends React.Component {
     AddEditNotificationStore.removeChangeListener(this.onChange);
   }
 
-  actions = [
-    <FlatButton
-      label="Cancel"
-      primary={false}
-      onTouchTap={this.state.cancelFn}
-    />,
-    <FlatButton
-      label="Submit"
-      primary={true}
-      keyboardFocused={true}
-      onTouchTap={this.handleSubmit.bind(this)}
-    />
-  ];
-
   componentDidUpdate() {
-    if (this.props.open) {
+    if (this.state.open) {
       let focus = () => { this.refs.subject.focus() }
       setTimeout(focus.bind(this), 200);
     }
@@ -57,10 +43,24 @@ export default class AddEditTodoDialog extends React.Component {
     }
   }
 
+  actions = [
+    <FlatButton
+      label="Cancel"
+      primary={false}
+      onTouchTap={this.state.cancelFn}
+    />,
+    <FlatButton
+      label="Submit"
+      primary={true}
+      keyboardFocused={true}
+      onTouchTap={this.handleSubmit.bind(this)}
+    />
+  ];
+
   render() {
     return(
       <div>
-        <Dialog title={this.state.id === null ? "Add Todo" : "Edit Todo" }
+        <Dialog title={this.state.id === undefined ? "Add Todo" : "Edit Todo" }
                 modal={false}
                 actions={this.actions}
                 open={this.state.open}
