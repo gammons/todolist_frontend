@@ -1,6 +1,11 @@
 Version = "0.2.0"
 
 desc "Uploads to s3"
+task :build do
+  system `rm -rf build/*`
+  system `npm run build`
+end
+
 task :upload do
   `mv build/common*.js build/common.js`
   `mv build/main*.js build/main.js`
