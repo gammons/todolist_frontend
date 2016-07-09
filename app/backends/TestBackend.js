@@ -5,7 +5,10 @@ import Backend from './Backend';
 export default class TestBackend extends Backend {
   load() {
     let promise = new Promise((resolve, reject) => {
-      resolve(this._fakeTodos());
+      let yes = () => {
+        resolve(this._fakeTodos());
+      }
+      setTimeout(yes, 800);
     });
     return promise;
   }

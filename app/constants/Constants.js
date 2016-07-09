@@ -1,4 +1,5 @@
 export default {
+  LOAD: "LOAD",
   ADD_TODO: "ADD_TODO",
   UPDATE_TODO: "UPDATE_TODO",
   DELETE_TODO: "DELETE_TODO",
@@ -12,10 +13,10 @@ export default {
   SHOW_UNARCHIVED: "SHOW_UNARCHIVED",
   SHOW_ARCHIVED: "SHOW_ARCHIVED",
 
-  TODAY: "TODAY",
-  TOMORROW: "TOMORROW",
-  THIS_WEEK: "THIS_WEEK",
-  ALL: "ALL",
+  TODAY: "today",
+  TOMORROW: "tomorrow",
+  THIS_WEEK: "this_week",
+  ALL: "all",
 
   SEARCH: "SEARCH",
 

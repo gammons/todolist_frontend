@@ -2,6 +2,12 @@ import AppDispatcher from "../dispatchers/AppDispatcher";
 import Constants from "../constants/Constants";
 
 var TodoActions = {
+  load() {
+    let action = {
+      actionType: Constants.LOAD
+    }
+    AppDispatcher.dispatch(action);
+  },
   create(id, subject, due) {
     let action = {
       actionType: Constants.ADD_TODO,

@@ -10,25 +10,52 @@ import FailWhale from './FailWhale';
 import DialogPrompt from './DialogPrompt';
 import AddEditTodoDialog from './AddEditTodoDialog';
 import Demo from './Demo';
+import TodoStore from '../stores/TodoStore';
+import CircularProgress from 'material-ui/CircularProgress';
 
 class Todolist extends React.Component {
-  render() {
-    return(
-      <div>
-        <AppBar title="Todolist"
-          showMenuIconButton={false}
-          iconElementRight={<TodolistIconMenu />}
-        />
+  state = {
+    loading: TodoStore.loading
+  }
+  onChange = () => {
+    this.setState({loading: TodoStore.loading});
+  }
+  componentDidMount() {
+    TodoStore.addChangeListener(this.onChange);
+  }
+  componentWillUnmount() {
+    TodoStore.removeChangeListener(this.onChange);
+  }
 
-        <TodoTabs />
-        <SearchBar />
-        <ListArea />
-        <AddTodo />
-        <FailWhale />
-        <DialogPrompt />
-        <AddEditTodoDialog />
-        <Demo open={false} />
-      </div>
+  render() {
+    if (this.state.loading) {
+      return this.renderLoading();
+    } else {
+      return(
+        <div>
+          <AppBar title="Todolist"
+            showMenuIconButton={false}
+            iconElementRight={<TodolistIconMenu />}
+          />
+
+          <TodoTabs selected={this.props.params.due} />
+          <SearchBar />
+          <ListArea />
+          <AddTodo />
+          <FailWhale />
+          <DialogPrompt />
+          <AddEditTodoDialog />
+          <Demo open={false} />
+        </div>
+      );
+    }
+  }
+
+  renderLoading() {
+    return(
+        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+          <CircularProgress size={2} />
+        </div>
     );
   }
 }

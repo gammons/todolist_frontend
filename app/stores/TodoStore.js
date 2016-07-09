@@ -15,6 +15,7 @@ const TodoStore = Object.assign({}, EventEmitter.prototype, {
   show: Constants.SHOW_UNARCHIVED,
   dueFilter: Constants.TODAY,
   searchTerm: null,
+  loading: true,
 
   emitChange() {
     this.emit(CHANGE_EVENT);
@@ -26,6 +27,9 @@ const TodoStore = Object.assign({}, EventEmitter.prototype, {
     this.removeListener(CHANGE_EVENT, callback);
   },
   getTodos() {
+    if (this.loading) {
+      return [];
+    }
     return this.repo.fetch(this.grouping, this.show, this.dueFilter, this.searchTerm);
   },
   failureState() {
@@ -57,9 +61,11 @@ const TodoStore = Object.assign({}, EventEmitter.prototype, {
     this._save(newRepo);
   },
   load() {
+    this.loading = true;
     this.backend.load().then((todos) => {
       this.backendFailed = false;
       this.repo.load(todos);
+      this.loading = false;
       this.emitChange();
     }).catch((reason) => {
       this.backendFailed = true;
@@ -114,9 +120,9 @@ AppDispatcher.register((action) => {
       TodoStore.searchTerm = action.term;
       TodoStore.emitChange();
       break;
+    case Constants.LOAD:
+      TodoStore.load();
   }
 });
-
-TodoStore.load();
 
 export default TodoStore;
