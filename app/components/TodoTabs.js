@@ -4,7 +4,7 @@ import TodayIcon from 'material-ui/svg-icons/action/today';
 import AllIcon from 'material-ui/svg-icons/places/all-inclusive';
 
 import Constants from "../constants/Constants";
-//import FilterActionCreators from "../actions/FilterActionCreators";
+import TodoStore from "../stores/TodoStore";
 
 export default class TodoTabs extends React.Component {
   static contextTypes = {
@@ -12,8 +12,7 @@ export default class TodoTabs extends React.Component {
   }
 
   handleChange(value) {
-    //FilterActionCreators.changeDueFilter(value);
-    this.context.router.push("/due/"+value);
+    this.context.router.push(TodoStore.getNextRoute({due: value}));
   }
 
   getSelectedIndex() {

@@ -7,38 +7,46 @@ import IconButton from 'material-ui/IconButton';
 import SortIcon from 'material-ui/svg-icons/content/sort';
 import DoneAllIcon from 'material-ui/svg-icons/action/done-all';
 
-import FilterActionCreators from "../../actions/FilterActionCreators";
 import Constants from "../../constants/Constants";
 import Checked from 'material-ui/svg-icons/navigation/check';
 import Divider from 'material-ui/Divider';
+import TodoStore from '../../stores/TodoStore';
 
 class TodolistIconMenu extends React.Component {
+  static contextTypes = {
+    router: React.PropTypes.object
+  }
+
   state = {
-    grouping: Constants.NONE,
-    show: Constants.SHOW_UNARCHIVED
+    show: TodoStore.show,
+    grouping: TodoStore.grouping
+  }
+  onChange = () => {
+    this.setState({show: TodoStore.show, grouping: TodoStore.grouping});
+  }
+  componentDidMount() {
+    TodoStore.addChangeListener(this.onChange);
+  }
+  componentWillUnmount() {
+    TodoStore.removeChangeListener(this.onChange);
   }
 
   handleNoGrouping() {
-    this.setState({grouping: Constants.NONE});
-    FilterActionCreators.changeGrouping(Constants.NONE);
+    this.context.router.push(TodoStore.getNextRoute({grouping: Constants.NONE}));
   }
 
   handleContextGrouping() {
-    this.setState({grouping: Constants.BY_CONTEXT});
-    FilterActionCreators.changeGrouping(Constants.BY_CONTEXT);
+    this.context.router.push(TodoStore.getNextRoute({grouping: Constants.BY_CONTEXT}));
   }
 
   handleProjectGrouping() {
-    this.setState({grouping: Constants.BY_PROJECT});
-    FilterActionCreators.changeGrouping(Constants.BY_PROJECT);
+    this.context.router.push(TodoStore.getNextRoute({grouping: Constants.BY_PROJECT}));
   }
   handleShowArchived() {
-    this.setState({show: Constants.SHOW_ARCHIVED});
-    FilterActionCreators.changeShow(Constants.SHOW_ARCHIVED);
+    this.context.router.push(TodoStore.getNextRoute({show: Constants.SHOW_ARCHIVED}));
   }
   handleShowUnarchived() {
-    this.setState({show: Constants.SHOW_UNARCHIVED});
-    FilterActionCreators.changeShow(Constants.SHOW_UNARCHIVED);
+    this.context.router.push(TodoStore.getNextRoute({show: Constants.SHOW_UNARCHIVED}));
   }
 
   groupingIcon(grouping) {

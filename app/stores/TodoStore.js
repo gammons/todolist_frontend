@@ -60,6 +60,26 @@ const TodoStore = Object.assign({}, EventEmitter.prototype, {
     newRepo.toggleArchived(id);
     this._save(newRepo);
   },
+  getNextRoute(changes) {
+    return "/" + (changes.show || this.show) + "/" + (changes.due || this.dueFilter) + "/" + (changes.grouping || this.grouping)
+  },
+  changeRoute(grouping, due, show) {
+    let changed = false;
+    if (this.show != show) {
+      this.show = show;
+      changed = true;
+    }
+    if (this.dueFilter != due) {
+      this.dueFilter = due;
+      changed = true;
+    }
+
+    if (this.grouping != grouping) {
+      this.grouping = grouping;
+      changed = true;
+    }
+    if (changed) { this.emitChange(); }
+  },
   load() {
     this.loading = true;
     this.backend.load().then((todos) => {
@@ -122,6 +142,9 @@ AppDispatcher.register((action) => {
       break;
     case Constants.LOAD:
       TodoStore.load();
+      break;
+    case Constants.CHANGE_ROUTE:
+      TodoStore.changeRoute(action.grouping, action.due, action.archived);
   }
 });
 
