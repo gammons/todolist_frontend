@@ -1,5 +1,5 @@
 import TodoRepo from './TodoRepo'
-import TestBackend from './backends/TestBackend'
+import TestBackend from '../backends/TestBackend'
 import expect from 'expect';
 
 describe('TodoRepo', () => {

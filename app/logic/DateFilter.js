@@ -1,4 +1,4 @@
-import Constants from "./constants/Constants"
+import Constants from "../constants/Constants"
 import moment from "moment";
 
 export default class DateFilter {
