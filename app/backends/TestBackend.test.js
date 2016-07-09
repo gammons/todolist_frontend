@@ -1,5 +1,5 @@
 import TestBackend from './TestBackend'
-import TodoRepo from '../TodoRepo'
+import TodoRepo from '../logic/TodoRepo'
 
 import expect from 'expect';
 
