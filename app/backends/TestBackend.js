@@ -1,5 +1,4 @@
 import moment from 'moment';
-
 import Backend from './Backend';
 
 export default class TestBackend extends Backend {
@@ -9,6 +8,13 @@ export default class TestBackend extends Backend {
         resolve(this._fakeTodos());
       }
       setTimeout(yes, 800);
+    });
+    return promise;
+  }
+
+  addTodo(subject, due) {
+    let promise = new Promise((resolve, reject) => {
+      resolve({id: 1, subject: subject, due: due});
     });
     return promise;
   }

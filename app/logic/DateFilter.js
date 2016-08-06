@@ -1,4 +1,4 @@
-import Constants from "../constants/Constants"
+import { TODAY, TOMORROW, THIS_WEEK, ALL } from '../constants';
 import moment from "moment";
 
 export default class DateFilter {
@@ -8,13 +8,13 @@ export default class DateFilter {
 
   filterBy(dueFilter) {
     switch(dueFilter) {
-      case Constants.TODAY:
+      case TODAY:
         return this._filterByDay();
-      case Constants.TOMORROW:
+      case TOMORROW:
         return this._filterByDay(moment().add(1, "day"));
-      case Constants.THIS_WEEK:
+      case THIS_WEEK:
         return this._filterByWeek();
-      case Constants.ALL:
+      case ALL:
         return this.todos;
     }
   }

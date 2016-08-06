@@ -1,6 +1,6 @@
 import Grouper from "./Grouper";
 import DateFilter from "./DateFilter";
-import Constants from "../constants/Constants";
+import Constants from "../constants";
 import moment from "moment";
 
 export default class TodoRepo {
@@ -12,14 +12,14 @@ export default class TodoRepo {
     _.each(this.todos, (todo) => { if (todo.due == "") todo.due = null });
   }
 
-  addTodo(subject, due) {
+  processAddTodo(subject, due) {
     if (due != null) {
       due = moment(due).format("YYYY-MM-DD");
     }
     let todo = {id: this._nextId(), subject: subject, due: due, projects: [], contexts: [], completed: false, archived: false}
     todo.contexts = this._getContexts(todo.subject);
     todo.projects = this._getProjects(todo.subject);
-    this.todos.push(todo);
+    return todo
   }
 
   updateTodo(id, subject, due) {
