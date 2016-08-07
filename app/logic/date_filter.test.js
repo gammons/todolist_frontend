@@ -1,4 +1,4 @@
-import DateFilter from './DateFilter'
+import DateFilter from './date_filter'
 import expect from 'expect';
 import moment from "moment";
 

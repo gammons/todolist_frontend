@@ -7,7 +7,6 @@ export default class App extends Component {
   render() {
     return(
       <div>
-        <h1>Todolist</h1>
         <Link to="/add">Add todo</Link>
         {this.props.children}
       </div>

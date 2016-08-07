@@ -1,11 +1,15 @@
 import moment from 'moment';
 import Backend from './Backend';
+import Grouper from '../logic/grouper';
+import DateFilter from '../logic/date_filter';
 
 export default class TestBackend extends Backend {
-  load() {
+  fetchTodos(archived, due, grouping) {
     let promise = new Promise((resolve, reject) => {
       let yes = () => {
-        resolve(this._fakeTodos());
+        let dateFilter = new DateFilter(this._fakeTodos());
+        let grouper = new Grouper(dateFilter.filterBy(due));
+        resolve(grouper.byAll());
       }
       setTimeout(yes, 800);
     });
