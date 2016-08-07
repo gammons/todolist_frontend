@@ -1,8 +1,17 @@
 import _ from "lodash";
+import { ALL, BY_CONTEXT, BY_PROJECT } from '../constants';
 
 export default class Grouper {
   constructor(todos) {
     this.todos = todos;
+  }
+
+  grouped(grouping) {
+    switch(grouping) {
+      case ALL: return this.byAll();
+      case BY_CONTEXT: return this.byContext();
+      case BY_PROJECT: return this.byProject();
+    }
   }
 
   byContext() {

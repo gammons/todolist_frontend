@@ -7,10 +7,12 @@ import TodolistIconMenu from '../components/todolist_icon_menu'
 import TodoTabs from '../components/todo_tabs'
 
 class Todolist extends Component {
+
   componentWillMount() {
     const { show, due, group } = this.props.params;
     this.props.fetchTodos(show, due, group);
   }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.params.due != this.props.params.due
       || nextProps.params.show != this.props.params.show
@@ -38,13 +40,15 @@ class Todolist extends Component {
   render() {
     let todos = [];
     if (this.props.todos) { todos = this.props.todos }
+    const { due, show, group } = this.props.params;
+
     return(
       <div>
         <AppBar title="Todolist"
           showMenuIconButton={false}
-          iconElementRight={<TodolistIconMenu />}
+          iconElementRight={<TodolistIconMenu due={due} show={show} group={group} />}
         />
-        <TodoTabs due={this.props.params.due} show={this.props.params.show} group={this.props.params.group} />
+        <TodoTabs due={due} show={show} group={group} />
         {todos.map(this.showGroup.bind(this))}
       </div>
     )

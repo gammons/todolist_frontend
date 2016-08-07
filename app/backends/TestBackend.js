@@ -2,24 +2,22 @@ import moment from 'moment';
 import Backend from './Backend';
 import Grouper from '../logic/grouper';
 import DateFilter from '../logic/date_filter';
+import ShowFilter from '../logic/show_filter';
 
 export default class TestBackend extends Backend {
   constructor() {
     super();
     this.cachedTodos = null;
   }
-  fetchTodos(archived, due, grouping) {
+
+  fetchTodos(show, due, group) {
     let promise = new Promise((resolve, reject) => {
       if (this.cachedTodos) {
-        let dateFilter = new DateFilter(this.cachedTodos);
-        let grouper = new Grouper(dateFilter.filterBy(due));
-        resolve(grouper.byAll());
+        resolve(this._filter(this.cachedTodos, show, due, group));
       } else {
         let yes = () => {
           this.cachedTodos = this._fakeTodos();
-          let dateFilter = new DateFilter(this.cachedTodos);
-          let grouper = new Grouper(dateFilter.filterBy(due));
-          resolve(grouper.byAll());
+          resolve(this._filter(this.cachedTodos, show, due, group));
         }
         setTimeout(yes, 800);
       }
@@ -101,4 +99,12 @@ export default class TestBackend extends Backend {
     ];
     return todos;
   }
+
+  _filter(todos, show, due, group) {
+    let showFilter = new ShowFilter(todos)
+    let dateFilter = new DateFilter(showFilter.filterBy(show));
+    let grouper = new Grouper(dateFilter.filterBy(due));
+    return grouper.grouped(group)
+  }
+
 }

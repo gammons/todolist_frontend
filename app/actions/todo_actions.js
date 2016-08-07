@@ -5,7 +5,6 @@ import TodoCreator from '../logic/todo_creator';
 const backend = new Backend();
 
 export function fetchTodos(archived, due, group) {
-  console.log("fetching todos");
   const request = backend.fetchTodos(archived, due, group);
 
   return {
