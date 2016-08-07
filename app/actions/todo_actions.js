@@ -2,9 +2,10 @@ import { ADD_TODO, FETCH_TODOS } from '../constants';
 import Backend from '../backends/TestBackend';
 import TodoCreator from '../logic/todo_creator';
 
+const backend = new Backend();
+
 export function fetchTodos(archived, due, group) {
   console.log("fetching todos");
-  const backend = new Backend();
   const request = backend.fetchTodos(archived, due, group);
 
   return {

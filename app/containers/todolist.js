@@ -8,7 +8,7 @@ import TodoTabs from '../components/todo_tabs'
 
 class Todolist extends Component {
   componentWillMount() {
-    console.log("todolist component will mount", this.props)
+    const { show, due, group } = this.props.params;
     this.props.fetchTodos(show, due, group);
   }
   componentWillReceiveProps(nextProps) {

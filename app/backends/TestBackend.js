@@ -4,14 +4,25 @@ import Grouper from '../logic/grouper';
 import DateFilter from '../logic/date_filter';
 
 export default class TestBackend extends Backend {
+  constructor() {
+    super();
+    this.cachedTodos = null;
+  }
   fetchTodos(archived, due, grouping) {
     let promise = new Promise((resolve, reject) => {
-      let yes = () => {
-        let dateFilter = new DateFilter(this._fakeTodos());
+      if (this.cachedTodos) {
+        let dateFilter = new DateFilter(this.cachedTodos);
         let grouper = new Grouper(dateFilter.filterBy(due));
         resolve(grouper.byAll());
+      } else {
+        let yes = () => {
+          this.cachedTodos = this._fakeTodos();
+          let dateFilter = new DateFilter(this.cachedTodos);
+          let grouper = new Grouper(dateFilter.filterBy(due));
+          resolve(grouper.byAll());
+        }
+        setTimeout(yes, 800);
       }
-      setTimeout(yes, 800);
     });
     return promise;
   }
