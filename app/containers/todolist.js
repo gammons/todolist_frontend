@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import { fetchTodos  } from '../actions/todo_actions';
 import { connect } from 'react-redux';
-import AppBar from 'material-ui/AppBar';
-
-import TodolistIconMenu from '../components/todolist_icon_menu'
-import TodoTabs from '../components/todo_tabs'
 
 class Todolist extends Component {
 
@@ -40,15 +36,9 @@ class Todolist extends Component {
   render() {
     let todos = [];
     if (this.props.todos) { todos = this.props.todos }
-    const { due, show, group } = this.props.params;
 
     return(
       <div>
-        <AppBar title="Todolist"
-          showMenuIconButton={false}
-          iconElementRight={<TodolistIconMenu due={due} show={show} group={group} />}
-        />
-        <TodoTabs due={due} show={show} group={group} />
         {todos.map(this.showGroup.bind(this))}
       </div>
     )
@@ -62,4 +52,3 @@ function mapStateToProps(state, ownProps) {
 }
 
 export default connect(mapStateToProps, { fetchTodos })(Todolist);
-

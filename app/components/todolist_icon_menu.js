@@ -15,6 +15,12 @@ export default class TodolistIconMenu extends Component {
     router: PropTypes.object
   };
 
+  static defaultProps = {
+    show: SHOW_UNARCHIVED,
+    due: ALL,
+    group: ALL
+  };
+
   checkedIcon(val, prop) {
     if (val === prop)
       return <Checked />
@@ -22,7 +28,7 @@ export default class TodolistIconMenu extends Component {
 
   handleChange(e,value) {
     const { show, due, group } = this.props;
-    if (value == ALL || value == BY_CONTEXT | value == BY_PROJECT) {
+    if (value == ALL || value == BY_CONTEXT || value == BY_PROJECT) {
       this.context.router.push(`/${show}/${due}/${value}`)
     } else {
       this.context.router.push(`/${value}/${due}/${group}`)
