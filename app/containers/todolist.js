@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import { fetchTodos  } from '../actions/todo_actions';
 import { connect } from 'react-redux';
+import Todo from '../components/todo';
+
+import Grouper from '../logic/grouper';
+import DateFilter from '../logic/date_filter';
+import ShowFilter from '../logic/show_filter';
 
 class Todolist extends Component {
 
@@ -16,9 +21,14 @@ class Todolist extends Component {
       this.props.fetchTodos(nextProps.params.show, nextProps.params.due, nextProps.params.group);
   }
 
-  showTodo(todo, idx) {
+  componentWillUpdate(nextProps) {
+    const { show, due, group } = nextProps.params;
+    this.groupedTodos = this._filterAndGroup(nextProps.todos, show, due, group)
+  }
+
+  showTodo(todo) {
     return(
-      <li key={idx}>{todo.subject}</li>
+      <Todo todo={todo} />
     )
   }
 
@@ -26,16 +36,14 @@ class Todolist extends Component {
     return(
       <div key={idx}>
         <h3>{group.title}</h3>
-        <ul>
         {group.todos.map(this.showTodo.bind(this))}
-        </ul>
       </div>
     )
   }
 
   render() {
     let todos = [];
-    if (this.props.todos) { todos = this.props.todos }
+    if (this.groupedTodos) { todos = this.groupedTodos }
 
     return(
       <div>
@@ -43,6 +51,14 @@ class Todolist extends Component {
       </div>
     )
   }
+
+  _filterAndGroup(todos, show, due, group) {
+    let showFilter = new ShowFilter(todos)
+    let dateFilter = new DateFilter(showFilter.filterBy(show));
+    let grouper = new Grouper(dateFilter.filterBy(due));
+    return grouper.grouped(group)
+  }
+
 }
 
 function mapStateToProps(state, ownProps) {

@@ -6,7 +6,6 @@ import TodayIcon from 'material-ui/svg-icons/action/today';
 import AllIcon from 'material-ui/svg-icons/places/all-inclusive';
 
 import { TODAY, TOMORROW, THIS_WEEK, ALL, SHOW_UNARCHIVED } from '../constants';
-import { fetchTodos  } from '../actions/todo_actions';
 
 export default class TodoTabs extends Component {
   static contextTypes = {

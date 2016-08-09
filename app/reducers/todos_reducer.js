@@ -14,10 +14,13 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
   switch(action.type) {
     case ADD_TODO:
-      return {...state, todos: [...state.todos, action.todo]}
+      if (action.error === true) {
+        return { ...state, error: true, errorMsg: action.payload }
+      }
+      return {...state, todos: [...state.todos, action.payload]}
       break;
     case FETCH_TODOS:
-      if (action.error == true) {
+      if (action.error === true) {
         return {...state, todos: [], error: true, errorMsg: action.payload}
       }
       return {...state, todos: action.payload}
