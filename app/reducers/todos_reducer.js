@@ -1,4 +1,3 @@
-import { combineReducers } from 'redux';
 import { ALL, SHOW_UNARCHIVED, TODAY, ADD_TODO, FETCH_TODOS } from '../constants'
 
 const INITIAL_STATE = {

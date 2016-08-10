@@ -1,9 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
-import { Navbar, Grid, Col, Button  } from 'react-bootstrap';
+import { Navbar, Grid, Col } from 'react-bootstrap';
+import { toggleModal } from '../actions/modal_actions';
 
-import TodoTabs from '../components/todo_tabs'
-import AddTodo from './add_todo';
+import TodoTabs from '../components/todo_tabs';
+import ModalDialog from './modal_dialog';
+import AddTodoButton from './add_todo_button';
 
 export default class App extends Component {
   static contextTypes = {
@@ -15,6 +17,7 @@ export default class App extends Component {
 
     return(
       <div>
+        <ModalDialog />
         <Navbar>
           <Navbar.Header>
             <Navbar.Brand>
@@ -27,10 +30,11 @@ export default class App extends Component {
             <TodoTabs due={due} show={show} group={group} />
             {this.props.children}
 
-            <Button>Add todo</Button>
+            <AddTodoButton />
           </Col>
         </Grid>
       </div>
     )
   }
+
 }
