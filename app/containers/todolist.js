@@ -2,10 +2,13 @@ import React, { Component } from 'react';
 import { fetchTodos  } from '../actions/todo_actions';
 import { connect } from 'react-redux';
 import Todo from '../components/todo';
+import { ListGroup, ButtonGroup, DropdownButton, MenuItem } from 'react-bootstrap';
 
 import Grouper from '../logic/grouper';
 import DateFilter from '../logic/date_filter';
 import ShowFilter from '../logic/show_filter';
+
+import FilterButtons from '../components/filter_buttons';
 
 class Todolist extends Component {
 
@@ -26,9 +29,9 @@ class Todolist extends Component {
     this.groupedTodos = this._filterAndGroup(nextProps.todos, show, due, group)
   }
 
-  showTodo(todo) {
+  showTodo(todo, idx) {
     return(
-      <Todo todo={todo} />
+      <Todo todo={todo} key={idx} />
     )
   }
 
@@ -36,7 +39,9 @@ class Todolist extends Component {
     return(
       <div key={idx}>
         <h3>{group.title}</h3>
-        {group.todos.map(this.showTodo.bind(this))}
+        <ListGroup>
+          {group.todos.map(this.showTodo.bind(this))}
+        </ListGroup>
       </div>
     )
   }
@@ -44,9 +49,14 @@ class Todolist extends Component {
   render() {
     let todos = [];
     if (this.groupedTodos) { todos = this.groupedTodos }
+    const { show, due, group } = this.props.params;
 
     return(
       <div>
+        <span className="pull-right">
+          <FilterButtons show={show} group={group} due={due} />
+
+        </span>
         {todos.map(this.showGroup.bind(this))}
       </div>
     )

@@ -8,7 +8,6 @@ export default class ShowFilter {
   }
 
   filterBy(show) {
-    console.log("filtering by ", show)
     return _.filter(this.todos, (todo) => {
       return (show === SHOW_UNARCHIVED) ? todo.archived === false : todo.archived === true
     })

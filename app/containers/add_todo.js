@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
-import {Card, CardTitle, CardText, CardActions} from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
-import TextField from 'material-ui/TextField';
 import moment from 'moment';
-import DatePicker from 'material-ui/DatePicker';
 import { connect } from 'react-redux';
 
 import { createTodo  } from '../actions/todo_actions';
@@ -22,23 +18,7 @@ class AddTodo extends Component {
 
     return(
       <div>
-        <Card>
-          <CardText>
-            <h3>Add todo</h3>
-            <TextField ref="subject" hintText="Title" fullWidth={true} />
-            <DatePicker
-              ref="due"
-              hintText="Due date"
-              defaultDate={this.dueDate()}
-              firstDayOfWeek={0}
-              formatDate={this.formatDate.bind(this)}
-            />
-          </CardText>
-          <CardActions>
-            <FlatButton primary={true} label="Save" onTouchTap={this.handleSave.bind(this)} />
-            <FlatButton label="Cancel" />
-          </CardActions>
-        </Card>
+        add todo
         <Todolist params={{due: due, show: show, group: group}}/>
       </div>
     )

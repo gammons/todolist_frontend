@@ -1,9 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-
-import {Tabs, Tab} from 'material-ui/Tabs';
-import TodayIcon from 'material-ui/svg-icons/action/today';
-import AllIcon from 'material-ui/svg-icons/places/all-inclusive';
+import { Tabs, Tab } from 'react-bootstrap';
 
 import { TODAY, TOMORROW, THIS_WEEK, ALL, SHOW_UNARCHIVED } from '../constants';
 
@@ -18,8 +15,9 @@ export default class TodoTabs extends Component {
     group: ALL
   };
 
-  handleChange(due) {
+  handleChange(dueIdx) {
     const { show, group } = this.props;
+    let due = this.getDueFromIndex(dueIdx);
     this.context.router.push(`/${show}/${due}/${group}`)
   }
 
@@ -32,29 +30,22 @@ export default class TodoTabs extends Component {
     }
   }
 
+  getDueFromIndex(idx) {
+    switch(idx) {
+      case 0: return TODAY;
+      case 1: return TOMORROW;
+      case 2: return THIS_WEEK;
+      case 3: return ALL;
+    }
+  }
+
   render() {
     return(
-      <Tabs ref="tabs" initialSelectedIndex={this.getSelectedIndex()} onChange={this.handleChange.bind(this)}>
-        <Tab
-          icon={<TodayIcon />}
-          label="Today"
-          value={TODAY}
-        />
-        <Tab
-          icon={<TodayIcon />}
-          label="Tomorrow"
-          value={TOMORROW}
-        />
-        <Tab
-          icon={<TodayIcon />}
-          label="This week"
-          value={THIS_WEEK}
-        />
-        <Tab
-          icon={<AllIcon />}
-          label="All todos"
-          value={ALL}
-        />
+      <Tabs id="main-tabs" activeKey={this.getSelectedIndex()} onSelect={this.handleChange.bind(this)}>
+        <Tab eventKey={0} title="Today"></Tab>
+        <Tab eventKey={1} title="Tomorrow"></Tab>
+        <Tab eventKey={2} title="This week"></Tab>
+        <Tab eventKey={3} title="All"></Tab>
       </Tabs>
     )
   }

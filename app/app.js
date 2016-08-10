@@ -4,9 +4,6 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider  } from 'react-redux';
 import promiseMiddleware from 'redux-promise';
 
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-
 import TodoRouter from './router';
 import reducers from './reducers';
 
@@ -19,9 +16,7 @@ class App extends React.Component {
   render() {
     return(
       <Provider store={createStoreWithMiddleware(reducers, window.devToolsExtension && window.devToolsExtension())}>
-        <MuiThemeProvider muiTheme={getMuiTheme()}>
-          <TodoRouter />
-        </MuiThemeProvider>
+        <TodoRouter />
       </Provider>
     );
   }

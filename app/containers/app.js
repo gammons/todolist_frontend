@@ -1,9 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
+import { Navbar, Grid, Col, Button  } from 'react-bootstrap';
 
-import AppBar from 'material-ui/AppBar';
-
-import TodolistIconMenu from '../components/todolist_icon_menu'
 import TodoTabs from '../components/todo_tabs'
 import AddTodo from './add_todo';
 
@@ -17,13 +15,21 @@ export default class App extends Component {
 
     return(
       <div>
-        <AppBar title="Todolist"
-          showMenuIconButton={false}
-          iconElementRight={<TodolistIconMenu due={due} show={show} group={group} />}
-        />
-        <TodoTabs due={due} show={show} group={group} />
-        <Link to={{pathname: "/add", state: {modal: true, due: due, show: show, group: group}}}>Add todo</Link>
-        {this.props.children}
+        <Navbar>
+          <Navbar.Header>
+            <Navbar.Brand>
+              <a href="#">Todolist</a>
+            </Navbar.Brand>
+          </Navbar.Header>
+        </Navbar>
+        <Grid>
+          <Col md={12}>
+            <TodoTabs due={due} show={show} group={group} />
+            {this.props.children}
+
+            <Button>Add todo</Button>
+          </Col>
+        </Grid>
       </div>
     )
   }
