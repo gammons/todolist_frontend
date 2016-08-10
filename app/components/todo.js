@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-import { ListGroup, ListGroupItem, Checkbox, DropdownButton, MenuItem } from 'react-bootstrap';
+import { ListGroup, ListGroupItem, Checkbox, DropdownButton, MenuItem, Row, Grid, Col } from 'react-bootstrap';
 import styles from '../styles.css'
 
 export default class Todo extends Component {
@@ -9,23 +9,41 @@ export default class Todo extends Component {
 
     return(
       <ListGroupItem className="clearfix" key={todo.id}>
-        <Checkbox inline className="clearfix" style={{marginTop: "13px"}}>
-          {todo.subject}
-          <br/>
-          <small>{this.formatDue(todo.due)}</small>
-        </Checkbox>
-        <span className="pull-right">
-          <DropdownButton pullRight bsStyle={"link"} title="Actions" id={`button-${this.props.todo.id}`}>
-            <MenuItem eventKey="1">Due today</MenuItem>
-            <MenuItem eventKey="2">Due tomorrow</MenuItem>
-            <MenuItem eventKey="3">Edit</MenuItem>
-            <MenuItem divider />
-            <MenuItem eventKey="4">Archive</MenuItem>
-            <MenuItem eventKey="5">Delete</MenuItem>
-          </DropdownButton>
-        </span>
+        <Grid fluid>
+          <Row className="show-grid">
+            <Col xs={1} sm={1}>
+              <Checkbox inline className="clearfix" style={{marginTop: "13px"}}>
+              </Checkbox>
+            </Col>
+            <Col xs={10} sm={8}>
+              {this.renderSubject()}
+              <small>{this.formatDue(todo.due)}</small>
+            </Col>
+            <Col xs={12} sm={3}>
+              <span className="pull-right">
+                <DropdownButton className="pull-right" bsStyle={"link"} title="Actions" id={`button-${this.props.todo.id}`}>
+                  <MenuItem eventKey="1">Due today</MenuItem>
+                  <MenuItem eventKey="2">Due tomorrow</MenuItem>
+                  <MenuItem eventKey="3">Edit</MenuItem>
+                  <MenuItem divider />
+                  <MenuItem eventKey="4">Archive</MenuItem>
+                  <MenuItem eventKey="5">Delete</MenuItem>
+                </DropdownButton>
+              </span>
+            </Col>
+          </Row>
+        </Grid>
       </ListGroupItem>
     )
+  }
+
+  renderSubject() {
+    if (this.props.todo.completed) {
+      return <s>{this.props.todo.subject}</s>
+    } else {
+      return <p>{this.props.todo.subject}</p>
+    }
+
   }
 
   formatDue(due) {

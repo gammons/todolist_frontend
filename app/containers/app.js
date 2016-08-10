@@ -18,14 +18,14 @@ export default class App extends Component {
     return(
       <div>
         <ModalDialog />
-        <Navbar>
+        <Navbar fluid>
           <Navbar.Header>
             <Navbar.Brand>
               <a href="#">Todolist</a>
             </Navbar.Brand>
           </Navbar.Header>
         </Navbar>
-        <Grid>
+        <Grid fluid>
           <Col md={12}>
             <TodoTabs due={due} show={show} group={group} />
             {this.props.children}
