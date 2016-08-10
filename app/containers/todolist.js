@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { fetchTodos  } from '../actions/todo_actions';
 import { connect } from 'react-redux';
-import Todo from '../components/todo';
+import Todo from './todo';
 import { ListGroup, ButtonGroup, DropdownButton, MenuItem } from 'react-bootstrap';
 
 import Grouper from '../logic/grouper';
