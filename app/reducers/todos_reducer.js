@@ -3,10 +3,6 @@ import { ALL, SHOW_UNARCHIVED, TODAY, ADD_TODO, FETCH_TODOS } from '../constants
 
 const INITIAL_STATE = {
   todos: [],
-  group: null,
-  show: null,
-  due: null,
-  searchTerm: null,
   error: false,
   errorMsg: null
 }
