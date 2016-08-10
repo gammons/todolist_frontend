@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import moment from 'moment';
 import { ListGroup, ListGroupItem, Checkbox, DropdownButton, MenuItem, Row, Grid, Col } from 'react-bootstrap';
 import styles from '../styles.css'
+import { toggleComplete } from '../actions/todo_actions';
+import { connect } from 'react-redux';
 
-export default class Todo extends Component {
+class Todo extends Component {
   render() {
     const {todo} = this.props;
 
@@ -12,8 +14,7 @@ export default class Todo extends Component {
         <Grid fluid>
           <Row className="show-grid">
             <Col xs={1} sm={1}>
-              <Checkbox inline className="clearfix" style={{marginTop: "13px"}}>
-              </Checkbox>
+              <input type="checkbox" checked={todo.completed} onChange={this.handleCheck.bind(this)} />
             </Col>
             <Col xs={10} sm={8}>
               {this.renderSubject()}
@@ -39,11 +40,15 @@ export default class Todo extends Component {
 
   renderSubject() {
     if (this.props.todo.completed) {
-      return <s>{this.props.todo.subject}</s>
+      return <s className="text-muted">{this.props.todo.subject}</s>
     } else {
       return <p>{this.props.todo.subject}</p>
     }
 
+  }
+
+  handleCheck(e) {
+    this.props.toggleComplete(this.props.todo.id)
   }
 
   formatDue(due) {
@@ -66,3 +71,5 @@ export default class Todo extends Component {
     }
   }
 }
+
+export default connect(null, { toggleComplete })(Todo)
