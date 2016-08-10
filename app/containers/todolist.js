@@ -57,9 +57,16 @@ class Todolist extends Component {
           <FilterButtons show={show} group={group} due={due} />
 
         </span>
-        {todos.map(this.showGroup.bind(this))}
+        {this.renderTodos(todos)}
       </div>
     )
+  }
+
+  renderTodos(todos) {
+    if (todos.length == 0) {
+      return <p>No todos.</p>
+    }
+    return todos.map(this.showGroup.bind(this))
   }
 
   _filterAndGroup(todos, show, due, group) {
