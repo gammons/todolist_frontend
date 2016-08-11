@@ -1,4 +1,4 @@
-import { ADD_TODO, FETCH_TODOS, TOGGLE_COMPLETE } from '../constants';
+import { ADD_TODO, UPDATE_TODO, FETCH_TODOS, TOGGLE_COMPLETE } from '../constants';
 import Backend from '../backends/TestBackend';
 import TodoCreator from '../logic/todo_creator';
 
@@ -23,14 +23,12 @@ export function createTodo(subject, due) {
   }
 }
 
-export function toggleComplete(id) {
-  const creator = new TodoCreator();
-  const request = backend.toggleComplete(id)
+export function updateTodo(todo) {
+  const request = backend.update(todo)
 
   return {
-    type: TOGGLE_COMPLETE,
-    id: id,
+    type: UPDATE_TODO,
+    todo: todo,
     payload: request
   }
-
 }

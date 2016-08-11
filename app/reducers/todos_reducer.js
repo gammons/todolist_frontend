@@ -1,4 +1,4 @@
-import { ALL, SHOW_UNARCHIVED, TODAY, ADD_TODO, FETCH_TODOS, TOGGLE_COMPLETE } from '../constants'
+import { ALL, SHOW_UNARCHIVED, TODAY, ADD_TODO, UPDATE_TODO, FETCH_TODOS, TOGGLE_COMPLETE } from '../constants'
 import _ from 'lodash';
 
 const INITIAL_STATE = {
@@ -16,17 +16,13 @@ export default (state = INITIAL_STATE, action) => {
       return {...state, todos: [...state.todos, action.payload]}
       break;
 
-    case TOGGLE_COMPLETE:
+    case UPDATE_TODO:
       if (action.error === true) {
-        return {...state, todos: [], error: true, errorMsg: action.payload}
+        return {...state, error: true, errorMsg: action.payload}
       }
-      let todo = _.find(state.todos, (todo) => { return todo.id === action.id });
-      let idx = _.findIndex(state.todos, (todo) => { return todo.id === action.id })
-      let newTodo = _.cloneDeep(todo)
+      let idx = _.findIndex(state.todos, (todo) => { return todo.id === action.todo.id })
 
-      newTodo.completed = !newTodo.completed
-
-      let newState = {...state, todos: [...state.todos.slice(0,idx), newTodo, ...state.todos.slice(idx+1)]}
+      let newState = {...state, todos: [...state.todos.slice(0,idx), _.cloneDeep(action.todo), ...state.todos.slice(idx+1)]}
       return newState
       break;
 
