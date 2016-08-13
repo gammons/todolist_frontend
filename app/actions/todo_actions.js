@@ -1,4 +1,6 @@
 import { ADD_TODO, UPDATE_TODO, FETCH_TODOS } from '../constants';
+import moment from 'moment';
+
 import Backend from '../backends/TestBackend';
 import TodoLogic from '../logic/todo_logic';
 
@@ -27,28 +29,23 @@ export function createTodo(subject, due) {
 
 export function toggleComplete(todo) {
   todo.completed = !todo.completed;
-
-  const request = backend.update(todo)
-
-  return {
-    type: UPDATE_TODO,
-    todo: todo,
-    payload: request
-  }
+  return updateTodo(todo)
 }
 
 export function dueToday(todo) {
   const logic = new TodoLogic();
-  todo.due = new Date().toString()
+  todo.due = moment();
   todo = logic.updateTodo(todo);
-  const request = backend.update(todo)
-
-  return {
-    type: UPDATE_TODO,
-    todo: todo,
-    payload: request
-  }
+  return updateTodo(todo)
 }
+
+export function dueTomorrow(todo) {
+  const logic = new TodoLogic();
+  todo.due = moment().add(1, "day")
+  todo = logic.updateTodo(todo);
+  return updateTodo(todo);
+}
+
 
 export function updateTodo(todo) {
   const request = backend.update(todo)

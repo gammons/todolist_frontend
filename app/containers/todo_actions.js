@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { DropdownButton, MenuItem } from 'react-bootstrap';
 
-import { dueToday } from '../actions/todo_actions';
+import { dueToday, dueTomorrow } from '../actions/todo_actions';
 
 class TodoActions extends Component {
   render() {
@@ -15,7 +15,7 @@ class TodoActions extends Component {
           onSelect={this.handleChange.bind(this)}
         >
           <MenuItem eventKey="today">Due today</MenuItem>
-          <MenuItem eventKey="2">Due tomorrow</MenuItem>
+          <MenuItem eventKey="tomorrow">Due tomorrow</MenuItem>
           <MenuItem eventKey="3">Edit</MenuItem>
           <MenuItem divider />
           <MenuItem eventKey="4">Archive</MenuItem>
@@ -27,9 +27,14 @@ class TodoActions extends Component {
 
   handleChange(action) {
     switch(action) {
-        case "today": this.props.dueToday(this.props.todo)
+      case "today":
+        this.props.dueToday(this.props.todo)
+        break;
+      case "tomorrow":
+        this.props.dueTomorrow(this.props.todo)
+        break;
     }
   }
 }
 
-export default connect(null, { dueToday })(TodoActions)
+export default connect(null, { dueToday, dueTomorrow })(TodoActions)
