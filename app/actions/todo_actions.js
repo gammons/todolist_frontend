@@ -23,6 +23,16 @@ export function createTodo(subject, due) {
   }
 }
 
+export function toggleComplete(id) {
+  const request = backend.toggleComplete(id)
+
+  return {
+    type: TOGGLE_COMPLETE,
+    id: id,
+    payload: request
+  }
+}
+
 export function updateTodo(todo) {
   const request = backend.update(todo)
 

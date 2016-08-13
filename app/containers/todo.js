@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import moment from 'moment';
 import { ListGroup, ListGroupItem, Checkbox, DropdownButton, MenuItem, Row, Grid, Col } from 'react-bootstrap';
 import styles from '../styles.css'
-import { updateTodo } from '../actions/todo_actions';
+import { toggleComplete } from '../actions/todo_actions';
 import { connect } from 'react-redux';
 import TodoActions from './todo_actions';
 
@@ -40,8 +40,7 @@ class Todo extends Component {
   }
 
   handleCheck(e) {
-    this.props.todo.completed = !this.props.todo.completed
-    this.props.updateTodo(this.props.todo)
+    this.props.toggleComplete(this.props.todo.id)
   }
 
   formatDue(due) {
@@ -65,4 +64,4 @@ class Todo extends Component {
   }
 }
 
-export default connect(null, { updateTodo })(Todo)
+export default connect(null, { toggleComplete })(Todo)
