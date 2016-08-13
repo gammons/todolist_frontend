@@ -1,6 +1,6 @@
-import { ADD_TODO, UPDATE_TODO, FETCH_TODOS, TOGGLE_COMPLETE } from '../constants';
+import { ADD_TODO, UPDATE_TODO, FETCH_TODOS } from '../constants';
 import Backend from '../backends/TestBackend';
-import TodoCreator from '../logic/todo_creator';
+import TodoLogic from '../logic/todo_logic';
 
 const backend = new Backend();
 
@@ -14,21 +14,38 @@ export function fetchTodos(archived, due, group) {
 }
 
 export function createTodo(subject, due) {
-  const creator = new TodoCreator();
-  const request = backend.addTodo(creator.addTodo(subject, due));
+  const logic = new TodoLogic();
+  let todo = logic.addTodo(subject, due)
+  const request = backend.addTodo(todo)
 
   return {
     type: ADD_TODO,
+    payload: request,
+    todo: todo
+  }
+}
+
+export function toggleComplete(todo) {
+  todo.completed = !todo.completed;
+
+  const request = backend.update(todo)
+
+  return {
+    type: UPDATE_TODO,
+    todo: todo,
     payload: request
   }
 }
 
-export function toggleComplete(id) {
-  const request = backend.toggleComplete(id)
+export function dueToday(todo) {
+  const logic = new TodoLogic();
+  todo.due = new Date().toString()
+  todo = logic.updateTodo(todo);
+  const request = backend.update(todo)
 
   return {
-    type: TOGGLE_COMPLETE,
-    id: id,
+    type: UPDATE_TODO,
+    todo: todo,
     payload: request
   }
 }

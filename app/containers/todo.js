@@ -22,7 +22,7 @@ class Todo extends Component {
               <small>{this.formatDue(todo.due)}</small>
             </Col>
             <Col xs={12} sm={3}>
-              <TodoActions id={this.props.todo.id} />
+              <TodoActions todo={this.props.todo} />
             </Col>
           </Row>
         </Grid>
@@ -40,7 +40,7 @@ class Todo extends Component {
   }
 
   handleCheck(e) {
-    this.props.toggleComplete(this.props.todo.id)
+    this.props.toggleComplete(this.props.todo)
   }
 
   formatDue(due) {

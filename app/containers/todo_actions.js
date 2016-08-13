@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { DropdownButton, MenuItem } from 'react-bootstrap';
 
-export default class TodoActions extends Component {
+import { dueToday } from '../actions/todo_actions';
+
+class TodoActions extends Component {
   render() {
     return(
       <span className="pull-right">
@@ -11,7 +14,7 @@ export default class TodoActions extends Component {
           id={`button-${this.props.id}`}
           onSelect={this.handleChange.bind(this)}
         >
-          <MenuItem eventKey="1">Due today</MenuItem>
+          <MenuItem eventKey="today">Due today</MenuItem>
           <MenuItem eventKey="2">Due tomorrow</MenuItem>
           <MenuItem eventKey="3">Edit</MenuItem>
           <MenuItem divider />
@@ -22,7 +25,11 @@ export default class TodoActions extends Component {
     )
   }
 
-  handleChange() {
+  handleChange(action) {
+    switch(action) {
+        case "today": this.props.dueToday(this.props.todo)
+    }
   }
 }
 
+export default connect(null, { dueToday })(TodoActions)

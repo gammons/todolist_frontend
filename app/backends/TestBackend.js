@@ -74,7 +74,7 @@ export default class TestBackend extends Backend {
           this.cachedTodos = _.cloneDeep(todos)
           resolve(this.cachedTodos)
         }
-        setTimeout(yes, 800);
+        setTimeout(yes, 400);
       }
     });
     return promise;
@@ -83,18 +83,8 @@ export default class TestBackend extends Backend {
   addTodo(todo) {
     let promise = new Promise((resolve, reject) => {
       //reject("Can't connect with backend")
-      resolve(todo);
-    });
-    return promise;
-  }
-
-  toggleComplete(id) {
-    let promise = new Promise((resolve, reject) => {
-      //reject("Can't connect with backend")
-      this.cachedTodos = null
-      let todo = _.find(todos, (todo) => { return todo.id === id });
-      todo.completed = !todo.completed
-      resolve(id);
+      todos.push(todo);
+      resolve();
     });
     return promise;
   }

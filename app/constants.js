@@ -1,9 +1,5 @@
 export const LOAD = "LOAD"
 export const CHANGE_ROUTE = "CHANGE_ROUTE"
-export const FETCH_TODOS = "FETCH_TODOS"
-export const ADD_TODO = "ADD_TODO"
-export const UPDATE_TODO = "UPDATE_TODO"
-export const DELETE_TODO = "DELETE_TODO"
 export const TOGGLE_ARCHIVE_TODO = "TOGGLE_ARCHIVE_TODO"
 export const TOGGLE_COMPLETE = "TOGGLE_COMPLETE_TODO"
 export const CHANGE_GROUPING = "CHANGE_GROUPING"
@@ -24,6 +20,16 @@ export const LOAD_SUCCESS = "LOAD_SUCCESS"
 export const SAVE_SUCCESS = "SAVE_SUCCESS"
 export const BACKEND_FAILURE = "BACKEND_FAILURE"
 export const TOGGLE_MODAL = "TOGGLE_MODAL"
+
+// *******************
+// Actions
+// *******************
+
+export const DUE_TODAY = "DUE_TODAY"
+export const ADD_TODO = "ADD_TODO"
+export const UPDATE_TODO = "UPDATE_TODO"
+export const DELETE_TODO = "DELETE_TODO"
+export const FETCH_TODOS = "FETCH_TODOS"
 
 export const ADD_TODO_MODAL = "ADD_TODO_MODAL"
 export const EDIT_TODO_MODAL = "EDIT_TODO_MODAL"

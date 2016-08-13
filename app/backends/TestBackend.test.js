@@ -1,13 +1,13 @@
 import TestBackend from './TestBackend'
-import TodoRepo from '../logic/TodoRepo'
+import { SHOW_UNARCHIVED, ALL } from '../constants';
 
 import expect from 'expect';
 
 describe('TestBackend', () => {
   it('load todos', (done) => {
     let backend = new TestBackend();
-    backend.load().then((todos) => {
-      expect(todos.length).toEqual(6);
+    backend.fetchTodos(SHOW_UNARCHIVED, ALL, ALL).then((todos) => {
+      expect(todos.length).toEqual(8);
       done();
     });
   });
