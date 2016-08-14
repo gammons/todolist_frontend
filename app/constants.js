@@ -19,7 +19,7 @@ export const ADD_EDIT_NOTIFICATION = "ADD_EDIT_NOTIFICATION"
 export const LOAD_SUCCESS = "LOAD_SUCCESS"
 export const SAVE_SUCCESS = "SAVE_SUCCESS"
 export const BACKEND_FAILURE = "BACKEND_FAILURE"
-export const TOGGLE_MODAL = "TOGGLE_MODAL"
+
 
 // *******************
 // Actions
@@ -33,3 +33,7 @@ export const FETCH_TODOS = "FETCH_TODOS"
 
 export const ADD_TODO_MODAL = "ADD_TODO_MODAL"
 export const EDIT_TODO_MODAL = "EDIT_TODO_MODAL"
+
+export const ALERT_MODAL = "ALERT_MODAL"
+export const TOGGLE_MODAL = "TOGGLE_MODAL"
+export const TOGGLE_ALERT = "TOGGLE_ALERT"

@@ -46,6 +46,11 @@ export function dueTomorrow(todo) {
   return updateTodo(todo);
 }
 
+export function toggleArchived(todo) {
+  todo.archived = !todo.archived
+  return updateTodo(todo);
+}
+
 
 export function updateTodo(todo) {
   const request = backend.update(todo)
@@ -56,3 +61,4 @@ export function updateTodo(todo) {
     payload: request
   }
 }
+
