@@ -172,8 +172,8 @@
     "redux": "^3.5.2",
     "redux-immutable": "^3.0.6",
     "redux-promise": "^0.5.3",
-    "redux-saga": "^0.10.0",
-    "reselect": "^2.5.1",
+    "redux-saga": "^0.10.5",
+    "reselect": "^2.5.3",
     "sanitize.css": "^3.3.0",
     "whatwg-fetch": "^1.0.0"
   },

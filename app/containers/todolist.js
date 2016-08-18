@@ -4,9 +4,7 @@ import { connect } from 'react-redux';
 import Todo from './todo';
 import { ListGroup, ButtonGroup, DropdownButton, MenuItem } from 'react-bootstrap';
 
-import Grouper from '../logic/grouper';
-import DateFilter from '../logic/date_filter';
-import ShowFilter from '../logic/show_filter';
+import FilteredTodosSelector from '../selectors/filtered_todos'
 
 import FilterButtons from '../components/filter_buttons';
 
@@ -22,11 +20,6 @@ class Todolist extends Component {
       || nextProps.params.show != this.props.params.show
       || nextProps.params.group != this.props.params.group)
       this.props.fetchTodos(nextProps.params.show, nextProps.params.due, nextProps.params.group);
-  }
-
-  componentWillUpdate(nextProps) {
-    const { show, due, group } = nextProps.params;
-    this.groupedTodos = this._filterAndGroup(nextProps.todos, show, due, group)
   }
 
   showTodo(todo, idx) {
@@ -48,7 +41,7 @@ class Todolist extends Component {
 
   render() {
     let todos = [];
-    if (this.groupedTodos) { todos = this.groupedTodos }
+    if (this.props.todos) { todos = this.props.todos }
     const { show, due, group } = this.props.params;
 
     return(
@@ -80,7 +73,7 @@ class Todolist extends Component {
 
 function mapStateToProps(state, ownProps) {
   return {
-    todos: state.todos.todos
+    todos: FilteredTodosSelector(state, ownProps)
   }
 }
 
