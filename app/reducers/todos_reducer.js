@@ -1,4 +1,4 @@
-import { ALL, SHOW_UNARCHIVED, TODAY, ADD_TODO, UPDATE_TODO, FETCH_TODOS, TOGGLE_COMPLETE } from '../constants'
+import { ALL, SHOW_UNARCHIVED, TODAY, ADD_TODO, UPDATE_TODO, TODOS_FETCHED, TOGGLE_COMPLETE } from '../constants'
 import _ from 'lodash';
 
 const INITIAL_STATE = {
@@ -19,7 +19,7 @@ export default (state = INITIAL_STATE, action) => {
     case UPDATE_TODO:
       return updateTodo(state, action);
 
-    case FETCH_TODOS:
+    case TODOS_FETCHED:
       return {...state, todos: action.payload}
       break;
   }

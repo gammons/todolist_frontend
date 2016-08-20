@@ -1,26 +1,37 @@
-import { TOGGLE_MODAL, TOGGLE_ALERT } from '../constants'
+import * as constants from '../constants'
 import { archiveTodo } from './todo_actions';
 
 export function toggleModal(open, component, title) {
   return {
-    type: TOGGLE_MODAL,
+    type: constants.TOGGLE_MODAL,
     open: open,
     component: component
   }
 }
 
-export function toggleAlert(open, body, onOk) {
+export function openAlert(body) {
   return {
-    type: TOGGLE_ALERT,
-    open: open,
-    body: body,
-    onOk: onOk
+    type: constants.ALERT,
+    body: body
   }
 }
 
-export function archiveAlert(open, onOk) {
-  return toggleAlert(open,
-    "Are you sure you wish to archive this todo?",
-    onOk
-  )
+export function confirmationAlert(body) {
+  return {
+    type: constants.CONFIRMATION_ALERT,
+    body: body
+  }
+}
+
+
+export function cancelAlert() {
+  return {
+    type: constants.ALERT_CANCEL
+  }
+}
+
+export function okAlert() {
+  return {
+    type: constants.ALERT_OK
+  }
 }

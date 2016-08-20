@@ -3,13 +3,15 @@ import { Modal } from 'react-bootstrap';
 import { connect } from 'react-redux';
 
 import { toggleModal } from '../actions/modal_actions';
-import { ADD_TODO_MODAL, TOGGLE_ALERT } from '../constants';
+import { CONFIRMATION_ALERT_MODAL, ADD_TODO_MODAL, TOGGLE_ALERT } from '../constants';
 import AddTodoModal from './add_todo_modal';
-import AlertModal from './alert_modal';
+import AlertModal from './modals/alert_modal';
+import ConfirmationAlertModal from './modals/confirmation_alert_modal';
 
 const MODAL_COMPONENTS = {
   ADD_TODO_MODAL: AddTodoModal,
-  ALERT_MODAL: AlertModal
+  ALERT_MODAL: AlertModal,
+  CONFIRMATION_ALERT_MODAL: ConfirmationAlertModal
 }
 
 export default class ModalDialog extends Component {
@@ -32,7 +34,6 @@ export default class ModalDialog extends Component {
 }
 
 function mapStateToProps(state) {
-  console.log("modal state = ", state)
   return {
     modal: state.modal
   }

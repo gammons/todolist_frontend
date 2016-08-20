@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { DropdownButton, MenuItem } from 'react-bootstrap';
 
-import { dueToday, dueTomorrow } from '../actions/todo_actions';
-import { toggleAlert, archiveAlert } from '../actions/modal_actions';
+import { dueToday, dueTomorrow, toggleArchived } from '../actions/todo_actions';
 
 class TodoActions extends Component {
   render() {
@@ -35,15 +34,9 @@ class TodoActions extends Component {
         this.props.dueTomorrow(this.props.todo)
         break;
       case "archive":
-        let onOk = () => {
-          this.props.archiveAlert(false)
-          this.props.toggleArchived(todo).then(() => {
-            this.props.toggleAlert(true, "Todo has been archived.")
-          })
-        }
-        this.props.archiveAlert(true, onOk)
+        this.props.toggleArchived(this.props.todo)
     }
   }
 }
 
-export default connect(null, { dueToday, dueTomorrow, archiveAlert })(TodoActions)
+export default connect(null, { dueToday, dueTomorrow, toggleArchived })(TodoActions)

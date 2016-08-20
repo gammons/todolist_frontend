@@ -65,7 +65,7 @@ export default class TestBackend extends Backend {
     this.cachedTodos = null;
   }
 
-  fetchTodos(show, due, group) {
+  fetchTodos() {
     let promise = new Promise((resolve, reject) => {
       if (this.cachedTodos) {
         resolve(this.cachedTodos)
@@ -90,10 +90,11 @@ export default class TestBackend extends Backend {
   }
 
   update(todo) {
-    let promise = new Promise((resolve, reject) =>  {
+    return new Promise((resolve, reject) =>  {
       this.cachedTodos = null
       let idx = _.findIndex(todos, (t) => { return t.id === todo.id });
       todos = [...todos.slice(0,idx), todo, ...todos.slice(idx+1)]
+      //reject("didn't work")
       resolve()
     });
   }

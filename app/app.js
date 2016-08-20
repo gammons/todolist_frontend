@@ -1,28 +1,42 @@
+import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider  } from 'react-redux';
-import promiseMiddleware from 'redux-promise';
 
+import createSagaMiddleware from 'redux-saga'
+
+import todoSagas from './sagas'
 import TodoRouter from './router';
 import reducers from './reducers';
 
-const injectTapEventPlugin = require('react-tap-event-plugin');
-injectTapEventPlugin();
+const sagaMiddleware = createSagaMiddleware();
+const devTools = window.devToolsExtension || (() => noop => noop);
 
-const createStoreWithMiddleware = applyMiddleware(promiseMiddleware)(createStore);
+const middlewares = [
+  sagaMiddleware
+];
+
+const enhancers = [
+  applyMiddleware(...middlewares),
+  devTools()
+]
+
+const store = createStore(
+  reducers,
+  compose(...enhancers)
+)
+
+sagaMiddleware.run(todoSagas)
 
 class App extends React.Component {
   render() {
     return(
-      <Provider store={createStoreWithMiddleware(reducers, window.devToolsExtension && window.devToolsExtension())}>
+      <Provider store={store}>
         <TodoRouter />
       </Provider>
     );
   }
 }
 
-const boot = () => {
-  ReactDOM.render( <App />, document.getElementById('app'));
-}
-boot();
+ReactDOM.render( <App />, document.getElementById('app'));

@@ -7,7 +7,6 @@ const todosSelector = state => state.todos.todos
 const filtersSelector = (state, props) => props.params
 
 const filterTodos = (todos, filter) => {
-  console.log("calling filter Todos")
   const showFilter = new ShowFilter(todos)
   const dateFilter = new DateFilter(showFilter.filterBy(filter.show));
   const grouper = new Grouper(dateFilter.filterBy(filter.due));

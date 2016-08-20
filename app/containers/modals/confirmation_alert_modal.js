@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Modal, FormGroup, ControlLabel, FormControl, Button } from 'react-bootstrap';
-import { createTodo } from '../actions/todo_actions';
+import { okAlert, cancelAlert } from '../../actions/modal_actions';
 import { connect } from 'react-redux';
 import DatePicker from 'react-bootstrap-date-picker';
 
-class AlertModal extends Component {
+class ConfirmationAlertModal extends Component {
   render() {
     return(
       <div>
@@ -12,18 +12,14 @@ class AlertModal extends Component {
           {this.props.modal.body}
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={this.handleHide.bind(this)}>Cancel</Button>
-          <Button onClick={this.handleSubmit.bind(this)} bsStyle="primary">Ok</Button>
+          <Button onClick={this.handleOk.bind(this)} bsStyle="primary">Ok</Button>
         </Modal.Footer>
       </div>
     )
   }
-  handleSubmit(e) {
-    this.props.modal.onOk()
-  }
-  handleHide() {
-    this.props.toggleModal(false)
+  handleOk(e) {
+    this.props.okAlert()
   }
 }
 
-export default connect(null, { createTodo })(AlertModal);
+export default connect(null, { okAlert})(ConfirmationAlertModal);
