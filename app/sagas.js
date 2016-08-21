@@ -1,6 +1,6 @@
 import { takeEvery  } from 'redux-saga';
 import { openAlert, openModal, confirmationAlert } from 'actions/modal_actions';
-import { addTodo, updateTodo } from 'actions/todo_actions';
+import { addTodo, updateTodo, deleteTodo } from 'actions/todo_actions';
 import { take, put, call  } from 'redux-saga/effects';
 import Backend from 'backends/TestBackend'
 import * as constants from './constants'
@@ -8,6 +8,7 @@ import * as constants from './constants'
 const backend = new Backend()
 const addTodoInBackend = todo => backend.add(todo)
 const updateTodoInBackend = todo => backend.update(todo)
+const deleteTodoInBackend = todo => backend.delete(todo)
 const fetchTodos = () => backend.fetchTodos()
 
 export function* runCreateTodo(action) {
@@ -17,6 +18,18 @@ export function* runCreateTodo(action) {
     yield call(addTodoInBackend, ret.todo)
     yield put(addTodo(ret.todo))
     yield put(confirmationAlert("The todo has been added."))
+  } catch(error) {
+    yield put(confirmationAlert("A backend failure occurred."))
+  }
+}
+
+export function* runDeleteTodo(action) {
+  yield put(openAlert("Are you sure you wish to delete this todo?"))
+  yield take(constants.ALERT_OK)
+  try {
+    yield call(deleteTodoInBackend, action.todo)
+    yield put(deleteTodo(action.todo))
+    yield put(confirmationAlert("The todo has been deleted."))
   } catch(error) {
     yield put(confirmationAlert("A backend failure occurred."))
   }
@@ -55,10 +68,15 @@ export function* watchCreateTodo() {
   yield* takeEvery(constants.START_CREATE_TODO_SAGA, runCreateTodo)
 }
 
+export function* watchDeleteTodo() {
+  yield* takeEvery(constants.START_DELETE_TODO_SAGA, runDeleteTodo)
+}
+
 export default function* rootSaga() {
   yield [
     watchToggleArchived(),
     watchFetchTodos(),
-    watchCreateTodo()
+    watchCreateTodo(),
+    watchDeleteTodo()
   ]
 }

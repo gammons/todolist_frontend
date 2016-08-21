@@ -1,4 +1,4 @@
-import { ALL, SHOW_UNARCHIVED, TODAY, ADD_TODO, UPDATE_TODO, TODOS_FETCHED, TOGGLE_COMPLETE } from '../constants'
+import * as constants from '../constants'
 import _ from 'lodash';
 
 const INITIAL_STATE = {
@@ -13,13 +13,16 @@ export default (state = INITIAL_STATE, action) => {
   }
 
   switch(action.type) {
-    case ADD_TODO:
+    case constants.ADD_TODO:
       return {...state, todos: [...state.todos, action.todo]}
 
-    case UPDATE_TODO:
+    case constants.UPDATE_TODO:
       return updateTodo(state, action);
 
-    case TODOS_FETCHED:
+    case constants.DELETE_TODO:
+      return deleteTodo(state, action);
+
+    case constants.TODOS_FETCHED:
       return {...state, todos: action.payload}
       break;
   }
@@ -29,5 +32,11 @@ export default (state = INITIAL_STATE, action) => {
 const updateTodo = (state, action) => {
   let idx = _.findIndex(state.todos, (todo) => { return todo.id === action.todo.id })
   let newState = {...state, todos: [...state.todos.slice(0,idx), _.cloneDeep(action.todo), ...state.todos.slice(idx+1)]}
+  return newState
+}
+
+const deleteTodo = (state, action) => {
+  let idx = _.findIndex(state.todos, (todo) => { return todo.id === action.todo.id })
+  let newState = {...state, todos: [...state.todos.slice(0,idx), ...state.todos.slice(idx+1)]}
   return newState
 }

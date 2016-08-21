@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { DropdownButton, MenuItem } from 'react-bootstrap';
 
-import { dueToday, dueTomorrow, toggleArchived } from '../actions/todo_actions';
+import { dueToday, dueTomorrow, toggleArchived, startDeleteTodo } from '../actions/todo_actions';
 
 class TodoActions extends Component {
   render() {
@@ -35,8 +35,10 @@ class TodoActions extends Component {
         break;
       case "archive":
         this.props.toggleArchived(this.props.todo)
+      case "delete":
+        this.props.startDeleteTodo(this.props.todo)
     }
   }
 }
 
-export default connect(null, { dueToday, dueTomorrow, toggleArchived })(TodoActions)
+export default connect(null, { dueToday, dueTomorrow, toggleArchived, startDeleteTodo })(TodoActions)

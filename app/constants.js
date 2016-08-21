@@ -42,6 +42,7 @@ export const FETCH_TODOS = "FETCH_TODOS"
 // Starting sagas
 // *******************
 export const START_CREATE_TODO_SAGA = "START_CREATE_TODO_SAGA"
+export const START_DELETE_TODO_SAGA = "START_DELETE_TODO_SAGA"
 
 // Used to open a modal dialog
 export const MODAL = "MODAL"

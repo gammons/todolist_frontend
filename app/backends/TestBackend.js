@@ -100,10 +100,13 @@ export default class TestBackend extends Backend {
     });
   }
 
-  save() {
-    let promise = new Promise((resolve, reject) => {
-      resolve();
+  delete(todo) {
+    return new Promise((resolve, reject) =>  {
+      this.cachedTodos = null
+      let idx = _.findIndex(todos, (t) => { return t.id === todo.id });
+      todos = [...todos.slice(0,idx), ...todos.slice(idx+1)]
+      //reject("didn't work")
+      resolve()
     });
-    return promise;
   }
 }

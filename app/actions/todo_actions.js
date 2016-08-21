@@ -13,6 +13,10 @@ export function startCreateTodo() {
   return { type: constants.START_CREATE_TODO_SAGA }
 }
 
+export function startDeleteTodo(todo) {
+  return { type: constants.START_DELETE_TODO_SAGA, todo: todo }
+}
+
 export function createTodo(subject, due) {
   const logic = new TodoLogic();
   let todo = logic.addTodo(subject, due)
@@ -52,5 +56,9 @@ export function addTodo(todo) {
 
 export function updateTodo(todo) {
   return { type: constants.UPDATE_TODO, todo: todo }
+}
+
+export function deleteTodo(todo) {
+  return { type: constants.DELETE_TODO, todo: todo }
 }
 
