@@ -80,10 +80,11 @@ export default class TestBackend extends Backend {
     return promise;
   }
 
-  addTodo(todo) {
+  add(todo) {
     let promise = new Promise((resolve, reject) => {
       //reject("Can't connect with backend")
       todos.push(todo);
+      this.cachedTodos = null
       resolve();
     });
     return promise;

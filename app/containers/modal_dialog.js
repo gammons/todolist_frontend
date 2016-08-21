@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { Modal } from 'react-bootstrap';
 import { connect } from 'react-redux';
 
-import { toggleModal } from '../actions/modal_actions';
+import { cancelAlert } from '../actions/modal_actions';
 import { CONFIRMATION_ALERT_MODAL, ADD_TODO_MODAL, TOGGLE_ALERT } from '../constants';
-import AddTodoModal from './add_todo_modal';
+import AddTodoModal from './modals/add_todo_modal';
 import AlertModal from './modals/alert_modal';
 import ConfirmationAlertModal from './modals/confirmation_alert_modal';
 
@@ -29,7 +29,7 @@ export default class ModalDialog extends Component {
   }
 
   handleHide() {
-    this.props.toggleModal(false);
+    this.props.cancelAlert();
   }
 }
 
@@ -39,4 +39,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, { toggleModal })(ModalDialog);
+export default connect(mapStateToProps, { cancelAlert })(ModalDialog);

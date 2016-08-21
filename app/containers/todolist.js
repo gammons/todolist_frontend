@@ -61,14 +61,6 @@ class Todolist extends Component {
     }
     return todos.map(this.showGroup.bind(this))
   }
-
-  _filterAndGroup(todos, show, due, group) {
-    let showFilter = new ShowFilter(todos)
-    let dateFilter = new DateFilter(showFilter.filterBy(show));
-    let grouper = new Grouper(dateFilter.filterBy(due));
-    return grouper.grouped(group)
-  }
-
 }
 
 function mapStateToProps(state, ownProps) {

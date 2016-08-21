@@ -3,8 +3,8 @@ import * as constants from '../constants'
 
 export default (state = {open: false}, action) => {
   switch(action.type) {
-    case constants.TOGGLE_MODAL:
-      return { open: action.open, component: action.component }
+    case constants.MODAL:
+      return { open: true, component: action.component }
     case constants.ALERT:
       return { open: true, component: constants.ALERT_MODAL, body: action.body }
     case constants.CONFIRMATION_ALERT:

@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Modal, FormGroup, ControlLabel, FormControl, Button } from 'react-bootstrap';
-import { createTodo } from '../actions/todo_actions';
 import { connect } from 'react-redux';
 import DatePicker from 'react-bootstrap-date-picker';
+
+import { createTodo } from '../../actions/todo_actions';
+import { cancelAlert } from '../../actions/modal_actions';
 
 class AddTodoModal extends Component {
   render() {
@@ -38,11 +40,10 @@ class AddTodoModal extends Component {
   }
   handleSubmit(e) {
     this.props.createTodo(this.subject, this.due)
-    this.props.toggleModal(false)
   }
   handleHide() {
-    this.props.toggleModal(false)
+    this.props.cancelAlert()
   }
 }
 
-export default connect(null, { createTodo })(AddTodoModal);
+export default connect(null, { cancelAlert, createTodo })(AddTodoModal);

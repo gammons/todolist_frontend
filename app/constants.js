@@ -32,15 +32,25 @@ export const ALERT_OK = "ALERT_OK"
 
 export const DUE_TODAY = "DUE_TODAY"
 export const ADD_TODO = "ADD_TODO"
+export const CREATE_TODO = "CREATE_TODO"
 export const UPDATE_TODO = "UPDATE_TODO"
 export const DELETE_TODO = "DELETE_TODO"
 export const FETCH_TODOS = "FETCH_TODOS"
 
+
+// *******************
+// Starting sagas
+// *******************
+export const START_CREATE_TODO_SAGA = "START_CREATE_TODO_SAGA"
+
+// Used to open a modal dialog
+export const MODAL = "MODAL"
+
+// Modal types
 export const ADD_TODO_MODAL = "ADD_TODO_MODAL"
 export const EDIT_TODO_MODAL = "EDIT_TODO_MODAL"
 export const CONFIRMATION_ALERT_MODAL = "CONFIRMATION_ALERT_MODAL"
 
-export const ALERT_MODAL = "ALERT_MODAL"
-export const TOGGLE_MODAL = "TOGGLE_MODAL"
 export const ALERT = "ALERT"
+export const ALERT_MODAL = "ALERT_MODAL"
 export const CONFIRMATION_ALERT = "CONFIRMATION_ALERT"

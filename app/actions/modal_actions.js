@@ -1,10 +1,8 @@
 import * as constants from '../constants'
-import { archiveTodo } from './todo_actions';
 
-export function toggleModal(open, component, title) {
+export function openModal(component) {
   return {
-    type: constants.TOGGLE_MODAL,
-    open: open,
+    type: constants.MODAL,
     component: component
   }
 }
@@ -22,7 +20,6 @@ export function confirmationAlert(body) {
     body: body
   }
 }
-
 
 export function cancelAlert() {
   return {
