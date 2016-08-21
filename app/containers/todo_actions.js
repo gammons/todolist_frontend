@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { DropdownButton, MenuItem } from 'react-bootstrap';
 
-import { dueToday, dueTomorrow, toggleArchived, startDeleteTodo } from '../actions/todo_actions';
+import { dueToday, dueTomorrow, startArchiveTodo, startUnarchiveTodo, startDeleteTodo } from '../actions/todo_actions';
 
 class TodoActions extends Component {
   render() {
@@ -18,11 +18,19 @@ class TodoActions extends Component {
           <MenuItem eventKey="tomorrow">Due tomorrow</MenuItem>
           <MenuItem eventKey="3">Edit</MenuItem>
           <MenuItem divider />
-          <MenuItem eventKey="archive">Archive</MenuItem>
+          {this.showArchiveOption()}
           <MenuItem eventKey="delete">Delete</MenuItem>
         </DropdownButton>
       </span>
     )
+  }
+
+  showArchiveOption() {
+    if (this.props.todo.archived) {
+      return <MenuItem eventKey="unarchive">Un-archive</MenuItem>
+    } else {
+      return <MenuItem eventKey="archive">Archive</MenuItem>
+    }
   }
 
   handleChange(action) {
@@ -34,11 +42,15 @@ class TodoActions extends Component {
         this.props.dueTomorrow(this.props.todo)
         break;
       case "archive":
-        this.props.toggleArchived(this.props.todo)
+        this.props.startArchiveTodo(this.props.todo)
+        break;
+      case "unarchive":
+        this.props.startUnarchiveTodo(this.props.todo)
+        break;
       case "delete":
         this.props.startDeleteTodo(this.props.todo)
     }
   }
 }
 
-export default connect(null, { dueToday, dueTomorrow, toggleArchived, startDeleteTodo })(TodoActions)
+export default connect(null, { dueToday, dueTomorrow, startArchiveTodo, startUnarchiveTodo, startDeleteTodo })(TodoActions)

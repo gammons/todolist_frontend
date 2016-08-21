@@ -35,13 +35,25 @@ export function* runDeleteTodo(action) {
   }
 }
 
-export function* toggleArchived(action) {
+export function* runArchiveTodo(action) {
   yield put(openAlert("Are you sure you wish to archive this todo?"))
   yield take(constants.ALERT_OK)
   try {
     yield call(updateTodoInBackend, action.todo)
     yield put(updateTodo(action.todo))
     yield put(confirmationAlert("The todo has been archived."))
+  } catch(error) {
+    yield put(confirmationAlert("A backend failure occurred."))
+  }
+}
+
+export function* runUnarchiveTodo(action) {
+  yield put(openAlert("Are you sure you wish to un-archive this todo?"))
+  yield take(constants.ALERT_OK)
+  try {
+    yield call(updateTodoInBackend, action.todo)
+    yield put(updateTodo(action.todo))
+    yield put(confirmationAlert("The todo has been un-archived."))
   } catch(error) {
     yield put(confirmationAlert("A backend failure occurred."))
   }
@@ -56,8 +68,12 @@ export function* runFetchTodos(action) {
   }
 }
 
-export function* watchToggleArchived() {
-  yield* takeEvery(constants.TOGGLE_ARCHIVE_TODO, toggleArchived)
+export function* watchArchiveTodo() {
+  yield* takeEvery(constants.START_ARCHIVE_TODO_SAGA, runArchiveTodo)
+}
+
+export function* watchUnarchiveTodo() {
+  yield* takeEvery(constants.START_UNARCHIVE_TODO_SAGA, runUnarchiveTodo)
 }
 
 export function* watchFetchTodos() {
@@ -74,7 +90,8 @@ export function* watchDeleteTodo() {
 
 export default function* rootSaga() {
   yield [
-    watchToggleArchived(),
+    watchArchiveTodo(),
+    watchUnarchiveTodo(),
     watchFetchTodos(),
     watchCreateTodo(),
     watchDeleteTodo()

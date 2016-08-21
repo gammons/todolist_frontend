@@ -42,10 +42,18 @@ export function dueTomorrow(todo) {
   return updateTodo(todo);
 }
 
-export function toggleArchived(todo) {
+export function startArchiveTodo(todo) {
   todo.archived = !todo.archived
   return {
-    type: constants.TOGGLE_ARCHIVE_TODO,
+    type: constants.START_ARCHIVE_TODO_SAGA,
+    todo: todo
+  }
+}
+
+export function startUnarchiveTodo(todo) {
+  todo.archived = !todo.archived
+  return {
+    type: constants.START_UNARCHIVE_TODO_SAGA,
     todo: todo
   }
 }
