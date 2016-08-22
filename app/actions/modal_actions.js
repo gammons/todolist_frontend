@@ -1,9 +1,10 @@
 import * as constants from '../constants'
 
-export function openModal(component) {
+export function openModal(component, extraProps = {}) {
   return {
     type: constants.MODAL,
-    component: component
+    component: component,
+    ...extraProps
   }
 }
 

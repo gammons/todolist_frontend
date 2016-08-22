@@ -17,7 +17,12 @@ class AddTodoModal extends Component {
           <form onSubmit={this.handleSubmit.bind(this)}>
             <FormGroup controlId="add-todo-form">
               <ControlLabel> Subject </ControlLabel>
-              <FormControl onChange={this.subjectChange.bind(this)}type="text" placeholder="Enter subject" />
+              <FormControl
+                onChange={this.subjectChange.bind(this)}
+                type="text"
+                placeholder="Enter subject"
+                defaultValue={this.props.modal.todo.subject}
+              />
             </FormGroup>
             <FormGroup>
               <ControlLabel>Due</ControlLabel>

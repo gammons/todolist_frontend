@@ -68,6 +68,16 @@ export function* runFetchTodos(action) {
   }
 }
 
+export function* runUpdateTodo(action) {
+  try {
+    yield call(updateTodoInBackend, action.todo)
+    yield put(updateTodo(action.todo))
+    yield put(confirmationAlert("The todo has been updated."))
+  } catch(error) {
+    yield put(confirmationAlert("A backend failure occurred."))
+  }
+}
+
 export function* watchArchiveTodo() {
   yield* takeEvery(constants.START_ARCHIVE_TODO_SAGA, runArchiveTodo)
 }
@@ -88,12 +98,17 @@ export function* watchDeleteTodo() {
   yield* takeEvery(constants.START_DELETE_TODO_SAGA, runDeleteTodo)
 }
 
+export function* watchUpdateTodo() {
+  yield* takeEvery(constants.START_UPDATE_TODO_SAGA, runUpdateTodo)
+}
+
 export default function* rootSaga() {
   yield [
     watchArchiveTodo(),
     watchUnarchiveTodo(),
     watchFetchTodos(),
     watchCreateTodo(),
-    watchDeleteTodo()
+    watchDeleteTodo(),
+    watchUpdateTodo()
   ]
 }

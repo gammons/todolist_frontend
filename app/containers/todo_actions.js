@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { DropdownButton, MenuItem } from 'react-bootstrap';
+import { EDIT_TODO_MODAL } from '../constants'
 
 import { dueToday, dueTomorrow, startArchiveTodo, startUnarchiveTodo, startDeleteTodo } from '../actions/todo_actions';
+import { openModal } from '../actions/modal_actions';
 
 class TodoActions extends Component {
   render() {
@@ -16,7 +18,7 @@ class TodoActions extends Component {
         >
           <MenuItem eventKey="today">Due today</MenuItem>
           <MenuItem eventKey="tomorrow">Due tomorrow</MenuItem>
-          <MenuItem eventKey="3">Edit</MenuItem>
+          <MenuItem eventKey="edit">Edit</MenuItem>
           <MenuItem divider />
           {this.showArchiveOption()}
           <MenuItem eventKey="delete">Delete</MenuItem>
@@ -41,6 +43,9 @@ class TodoActions extends Component {
       case "tomorrow":
         this.props.dueTomorrow(this.props.todo)
         break;
+      case "edit":
+        this.props.openModal(EDIT_TODO_MODAL, {todo: this.props.todo})
+        break;
       case "archive":
         this.props.startArchiveTodo(this.props.todo)
         break;
@@ -53,4 +58,4 @@ class TodoActions extends Component {
   }
 }
 
-export default connect(null, { dueToday, dueTomorrow, startArchiveTodo, startUnarchiveTodo, startDeleteTodo })(TodoActions)
+export default connect(null, { dueToday, dueTomorrow, startArchiveTodo, startUnarchiveTodo, startDeleteTodo, openModal })(TodoActions)

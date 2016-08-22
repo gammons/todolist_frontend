@@ -5,11 +5,13 @@ import { connect } from 'react-redux';
 import { cancelAlert } from '../actions/modal_actions';
 import { CONFIRMATION_ALERT_MODAL, ADD_TODO_MODAL, TOGGLE_ALERT } from '../constants';
 import AddTodoModal from './modals/add_todo_modal';
+import EditTodoModal from './modals/edit_todo_modal';
 import AlertModal from './modals/alert_modal';
 import ConfirmationAlertModal from './modals/confirmation_alert_modal';
 
 const MODAL_COMPONENTS = {
   ADD_TODO_MODAL: AddTodoModal,
+  EDIT_TODO_MODAL: EditTodoModal,
   ALERT_MODAL: AlertModal,
   CONFIRMATION_ALERT_MODAL: ConfirmationAlertModal
 }
