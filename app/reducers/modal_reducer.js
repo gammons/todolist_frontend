@@ -1,4 +1,3 @@
-//import { TOGGLE_MODAL, TOGGLE_ALERT, ALERT_MODAL, ALERT_OK, ALERT_CANCEL, BACKEND_FAILURE } from '../constants'
 import * as constants from '../constants'
 
 export default (state = {open: false}, action) => {
