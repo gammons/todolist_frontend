@@ -2,16 +2,18 @@ import React, { Component } from 'react';
 import { Modal, FormGroup, ControlLabel, FormControl, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import DatePicker from 'react-bootstrap-date-picker';
+import moment from 'moment'
 
-import { createTodo } from '../../actions/todo_actions';
+import { startUpdateTodo } from '../../actions/todo_actions';
 import { cancelAlert } from '../../actions/modal_actions';
 
-class AddTodoModal extends Component {
+class EditTodoModal extends Component {
   render() {
+    const todo = this.props.modal.todo
     return(
       <div>
         <Modal.Header>
-          <Modal.Title>Add todo</Modal.Title>
+          <Modal.Title>Edit todo</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form onSubmit={this.handleSubmit.bind(this)}>
@@ -21,12 +23,12 @@ class AddTodoModal extends Component {
                 onChange={this.subjectChange.bind(this)}
                 type="text"
                 placeholder="Enter subject"
-                defaultValue={this.props.modal.todo.subject}
+                defaultValue={todo.subject}
               />
             </FormGroup>
             <FormGroup>
               <ControlLabel>Due</ControlLabel>
-              <DatePicker onChange={this.dueChange.bind(this)} />
+              <DatePicker value={this.isoDue(todo.due)} onChange={this.dueChange.bind(this)} />
             </FormGroup>
           </form>
         </Modal.Body>
@@ -37,18 +39,28 @@ class AddTodoModal extends Component {
       </div>
     )
   }
+
+  isoDue(due) {
+    if (due) {
+      return moment(due).format()
+    }
+  }
+
   subjectChange(e) {
-    this.subject = e.target.value
+    this.props.modal.todo.subject = e.target.value
   }
+
   dueChange(e) {
-    this.due = e;
+    this.props.modal.todo.due = e
   }
+
   handleSubmit(e) {
-    this.props.createTodo(this.subject, this.due)
+    this.props.startUpdateTodo(this.props.modal.todo)
   }
+
   handleHide() {
     this.props.cancelAlert()
   }
 }
 
-export default connect(null, { cancelAlert, createTodo })(AddTodoModal);
+export default connect(null, { cancelAlert, startUpdateTodo })(EditTodoModal);

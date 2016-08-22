@@ -4,7 +4,7 @@ import * as constants from '../constants'
 export default (state = {open: false}, action) => {
   switch(action.type) {
     case constants.MODAL:
-      return { open: true, component: action.component }
+      return { open: true, component: action.component, todo: action.todo }
     case constants.ALERT:
       return { open: true, component: constants.ALERT_MODAL, body: action.body }
     case constants.CONFIRMATION_ALERT:
