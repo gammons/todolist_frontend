@@ -66,7 +66,7 @@ export default class TestBackend extends Backend {
   }
 
   fetchTodos() {
-    let promise = new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       if (this.cachedTodos) {
         resolve(this.cachedTodos)
       } else {
@@ -77,7 +77,6 @@ export default class TestBackend extends Backend {
         setTimeout(yes, 400);
       }
     });
-    return promise;
   }
 
   add(todo) {
