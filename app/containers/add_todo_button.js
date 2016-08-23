@@ -5,7 +5,7 @@ import { Button } from 'react-bootstrap';
 
 import { ADD_TODO_MODAL } from '../constants';
 
-class AddTodoButton extends Component {
+export class AddTodoButton extends Component {
   render() {
     return <Button onClick={this.props.startCreateTodo}>Add todo</Button>
   }
