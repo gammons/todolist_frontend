@@ -21,7 +21,6 @@ class AddTodoModal extends Component {
                 onChange={this.subjectChange.bind(this)}
                 type="text"
                 placeholder="Enter subject"
-                defaultValue={this.props.modal.todo.subject}
               />
             </FormGroup>
             <FormGroup>
