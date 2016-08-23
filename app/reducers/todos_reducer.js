@@ -2,16 +2,10 @@ import * as constants from '../constants'
 import _ from 'lodash';
 
 const INITIAL_STATE = {
-  todos: [],
-  error: false,
-  errorMsg: null
+  todos: []
 }
 
 export default (state = INITIAL_STATE, action) => {
-  if (action.error === true) {
-    return {...state, error: true, errorMsg: action.payload}
-  }
-
   switch(action.type) {
     case constants.ADD_TODO:
       return {...state, todos: [...state.todos, action.todo]}
