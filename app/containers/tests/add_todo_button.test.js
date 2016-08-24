@@ -1,13 +1,12 @@
 import React from 'react'
-import { shallow } from 'enzyme'
 import { AddTodoButton } from '../add_todo_button'
 import expect from 'expect'
+import { shallow } from 'enzyme'
 
 function setup() {
   const props = {
     startCreateTodo: expect.createSpy()
   }
-
   const enzymeWrapper = shallow(<AddTodoButton {...props} />)
 
   return { props, enzymeWrapper }

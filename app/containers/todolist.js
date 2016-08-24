@@ -22,10 +22,17 @@ class Todolist extends Component {
       this.props.fetchTodos(nextProps.params.show, nextProps.params.due, nextProps.params.group);
   }
 
-  showTodo(todo, idx) {
+  renderTodo(todo, idx) {
     return(
       <Todo todo={todo} key={idx} />
     )
+  }
+
+  renderTodosForGroup(todos) {
+    if (todos.length == 0) {
+      return <p>No todos.</p>
+    }
+    return todos.map(this.renderTodo.bind(this))
   }
 
   showGroup(group, idx) {
@@ -33,7 +40,7 @@ class Todolist extends Component {
       <div key={idx}>
         <h3>{group.title}</h3>
         <ListGroup>
-          {group.todos.map(this.showTodo.bind(this))}
+          {this.renderTodosForGroup(group.todos)}
         </ListGroup>
       </div>
     )
@@ -50,16 +57,9 @@ class Todolist extends Component {
           <FilterButtons show={show} group={group} due={due} />
 
         </span>
-        {this.renderTodos(todos)}
+        {todos.map(this.showGroup.bind(this))}
       </div>
     )
-  }
-
-  renderTodos(todos) {
-    if (todos.length == 0) {
-      return <p>No todos.</p>
-    }
-    return todos.map(this.showGroup.bind(this))
   }
 }
 
