@@ -1,26 +1,42 @@
+import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import { createStore, applyMiddleware, compose } from 'redux';
+import { Provider  } from 'react-redux';
 
-import TodoActionCreators from './actions/TodoActionCreators';
-import TodoRouter from './TodoRouter';
+import createSagaMiddleware from 'redux-saga'
 
-const injectTapEventPlugin = require('react-tap-event-plugin');
-injectTapEventPlugin();
+import todoSagas from './sagas'
+import TodoRouter from './router';
+import reducers from './reducers';
+
+const sagaMiddleware = createSagaMiddleware();
+const devTools = window.devToolsExtension || (() => noop => noop);
+
+const middlewares = [
+  sagaMiddleware
+];
+
+const enhancers = [
+  applyMiddleware(...middlewares),
+  devTools()
+]
+
+const store = createStore(
+  reducers,
+  compose(...enhancers)
+)
+
+sagaMiddleware.run(todoSagas)
 
 class App extends React.Component {
   render() {
     return(
-      <MuiThemeProvider muiTheme={getMuiTheme()}>
-      <TodoRouter />
-      </MuiThemeProvider>
+      <Provider store={store}>
+        <TodoRouter />
+      </Provider>
     );
   }
 }
 
-const boot = () => {
-  ReactDOM.render( <App />, document.getElementById('app'));
-  TodoActionCreators.load();
-}
-boot();
+ReactDOM.render( <App />, document.getElementById('app'));

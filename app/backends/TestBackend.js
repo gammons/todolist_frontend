@@ -1,83 +1,53 @@
-import moment from 'moment';
+import { todos as todoFixtures } from '../../test/test_helper'
 
-import Backend from './Backend';
+let todos = todoFixtures
 
-export default class TestBackend extends Backend {
-  load() {
-    let promise = new Promise((resolve, reject) => {
-      let yes = () => {
-        resolve(this._fakeTodos());
-      }
-      setTimeout(yes, 800);
-    });
-    return promise;
+export default class TestBackend {
+  constructor() {
+    this.cachedTodos = null;
   }
 
-  save() {
+  fetchTodos() {
+    return new Promise((resolve, reject) => {
+      if (this.cachedTodos) {
+        resolve(this.cachedTodos)
+      } else {
+        let yes = () => {
+          this.cachedTodos = _.cloneDeep(todos)
+          resolve(this.cachedTodos)
+        }
+        setTimeout(yes, 400);
+      }
+    });
+  }
+
+  add(todo) {
     let promise = new Promise((resolve, reject) => {
+      //reject("Can't connect with backend")
+      todos.push(todo);
+      this.cachedTodos = null
       resolve();
     });
     return promise;
   }
 
-  _fakeTodos() {
-    let todos = [
-    {
-      id: 1,
-      subject: 'Call with @Bob and @Frank about +bigProject',
-      projects: ['bigProject'],
-      contexts: ['Bob','Frank'],
-      due: moment().add(1, 'day').format('YYYY-MM-DD'),
-      completed: false,
-      archived: false
-    },
-    {
-      id: 2,
-      subject: 'Strategy for +mobile @pomodoro',
-      projects: ['mobile'],
-      contexts: [],
-      due: moment().format('YYYY-MM-DD'),
-      completed: false,
-      archived: false
-    },
-    {
-      id: 3,
-      subject: 'Send phone udid to @Marty to test +mobile projects',
-      projects: ['mobile'],
-      contexts: ['marty'],
-      due: moment().format('YYYY-MM-DD'),
-      completed: false,
-      archived: false
-    },
-    {
-      id: 4,
-      subject: 'Did @john call me back about the +testProject?',
-      projects: ['testProject'],
-      contexts: ['john'],
-      due: moment().format('YYYY-MM-DD'),
-      due: '2016-04-28',
-      completed: true,
-      archived: false
-    },
-    {
-      id: 5,
-      subject: 'Follow up with @nick about 6-month salary increase',
-      projects: [],
-      contexts: ['Nick'],
-      due: moment().subtract(2, 'day').format('YYYY-MM-DD'),
-      completed: true,
-      archived: true
-    },
-    {
-      id: 6,
-      subject: 'Work on +budget presentation for leadership team, sell to @Nick first',
-      projects: [],
-      contexts: ['Nick'],
-      due: moment().subtract(2, 'day').format('YYYY-MM-DD'),
-      completed: false,
-      archived: false
-    }
-    ];
-    return todos;
+  update(todo) {
+    return new Promise((resolve, reject) =>  {
+      this.cachedTodos = null
+      let idx = _.findIndex(todos, (t) => { return t.id === todo.id });
+      todos = [...todos.slice(0,idx), todo, ...todos.slice(idx+1)]
+      //reject("didn't work")
+      resolve()
+    });
+  }
+
+  delete(todo) {
+    return new Promise((resolve, reject) =>  {
+      this.cachedTodos = null
+      let idx = _.findIndex(todos, (t) => { return t.id === todo.id });
+      todos = [...todos.slice(0,idx), ...todos.slice(idx+1)]
+      //reject("didn't work")
+      resolve()
+    });
   }
 }

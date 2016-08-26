@@ -1,5 +1,5 @@
 import expect from 'expect';
-import Grouper from './Grouper';
+import Grouper from './grouper';
 
 describe('Grouper', () => {
   it("_getContexts", () => {
