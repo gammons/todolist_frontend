@@ -2,10 +2,17 @@ import { takeEvery  } from 'redux-saga';
 import { openAlert, openModal, confirmationAlert } from 'actions/modal_actions';
 import { addTodo, updateTodo, deleteTodo } from 'actions/todo_actions';
 import { take, put, call  } from 'redux-saga/effects';
-import Backend from 'backends/TestBackend'
+import TestBackend from 'backends/TestBackend'
+import LocalBackend from 'backends/LocalBackend'
 import * as constants from './constants'
 
-const backend = new Backend()
+let backend
+if (window.location.hostname === "localhost" || window.location.hostname == "127.0.0.1") {
+  backend = new LocalBackend()
+} else {
+  backend = new TestBackend()
+}
+
 const addTodoInBackend = todo => backend.add(todo)
 const updateTodoInBackend = todo => backend.update(todo)
 const deleteTodoInBackend = todo => backend.delete(todo)

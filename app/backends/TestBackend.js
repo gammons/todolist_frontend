@@ -1,11 +1,9 @@
-import Backend from './Backend';
 import { todos as todoFixtures } from '../../test/test_helper'
 
 let todos = todoFixtures
 
-export default class TestBackend extends Backend {
+export default class TestBackend {
   constructor() {
-    super();
     this.cachedTodos = null;
   }
 
