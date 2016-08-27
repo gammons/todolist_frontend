@@ -3,7 +3,7 @@ import expect from 'expect'
 import { mount } from 'enzyme'
 import { Provider } from 'react-redux'
 
-import { fakeStore, todos as todoFixtures } from '../../../test/test_helper'
+import { fakeStore, todos as todoFixtures } from '../../test/test_helper'
 import * as constants from '../../constants'
 
 import Todolist from '../todolist'

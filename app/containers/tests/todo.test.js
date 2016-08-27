@@ -2,7 +2,7 @@ import React from 'react'
 import { expect } from 'chai'
 import { render } from 'enzyme'
 import { Provider } from 'react-redux'
-import { fakeStore } from '../../../test/test_helper'
+import { fakeStore } from '../../test/test_helper'
 import moment from 'moment'
 
 import Todo from '../todo'

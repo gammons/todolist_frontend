@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { todos as todoFixtures } from '../../test/test_helper'
+import { todos as todoFixtures } from '../test/test_helper'
 
 let todos = todoFixtures
 
