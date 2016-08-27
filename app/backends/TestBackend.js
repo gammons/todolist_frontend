@@ -1,53 +1,50 @@
+import _ from 'lodash'
 import { todos as todoFixtures } from '../../test/test_helper'
 
 let todos = todoFixtures
 
 export default class TestBackend {
   constructor() {
-    this.cachedTodos = null;
+    this.cachedTodos = null
   }
 
   fetchTodos() {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       if (this.cachedTodos) {
         resolve(this.cachedTodos)
       } else {
-        let yes = () => {
+        const yes = () => {
           this.cachedTodos = _.cloneDeep(todos)
           resolve(this.cachedTodos)
         }
-        setTimeout(yes, 400);
+        setTimeout(yes, 400)
       }
-    });
+    })
   }
 
   add(todo) {
-    let promise = new Promise((resolve, reject) => {
-      //reject("Can't connect with backend")
-      todos.push(todo);
+    return new Promise((resolve) => {
+      todos.push(todo)
       this.cachedTodos = null
-      resolve();
-    });
-    return promise;
+      resolve()
+    })
   }
 
   update(todo) {
-    return new Promise((resolve, reject) =>  {
+    return new Promise((resolve) => {
       this.cachedTodos = null
-      let idx = _.findIndex(todos, (t) => { return t.id === todo.id });
-      todos = [...todos.slice(0,idx), todo, ...todos.slice(idx+1)]
-      //reject("didn't work")
+      const idx = _.findIndex(todos, (t) => t.id === todo.id)
+      todos = [...todos.slice(0, idx), todo, ...todos.slice(idx + 1)]
       resolve()
-    });
+    })
   }
 
   delete(todo) {
-    return new Promise((resolve, reject) =>  {
+    return new Promise((resolve) => {
       this.cachedTodos = null
-      let idx = _.findIndex(todos, (t) => { return t.id === todo.id });
-      todos = [...todos.slice(0,idx), ...todos.slice(idx+1)]
-      //reject("didn't work")
+      const idx = _.findIndex(todos, (t) => t.id === todo.id)
+      todos = [...todos.slice(0, idx), ...todos.slice(idx + 1)]
       resolve()
-    });
+    })
   }
 }

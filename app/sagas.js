@@ -1,13 +1,13 @@
-import { takeEvery  } from 'redux-saga';
-import { openAlert, openModal, confirmationAlert } from 'actions/modal_actions';
-import { addTodo, updateTodo, deleteTodo } from 'actions/todo_actions';
-import { take, put, call  } from 'redux-saga/effects';
-import TestBackend from 'backends/TestBackend'
-import LocalBackend from 'backends/LocalBackend'
+import { takeEvery } from 'redux-saga'
+import { openAlert, openModal, confirmationAlert } from './actions/modal_actions'
+import { addTodo, updateTodo, deleteTodo } from './actions/todo_actions'
+import { take, put, call } from 'redux-saga/effects'
+import TestBackend from './backends/TestBackend'
+import LocalBackend from './backends/LocalBackend'
 import * as constants from './constants'
 
 let backend
-if (window.location.hostname === "localhost" || window.location.hostname == "127.0.0.1") {
+if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
   backend = new LocalBackend()
 } else {
   backend = new TestBackend()
@@ -18,60 +18,60 @@ const updateTodoInBackend = todo => backend.update(todo)
 const deleteTodoInBackend = todo => backend.delete(todo)
 const fetchTodos = () => backend.fetchTodos()
 
-export function* runCreateTodo(action) {
+export function* runCreateTodo() {
   yield put(openModal(constants.ADD_TODO_MODAL))
   const ret = yield take(constants.CREATE_TODO)
   try {
     yield call(addTodoInBackend, ret.todo)
     yield put(addTodo(ret.todo))
-    yield put(confirmationAlert("The todo has been added."))
-  } catch(error) {
-    yield put(confirmationAlert("A backend failure occurred."))
+    yield put(confirmationAlert('The todo has been added.'))
+  } catch (error) {
+    yield put(confirmationAlert('A backend failure occurred.'))
   }
 }
 
 export function* runDeleteTodo(action) {
-  yield put(openAlert("Are you sure you wish to delete this todo?"))
+  yield put(openAlert('Are you sure you wish to delete this todo?'))
   yield take(constants.ALERT_OK)
   try {
     yield call(deleteTodoInBackend, action.todo)
     yield put(deleteTodo(action.todo))
-    yield put(confirmationAlert("The todo has been deleted."))
-  } catch(error) {
-    yield put(confirmationAlert("A backend failure occurred."))
+    yield put(confirmationAlert('The todo has been deleted.'))
+  } catch (error) {
+    yield put(confirmationAlert('A backend failure occurred.'))
   }
 }
 
 export function* runArchiveTodo(action) {
-  yield put(openAlert("Are you sure you wish to archive this todo?"))
+  yield put(openAlert('Are you sure you wish to archive this todo?'))
   yield take(constants.ALERT_OK)
   try {
     yield call(updateTodoInBackend, action.todo)
     yield put(updateTodo(action.todo))
-    yield put(confirmationAlert("The todo has been archived."))
-  } catch(error) {
-    yield put(confirmationAlert("A backend failure occurred."))
+    yield put(confirmationAlert('The todo has been archived.'))
+  } catch (error) {
+    yield put(confirmationAlert('A backend failure occurred.'))
   }
 }
 
 export function* runUnarchiveTodo(action) {
-  yield put(openAlert("Are you sure you wish to un-archive this todo?"))
+  yield put(openAlert('Are you sure you wish to un-archive this todo?'))
   yield take(constants.ALERT_OK)
   try {
     yield call(updateTodoInBackend, action.todo)
     yield put(updateTodo(action.todo))
-    yield put(confirmationAlert("The todo has been un-archived."))
-  } catch(error) {
-    yield put(confirmationAlert("A backend failure occurred."))
+    yield put(confirmationAlert('The todo has been un-archived.'))
+  } catch (error) {
+    yield put(confirmationAlert('A backend failure occurred.'))
   }
 }
 
-export function* runFetchTodos(action) {
+export function* runFetchTodos() {
   try {
     const todos = yield call(fetchTodos)
-    yield put({type: constants.TODOS_FETCHED, payload: todos})
-  } catch(error) {
-    yield put(openAlert("A backend failure occurred."))
+    yield put({ type: constants.TODOS_FETCHED, payload: todos })
+  } catch (error) {
+    yield put(openAlert('A backend failure occurred.'))
   }
 }
 
@@ -79,9 +79,9 @@ export function* runUpdateTodo(action) {
   try {
     yield call(updateTodoInBackend, action.todo)
     yield put(updateTodo(action.todo))
-    yield put(confirmationAlert("The todo has been updated."))
-  } catch(error) {
-    yield put(confirmationAlert("A backend failure occurred."))
+    yield put(confirmationAlert('The todo has been updated.'))
+  } catch (error) {
+    yield put(confirmationAlert('A backend failure occurred.'))
   }
 }
 
@@ -116,6 +116,6 @@ export default function* rootSaga() {
     watchFetchTodos(),
     watchCreateTodo(),
     watchDeleteTodo(),
-    watchUpdateTodo()
+    watchUpdateTodo(),
   ]
 }

@@ -1,6 +1,9 @@
+import fetch from 'whatwg-fetch'
+import _ from 'lodash'
+
 export default class LocalBackend {
   constructor() {
-    this.cachedTodos = null;
+    this.cachedTodos = null
   }
 
   fetchTodos() {
@@ -8,52 +11,47 @@ export default class LocalBackend {
       if (this.cachedTodos) {
         resolve(this.cachedTodos)
       } else {
-        fetch("http://localhost:7890/todos")
-          .then((resp) => { return resp.json() })
+        fetch('http://localhost:7890/todos')
+          .then((resp) => { resp.json() })
           .then((json) => {
             this.cachedTodos = json
             resolve(json)
           })
           .catch((error) => { reject(error) })
       }
-    });
+    })
   }
 
   add(todo) {
-    console.log("calling add todo")
-    return this._save([...this.cachedTodos, todo])
+    return this.save([...this.cachedTodos, todo])
   }
 
   update(todo) {
-    let idx = _.findIndex(this.cachedTodos, (t) => { return t.id === todo.id });
-    let todos = [...this.cachedTodos.slice(0,idx), todo, ...this.cachedTodos.slice(idx+1)]
-    return this._save(todos)
+    const idx = _.findIndex(this.cachedTodos, (t) => t.id === todo.id)
+    const todos = [...this.cachedTodos.slice(0, idx), todo, ...this.cachedTodos.slice(idx + 1)]
+    return this.save(todos)
   }
 
   delete(todo) {
-    let idx = _.findIndex(this.cachedTodos, (t) => { return t.id === todo.id });
-    let todos = [...this.cachedTodos.slice(0,idx), ...this.cachedTodos.slice(idx+1)]
-    return this._save(todos)
+    const idx = _.findIndex(this.cachedTodos, (t) => t.id === todo.id)
+    const todos = [...this.cachedTodos.slice(0, idx), ...this.cachedTodos.slice(idx + 1)]
+    return this.save(todos)
   }
 
-  _save(todos) {
-    return new Promise((resolve, reject)  => {
-      console.log("in save promise")
+  save(todos) {
+    return new Promise((resolve, reject) => {
       fetch('http://localhost:7890/todos', {
         method: 'POST',
-        headers: { 'Accept': 'application/json', },
-        body: JSON.stringify(todos)
+        headers: { Accept: 'application/json' },
+        body: JSON.stringify(todos),
       })
         .then((resp) => {
-          console.log("in then")
           this.cachedTodos = todos
-          resolve(resp);
+          resolve(resp)
         })
         .catch((error) => {
-          debugger;
-          console.log("error is ", error)
           reject(error)
-        });
+        })
     })
   }
 }

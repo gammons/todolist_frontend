@@ -1,95 +1,98 @@
-import _ from "lodash";
-import { ALL, BY_CONTEXT, BY_PROJECT } from '../constants';
+import _ from 'lodash'
+import { ALL, BY_CONTEXT, BY_PROJECT } from '../constants'
 
 export default class Grouper {
   constructor(todos) {
-    this.todos = todos;
+    this.todos = todos
   }
 
   grouped(grouping) {
-    switch(grouping) {
-      case ALL: return this.byAll();
-      case BY_CONTEXT: return this.byContext();
-      case BY_PROJECT: return this.byProject();
+    switch (grouping) {
+      case ALL: return this.byAll()
+      case BY_CONTEXT: return this.byContext()
+      case BY_PROJECT: return this.byProject()
+      default: return this.byAll()
     }
   }
 
   byContext() {
-    let grouped = [];
-    _.map(this._getContexts(), (context) => {
-      grouped.push({title: context, todos: this._todosWithContext(context) });
-    });
-    let contextLengths = _.map(this.todos, (todo) => { return todo.contexts.length });
-    if (_.some(contextLengths, (l) => { return l == 0 })) {
-      grouped.push({title: "No contexts", todos: this._todosWithNoContext()})
+    const grouped = []
+    _.map(this.getContexts(), (context) => {
+      grouped.push({ title: context, todos: this.todosWithContext(context) })
+    })
+    const contextLengths = _.map(this.todos, (todo) => todo.contexts.length)
+    if (_.some(contextLengths, (l) => l === 0)) {
+      grouped.push({ title: 'No contexts', todos: this.todosWithNoContext() })
     }
-    return grouped;
+    return grouped
   }
 
   byProject() {
-    let grouped = [];
-    _.map(this._getProjects(), (project) => {
-      grouped.push({title: project, todos: this._todosWithProject(project) });
-    });
-    let projectLengths = _.map(this.todos, (todo) => { return todo.projects.length });
-    if (_.some(projectLengths, (l) => { return l == 0 })) {
-      grouped.push({title: "No projects", todos: this._todosWithNoProject()})
+    const grouped = []
+    _.map(this.getProjects(), (project) => {
+      grouped.push({ title: project, todos: this.todosWithProject(project) })
+    })
+
+    const projectLengths = _.map(this.todos, (todo) => todo.projects.length)
+    if (_.some(projectLengths, (l) => l === 0)) {
+      grouped.push({ title: 'No projects', todos: this.todosWithNoProject() })
     }
-    return grouped;
+    return grouped
   }
 
   byAll() {
-    return [{title: "All todos", todos: this.todos}];
+    return [{ title: 'All todos', todos: this.todos }]
   }
 
-  _todosWithContext(context) {
-    let ret = [];
+  todosWithContext(context) {
+    const ret = []
     _.each(this.todos, (todo) => {
       if (_.includes(todo.contexts, context)) {
-        ret.push(todo);
+        ret.push(todo)
       }
-    });
-    return ret;
+    })
+    return ret
   }
 
-  _todosWithNoContext() {
-    return _.filter(this.todos, (todo) => { return todo.contexts.length === 0 });
+  todosWithNoContext() {
+    return _.filter(this.todos, (todo) => todo.contexts.length === 0)
   }
 
-  _todosWithProject(project) {
-    let ret = [];
+  todosWithProject(project) {
+    const ret = []
     _.each(this.todos, (todo) => {
       if (_.includes(todo.projects, project)) {
-        ret.push(todo);
+        ret.push(todo)
       }
-    });
-    return ret;
+    })
+    return ret
   }
 
-  _todosWithNoProject() {
-    return _.filter(this.todos, (todo) => { return todo.projects.length === 0 });
+  todosWithNoProject() {
+    return _.filter(this.todos, (todo) => todo.projects.length === 0)
   }
 
-  _getContexts() {
-    let contexts = [];
+  getContexts() {
+    const contexts = []
     _.each(this.todos, (todo) => {
       _.each(todo.contexts, (context) => {
         if (!_.includes(contexts, context)) {
           contexts.push(context)
         }
-      });
-    });
-    return contexts;
+      })
+    })
+    return contexts
   }
-  _getProjects() {
-    let projects = [];
+
+  getProjects() {
+    const projects = []
     _.each(this.todos, (todo) => {
       _.each(todo.projects, (project) => {
         if (!_.includes(projects, project)) {
           projects.push(project)
         }
-      });
-    });
-    return projects;
+      })
+    })
+    return projects
   }
 }

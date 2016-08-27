@@ -1,14 +1,13 @@
-import React, { Component } from 'react';
-import { startCreateTodo } from '../actions/todo_actions';
-import { connect } from 'react-redux';
-import { Button } from 'react-bootstrap';
+import React, { PropTypes } from 'react'
+import { startCreateTodo } from '../actions/todo_actions'
+import { connect } from 'react-redux'
+import { Button } from 'react-bootstrap'
 
-import { ADD_TODO_MODAL } from '../constants';
+export const AddTodoButton = (props) =>
+  <Button onClick={props.startCreateTodo}>Add todo</Button>
 
-export class AddTodoButton extends Component {
-  render() {
-    return <Button onClick={this.props.startCreateTodo}>Add todo</Button>
-  }
+AddTodoButton.propTypes = {
+  startCreateTodo: PropTypes.func,
 }
 
-export default connect(null, { startCreateTodo })(AddTodoButton);
+export default connect(null, { startCreateTodo })(AddTodoButton)

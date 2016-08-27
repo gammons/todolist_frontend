@@ -1,42 +1,38 @@
-import React, { Component } from 'react';
-import { fetchTodos  } from '../actions/todo_actions';
-import { connect } from 'react-redux';
-import Todo from './todo';
-import { ListGroup, ButtonGroup, DropdownButton, MenuItem } from 'react-bootstrap';
+import React, { Component, PropTypes } from 'react'
+import { fetchTodos } from '../actions/todo_actions'
+import { connect } from 'react-redux'
+import Todo from './todo'
+import { ListGroup } from 'react-bootstrap'
 
-import FilteredTodosSelector from '../selectors/filtered_todos'
+import filteredTodosSelector from '../selectors/filtered_todos'
 
-import FilterButtons from '../components/filter_buttons';
+import FilterButtons from '../components/filter_buttons'
 
 class Todolist extends Component {
 
+  static get propTypes() {
+    return {
+      params: PropTypes.object,
+      fetchTodos: PropTypes.func,
+      todos: PropTypes.array,
+    }
+  }
+
   componentWillMount() {
-    const { show, due, group } = this.props.params;
-    this.props.fetchTodos(show, due, group);
+    const { show, due, group } = this.props.params
+    this.props.fetchTodos(show, due, group)
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.params.due != this.props.params.due
-      || nextProps.params.show != this.props.params.show
-      || nextProps.params.group != this.props.params.group)
-      this.props.fetchTodos(nextProps.params.show, nextProps.params.due, nextProps.params.group);
-  }
-
-  renderTodo(todo, idx) {
-    return(
-      <Todo todo={todo} key={idx} />
-    )
-  }
-
-  renderTodosForGroup(todos) {
-    if (todos.length == 0) {
-      return <p>No todos.</p>
+    if (nextProps.params.due !== this.props.params.due
+      || nextProps.params.show !== this.props.params.show
+      || nextProps.params.group !== this.props.params.group) {
+      this.props.fetchTodos(nextProps.params.show, nextProps.params.due, nextProps.params.group)
     }
-    return todos.map(this.renderTodo.bind(this))
   }
 
   showGroup(group, idx) {
-    return(
+    return (
       <div key={idx}>
         <h3>{group.title}</h3>
         <ListGroup>
@@ -46,12 +42,25 @@ class Todolist extends Component {
     )
   }
 
-  render() {
-    let todos = [];
-    if (this.props.todos) { todos = this.props.todos }
-    const { show, due, group } = this.props.params;
+  renderTodosForGroup(todos) {
+    if (todos.length === 0) {
+      return <p>No todos.</p>
+    }
+    return todos.map(this.renderTodo.bind(this))
+  }
 
-    return(
+  renderTodo(todo, idx) {
+    return (
+      <Todo todo={todo} key={idx} />
+    )
+  }
+
+  render() {
+    let todos = []
+    if (this.props.todos) { todos = this.props.todos }
+    const { show, due, group } = this.props.params
+
+    return (
       <div>
         <span className="pull-right">
           <FilterButtons show={show} group={group} due={due} />
@@ -65,8 +74,8 @@ class Todolist extends Component {
 
 function mapStateToProps(state, ownProps) {
   return {
-    todos: FilteredTodosSelector(state, ownProps)
+    todos: filteredTodosSelector(state, ownProps),
   }
 }
 
-export default connect(mapStateToProps, { fetchTodos })(Todolist);
+export default connect(mapStateToProps, { fetchTodos })(Todolist)

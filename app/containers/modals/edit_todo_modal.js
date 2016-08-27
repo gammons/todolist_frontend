@@ -1,26 +1,65 @@
-import React, { Component } from 'react';
-import { Modal, FormGroup, ControlLabel, FormControl, Button } from 'react-bootstrap';
-import { connect } from 'react-redux';
-import DatePicker from 'react-bootstrap-date-picker';
+import React, { Component, PropTypes } from 'react'
+import { Modal, FormGroup, ControlLabel, FormControl, Button } from 'react-bootstrap'
+import { connect } from 'react-redux'
+import DatePicker from 'react-bootstrap-date-picker'
 import moment from 'moment'
 
-import { startUpdateTodo } from '../../actions/todo_actions';
-import { cancelAlert } from '../../actions/modal_actions';
+import { startUpdateTodo } from '../../actions/todo_actions'
+import { cancelAlert } from '../../actions/modal_actions'
 
 class EditTodoModal extends Component {
+  static get propTypes() {
+    return {
+      modal: PropTypes.object,
+      startUpdateTodo: PropTypes.func,
+      cancelAlert: PropTypes.func,
+    }
+  }
+
+  constructor() {
+    super()
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.onSubjectChange = this.onSubjectChange.bind(this)
+    this.onDueChange = this.onDueChange.bind(this)
+    this.handleHide = this.handleHide.bind(this)
+  }
+
+  onSubjectChange(e) {
+    this.props.modal.todo.subject = e.target.value
+  }
+
+  onDueChange(e) {
+    this.props.modal.todo.due = e
+  }
+
+  handleSubmit() {
+    this.props.startUpdateTodo(this.props.modal.todo)
+  }
+
+  handleHide() {
+    this.props.cancelAlert()
+  }
+
+  isoDue(due) {
+    if (due) {
+      return moment(due).format()
+    }
+    return ''
+  }
+
   render() {
     const todo = this.props.modal.todo
-    return(
+    return (
       <div>
         <Modal.Header>
           <Modal.Title>Edit todo</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form onSubmit={this.handleSubmit.bind(this)}>
+          <form onSubmit={this.handleSubmit}>
             <FormGroup controlId="add-todo-form">
               <ControlLabel> Subject </ControlLabel>
               <FormControl
-                onChange={this.subjectChange.bind(this)}
+                onChange={this.onSubjectChange}
                 type="text"
                 placeholder="Enter subject"
                 defaultValue={todo.subject}
@@ -28,39 +67,18 @@ class EditTodoModal extends Component {
             </FormGroup>
             <FormGroup>
               <ControlLabel>Due</ControlLabel>
-              <DatePicker value={this.isoDue(todo.due)} onChange={this.dueChange.bind(this)} />
+              <DatePicker value={this.isoDue(todo.due)} onChange={this.onDueChange} />
             </FormGroup>
           </form>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={this.handleHide.bind(this)}>Close</Button>
-          <Button onClick={this.handleSubmit.bind(this)} bsStyle="primary">Save changes</Button>
+          <Button onClick={this.handleHide}>Close</Button>
+          <Button onClick={this.handleSubmit} bsStyle="primary">Save changes</Button>
         </Modal.Footer>
       </div>
     )
   }
 
-  isoDue(due) {
-    if (due) {
-      return moment(due).format()
-    }
-  }
-
-  subjectChange(e) {
-    this.props.modal.todo.subject = e.target.value
-  }
-
-  dueChange(e) {
-    this.props.modal.todo.due = e
-  }
-
-  handleSubmit(e) {
-    this.props.startUpdateTodo(this.props.modal.todo)
-  }
-
-  handleHide() {
-    this.props.cancelAlert()
-  }
 }
 
-export default connect(null, { cancelAlert, startUpdateTodo })(EditTodoModal);
+export default connect(null, { cancelAlert, startUpdateTodo })(EditTodoModal)

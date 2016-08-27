@@ -1,25 +1,37 @@
-import React, { Component } from 'react';
-import { Modal, FormGroup, ControlLabel, FormControl, Button } from 'react-bootstrap';
-import { okAlert, cancelAlert } from '../../actions/modal_actions';
-import { connect } from 'react-redux';
-import DatePicker from 'react-bootstrap-date-picker';
+import React, { Component, PropTypes } from 'react'
+import { Modal, Button } from 'react-bootstrap'
+import { okAlert } from '../../actions/modal_actions'
+import { connect } from 'react-redux'
 
 class ConfirmationAlertModal extends Component {
+  static get propTypes() {
+    return {
+      okAlert: PropTypes.func,
+      modal: PropTypes.object,
+    }
+  }
+
+  constructor() {
+    super()
+    this.handleOk = this.handleOk.bind(this)
+  }
+
+  handleOk() {
+    this.props.okAlert()
+  }
+
   render() {
-    return(
+    return (
       <div>
         <Modal.Body>
           {this.props.modal.body}
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={this.handleOk.bind(this)} bsStyle="primary">Ok</Button>
+          <Button onClick={this.handleOk} bsStyle="primary">Ok</Button>
         </Modal.Footer>
       </div>
     )
   }
-  handleOk(e) {
-    this.props.okAlert()
-  }
 }
 
-export default connect(null, { okAlert})(ConfirmationAlertModal);
+export default connect(null, { okAlert })(ConfirmationAlertModal)

@@ -1,41 +1,46 @@
-import moment from 'moment';
+import moment from 'moment'
+import _ from 'lodash'
 
 export default class TodoLogic {
-  addTodo(subject, due) {
+  addTodo(subject, inDue) {
+    let due = inDue
+
     if (due != null) {
-      due = moment(due).format("YYYY-MM-DD");
+      due = moment(due).format('YYYY-MM-DD')
     }
-    let todo = {subject: subject, due: due, projects: [], contexts: [], completed: false, archived: false}
-    todo.contexts = this._getContexts(todo.subject);
-    todo.projects = this._getProjects(todo.subject);
+    const todo = { subject, due, projects: [], contexts: [], completed: false, archived: false }
+    todo.contexts = this.getContexts(todo.subject)
+    todo.projects = this.getProjects(todo.subject)
     return todo
   }
 
-  updateTodo(todo) {
-    todo.contexts = this._getContexts(todo.subject);
-    todo.projects = this._getProjects(todo.subject);
+  updateTodo(inTodo) {
+    const todo = inTodo
+
+    todo.contexts = this.getContexts(todo.subject)
+    todo.projects = this.getProjects(todo.subject)
+
     if (todo.due != null) {
-      todo.due = moment(todo.due).format("YYYY-MM-DD");
+      todo.due = moment(todo.due).format('YYYY-MM-DD')
     }
     return todo
   }
 
-  _getContexts(subject) {
-    let regex = /\@\w+/g;
-    let matches = subject.match(regex);
+  getContexts(subject) {
+    const regex = /@\w+/g
+    const matches = subject.match(regex)
     if (matches === null) {
-      return [];
+      return []
     }
-    return _.map(matches, (match) => { return match.replace(/\@/,""); });
+    return _.map(matches, (match) => match.replace(/@/, ''))
   }
 
-  _getProjects(subject) {
-    let regex = /\+\w+/g;
-    let matches = subject.match(regex);
+  getProjects(subject) {
+    const regex = /\+\w+/g
+    const matches = subject.match(regex)
     if (matches === null) {
-      return [];
+      return []
     }
-    return _.map(matches, (match) => { return match.replace(/\+/,""); });
+    return _.map(matches, (match) => match.replace(/\+/, ''))
   }
 }
-
