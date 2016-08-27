@@ -1,4 +1,4 @@
-Version = "0.2.0"
+Version = "0.3.0"
 
 desc "Uploads to s3"
 task :build do
