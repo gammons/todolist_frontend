@@ -1,4 +1,3 @@
-import fetch from 'whatwg-fetch'
 import _ from 'lodash'
 
 export default class LocalBackend {
@@ -12,7 +11,7 @@ export default class LocalBackend {
         resolve(this.cachedTodos)
       } else {
         fetch('http://localhost:7890/todos')
-          .then((resp) => { resp.json() })
+          .then((resp) => resp.json())
           .then((json) => {
             this.cachedTodos = json
             resolve(json)
