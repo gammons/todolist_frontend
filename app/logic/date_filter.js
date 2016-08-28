@@ -10,9 +10,9 @@ export default class DateFilter {
   filterBy(dueFilter) {
     switch (dueFilter) {
       case TODAY:
-        return this.filterByDay()
+        return this.filterByDay(moment(), true)
       case TOMORROW:
-        return this.filterByDay(moment().add(1, 'day'))
+        return this.filterByDay(moment().add(1, 'day'), false)
       case THIS_WEEK:
         return this.filterByWeek()
       case ALL:
@@ -22,11 +22,11 @@ export default class DateFilter {
     }
   }
 
-  filterByDay(due = moment()) {
+  filterByDay(day = moment(), includePastUncompleted = true) {
     return _.filter(this.todos, (todo) => {
       const todoDue = moment(todo.due).clone().startOf('day')
-      const dateDue = moment(due).clone().startOf('day')
-      if (todo.completed === false && todoDue.isBefore(dateDue)) {
+      const dateDue = day.clone().startOf('day')
+      if (includePastUncompleted && todo.completed === false && todoDue.isBefore(dateDue)) {
         return true
       } else if (todoDue.isSame(dateDue)) {
         return true
