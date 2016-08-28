@@ -1,4 +1,7 @@
 # todolist_frontend
+
+[![Build Status](https://travis-ci.org/gammons/todolist_frontend.svg?branch=master)](https://travis-ci.org/gammons/todolist_frontend)
+
 The web frontend to [todolist](http://todolist.site).  It is based off of [react-boilerplate](https://github.com/mxstbr/react-boilerplate), which provides a lot of nice things if you're doing react development.
 
 ## To run locally:

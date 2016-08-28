@@ -23,6 +23,6 @@ task :upload_demo do
   `mv build/main*.css build/main.css`
 
   Dir.foreach("./build") do |file|
-    `aws s3 cp build/#{file} s3://todolist-demo/#{Version}/#{file} --acl public-read`
+    `aws s3 cp build/#{file} s3://todolist-demo/#{file} --acl public-read`
   end
 end
