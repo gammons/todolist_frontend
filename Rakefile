@@ -17,11 +17,7 @@ task :upload do
 end
 
 desc "Uploads the demo to s3"
-task :upload_demo do
-  `mv build/common*.js build/common.js`
-  `mv build/main*.js build/main.js`
-  `mv build/main*.css build/main.css`
-
+task :upload_demo => :build do
   Dir.foreach("./build") do |file|
     `aws s3 cp build/#{file} s3://todolist-demo/#{file} --acl public-read`
   end
