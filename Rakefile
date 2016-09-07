@@ -17,7 +17,7 @@ task :upload do
 end
 
 desc "Uploads the demo to s3"
-task :upload_demo => :build do
+task :upload_demo do
   Dir.foreach("./build") do |file|
     `aws s3 cp build/#{file} s3://todolist-demo/#{file} --acl public-read`
   end
