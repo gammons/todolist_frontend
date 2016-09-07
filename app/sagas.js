@@ -1,5 +1,6 @@
 import { takeEvery } from 'redux-saga'
-import { openAlert, openModal, confirmationAlert } from './actions/modal_actions'
+import { okConfirmDialog, openConfirmDialog, openModal } from './actions/modal_actions'
+import { openAlert } from './actions/alert_actions'
 import { addTodo, updateTodo, deleteTodo } from './actions/todo_actions'
 import { take, put, call } from 'redux-saga/effects'
 import TestBackend from './backends/TestBackend'
@@ -21,48 +22,49 @@ const fetchTodos = () => backend.fetchTodos()
 export function* runCreateTodo() {
   yield put(openModal(constants.ADD_TODO_MODAL))
   const ret = yield take(constants.CREATE_TODO)
+  yield put(okConfirmDialog())
   try {
     yield call(addTodoInBackend, ret.todo)
     yield put(addTodo(ret.todo))
-    yield put(confirmationAlert('The todo has been added.'))
+    yield put(openAlert('The todo has been added.'))
   } catch (error) {
-    yield put(confirmationAlert('A backend failure occurred.'))
+    yield put(openAlert('A backend failure occurred.'))
   }
 }
 
 export function* runDeleteTodo(action) {
-  yield put(openAlert('Are you sure you wish to delete this todo?'))
-  yield take(constants.ALERT_OK)
+  yield put(openConfirmDialog('Are you sure you wish to delete this todo?'))
+  yield take(constants.CONFIRM_DIALOG_OK)
   try {
     yield call(deleteTodoInBackend, action.todo)
     yield put(deleteTodo(action.todo))
-    yield put(confirmationAlert('The todo has been deleted.'))
+    yield put(openAlert('The todo has been deleted.'))
   } catch (error) {
-    yield put(confirmationAlert('A backend failure occurred.'))
+    yield put(openAlert('A backend failure occurred.'))
   }
 }
 
 export function* runArchiveTodo(action) {
-  yield put(openAlert('Are you sure you wish to archive this todo?'))
-  yield take(constants.ALERT_OK)
+  yield put(openConfirmDialog('Are you sure you wish to archive this todo?'))
+  yield take(constants.CONFIRM_DIALOG_OK)
   try {
     yield call(updateTodoInBackend, action.todo)
     yield put(updateTodo(action.todo))
-    yield put(confirmationAlert('The todo has been archived.'))
+    yield put(openAlert('The todo has been archived.'))
   } catch (error) {
-    yield put(confirmationAlert('A backend failure occurred.'))
+    yield put(openAlert('A backend failure occurred.'))
   }
 }
 
 export function* runUnarchiveTodo(action) {
-  yield put(openAlert('Are you sure you wish to un-archive this todo?'))
-  yield take(constants.ALERT_OK)
+  yield put(openConfirmDialog('Are you sure you wish to un-archive this todo?'))
+  yield take(constants.CONFIRM_DIALOG_OK)
   try {
     yield call(updateTodoInBackend, action.todo)
     yield put(updateTodo(action.todo))
-    yield put(confirmationAlert('The todo has been un-archived.'))
+    yield put(openAlert('The todo has been un-archived.'))
   } catch (error) {
-    yield put(confirmationAlert('A backend failure occurred.'))
+    yield put(openAlert('A backend failure occurred.'))
   }
 }
 
@@ -79,9 +81,9 @@ export function* runUpdateTodo(action) {
   try {
     yield call(updateTodoInBackend, action.todo)
     yield put(updateTodo(action.todo))
-    yield put(confirmationAlert('The todo has been updated.'))
+    yield put(openAlert('The todo has been updated.'))
   } catch (error) {
-    yield put(confirmationAlert('A backend failure occurred.'))
+    yield put(openAlert('A backend failure occurred.'))
   }
 }
 

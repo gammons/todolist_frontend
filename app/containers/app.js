@@ -3,6 +3,7 @@ import { Navbar, Grid, Col } from 'react-bootstrap'
 
 import TodoTabs from '../components/todo_tabs'
 import ModalDialog from './modal_dialog'
+import AlertManager from './alerts/alert_manager'
 import AddTodoButton from './add_todo_button'
 
 const App = (props) => {
@@ -10,6 +11,8 @@ const App = (props) => {
   return (
     <div>
       <ModalDialog />
+      <AlertManager />
+
       <Navbar fluid>
         <Navbar.Header>
           <Navbar.Brand>
@@ -17,6 +20,7 @@ const App = (props) => {
           </Navbar.Brand>
         </Navbar.Header>
       </Navbar>
+
       <Grid fluid>
         <Col md={12}>
           <TodoTabs due={due} show={show} group={group} />

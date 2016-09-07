@@ -50,8 +50,12 @@ export const MODAL = 'MODAL'
 // Modal types
 export const ADD_TODO_MODAL = 'ADD_TODO_MODAL'
 export const EDIT_TODO_MODAL = 'EDIT_TODO_MODAL'
-export const CONFIRMATION_ALERT_MODAL = 'CONFIRMATION_ALERT_MODAL'
+export const CONFIRM_DIALOG_MODAL = 'CONFIRM_DIALOG_MODAL'
 
-export const ALERT = 'ALERT'
-export const ALERT_MODAL = 'ALERT_MODAL'
-export const CONFIRMATION_ALERT = 'CONFIRMATION_ALERT'
+// confirm dialog actions
+export const CONFIRM_DIALOG_OK = 'CONFIRM_DIALOG'
+export const CONFIRM_DIALOG_CANCEL = 'CONFIRM_DIALOG_CANCEL'
+
+// alert actions
+export const OPEN_ALERT = 'OPEN_ALERT'
+export const DISMISS_ALERT = 'DISMISS_ALERT'

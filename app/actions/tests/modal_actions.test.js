@@ -4,7 +4,7 @@ import { expect } from 'chai'
 
 describe('openAlert()', () => {
   it('returns an object with type ALERT', () => {
-    const ret = actions.openAlert('test')
-    expect(ret).to.eql({ type: constants.ALERT, body: 'test' })
+    const ret = actions.openModal('test')
+    expect(ret).to.eql({ type: constants.MODAL, component: 'test' })
   })
 })

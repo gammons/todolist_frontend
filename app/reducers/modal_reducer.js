@@ -1,18 +1,19 @@
 import * as constants from '../constants'
 
-export default (state = { open: false }, action) => {
+const INITIAL_STATE = {
+  open: false,
+}
+
+export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case constants.MODAL:
-      return { open: true, component: action.component, todo: action.todo }
+      return { ...state, open: true, component: action.component, todo: action.todo }
 
-    case constants.ALERT:
-      return { open: true, component: constants.ALERT_MODAL, body: action.body }
+    case constants.CONFIRM_DIALOG_MODAL:
+      return { ...state, open: true, component: constants.CONFIRM_DIALOG_MODAL, body: action.body }
 
-    case constants.CONFIRMATION_ALERT:
-      return { open: true, component: constants.CONFIRMATION_ALERT_MODAL, body: action.body }
-
-    case constants.ALERT_OK:
-    case constants.ALERT_CANCEL:
+    case constants.CONFIRM_DIALOG_OK:
+    case constants.CONFIRM_DIALOG_CANCEL:
       return { open: false }
 
     default: return state

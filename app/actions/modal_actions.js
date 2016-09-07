@@ -8,28 +8,21 @@ export function openModal(component, extraProps = {}) {
   }
 }
 
-export function openAlert(body) {
+export function openConfirmDialog(body) {
   return {
-    type: constants.ALERT,
+    type: constants.CONFIRM_DIALOG_MODAL,
     body,
   }
 }
 
-export function confirmationAlert(body) {
+export function cancelConfirmDialog() {
   return {
-    type: constants.CONFIRMATION_ALERT,
-    body,
+    type: constants.CONFIRM_DIALOG_CANCEL,
   }
 }
 
-export function cancelAlert() {
+export function okConfirmDialog() {
   return {
-    type: constants.ALERT_CANCEL,
-  }
-}
-
-export function okAlert() {
-  return {
-    type: constants.ALERT_OK,
+    type: constants.CONFIRM_DIALOG_OK,
   }
 }

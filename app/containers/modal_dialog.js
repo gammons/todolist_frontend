@@ -2,23 +2,21 @@ import React, { Component, PropTypes } from 'react'
 import { Modal } from 'react-bootstrap'
 import { connect } from 'react-redux'
 
-import { cancelAlert } from '../actions/modal_actions'
+import { cancelConfirmDialog } from '../actions/modal_actions'
 import AddTodoModal from './modals/add_todo_modal'
 import EditTodoModal from './modals/edit_todo_modal'
-import AlertModal from './modals/alert_modal'
-import ConfirmationAlertModal from './modals/confirmation_alert_modal'
+import ConfirmDialogModal from './modals/confirm_dialog_modal'
 
 const MODAL_COMPONENTS = {
   ADD_TODO_MODAL: AddTodoModal,
   EDIT_TODO_MODAL: EditTodoModal,
-  ALERT_MODAL: AlertModal,
-  CONFIRMATION_ALERT_MODAL: ConfirmationAlertModal,
+  CONFIRM_DIALOG_MODAL: ConfirmDialogModal,
 }
 
 class ModalDialog extends Component {
   static get propTypes() {
     return {
-      cancelAlert: PropTypes.func,
+      cancelConfirmDialog: PropTypes.func,
       modal: PropTypes.object,
     }
   }
@@ -29,12 +27,12 @@ class ModalDialog extends Component {
   }
 
   handleHide() {
-    this.props.cancelAlert()
+    this.props.cancelConfirmDialog()
   }
 
   render() {
     if (!this.props.modal.component) {
-      return null
+      return <div></div>
     }
 
     const SpecificModal = MODAL_COMPONENTS[this.props.modal.component]
@@ -52,4 +50,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, { cancelAlert })(ModalDialog)
+export default connect(mapStateToProps, { cancelConfirmDialog })(ModalDialog)
