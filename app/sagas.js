@@ -1,5 +1,5 @@
 import { takeEvery } from 'redux-saga'
-import { openConfirmDialog, openModal } from './actions/modal_actions'
+import { okConfirmDialog, openConfirmDialog, openModal } from './actions/modal_actions'
 import { openAlert } from './actions/alert_actions'
 import { addTodo, updateTodo, deleteTodo } from './actions/todo_actions'
 import { take, put, call } from 'redux-saga/effects'
@@ -22,6 +22,7 @@ const fetchTodos = () => backend.fetchTodos()
 export function* runCreateTodo() {
   yield put(openModal(constants.ADD_TODO_MODAL))
   const ret = yield take(constants.CREATE_TODO)
+  yield put(okConfirmDialog())
   try {
     yield call(addTodoInBackend, ret.todo)
     yield put(addTodo(ret.todo))
@@ -45,7 +46,7 @@ export function* runDeleteTodo(action) {
 
 export function* runArchiveTodo(action) {
   yield put(openConfirmDialog('Are you sure you wish to archive this todo?'))
-  yield take(constants.ALERT_OK)
+  yield take(constants.CONFIRM_DIALOG_OK)
   try {
     yield call(updateTodoInBackend, action.todo)
     yield put(updateTodo(action.todo))
@@ -57,7 +58,7 @@ export function* runArchiveTodo(action) {
 
 export function* runUnarchiveTodo(action) {
   yield put(openConfirmDialog('Are you sure you wish to un-archive this todo?'))
-  yield take(constants.ALERT_OK)
+  yield take(constants.CONFIRM_DIALOG_OK)
   try {
     yield call(updateTodoInBackend, action.todo)
     yield put(updateTodo(action.todo))

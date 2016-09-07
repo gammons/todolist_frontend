@@ -10,7 +10,7 @@ export function openModal(component, extraProps = {}) {
 
 export function openConfirmDialog(body) {
   return {
-    type: constants.CONFIRM_DIALOG,
+    type: constants.CONFIRM_DIALOG_MODAL,
     body,
   }
 }

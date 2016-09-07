@@ -2,8 +2,6 @@ import * as constants from '../constants'
 
 const INITIAL_STATE = {
   open: false,
-  alertId: 0,
-  dismissedAlertId: 0,
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -11,8 +9,8 @@ export default (state = INITIAL_STATE, action) => {
     case constants.MODAL:
       return { ...state, open: true, component: action.component, todo: action.todo }
 
-    case constants.CONFIRM_DIALOG:
-      return { ...state, open: true, component: constants.CONFIRM_DIALOG, body: action.body }
+    case constants.CONFIRM_DIALOG_MODAL:
+      return { ...state, open: true, component: constants.CONFIRM_DIALOG_MODAL, body: action.body }
 
     case constants.CONFIRM_DIALOG_OK:
     case constants.CONFIRM_DIALOG_CANCEL:

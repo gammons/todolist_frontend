@@ -34,6 +34,7 @@ class EditTodoModal extends Component {
 
   handleSubmit() {
     this.props.startUpdateTodo(this.props.modal.todo)
+    this.props.cancelConfirmDialog()
   }
 
   handleHide() {
