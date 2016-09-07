@@ -4,12 +4,12 @@ import { connect } from 'react-redux'
 import DatePicker from 'react-bootstrap-date-picker'
 
 import { createTodo } from '../../actions/todo_actions'
-import { cancelAlert } from '../../actions/modal_actions'
+import { cancelConfirmDialog } from '../../actions/modal_actions'
 
 class AddTodoModal extends Component {
   static get propTypes() {
     return {
-      cancelAlert: PropTypes.func,
+      cancelConfirmDialog: PropTypes.func,
       createTodo: PropTypes.func,
     }
   }
@@ -23,7 +23,7 @@ class AddTodoModal extends Component {
   }
 
   handleHide() {
-    this.props.cancelAlert()
+    this.props.cancelConfirmDialog()
   }
 
   subjectChange(e) {
@@ -67,4 +67,4 @@ class AddTodoModal extends Component {
   }
 }
 
-export default connect(null, { cancelAlert, createTodo })(AddTodoModal)
+export default connect(null, { cancelConfirmDialog, createTodo })(AddTodoModal)

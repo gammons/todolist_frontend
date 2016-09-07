@@ -1,13 +1,13 @@
 import React, { Component, PropTypes } from 'react'
 import { Modal, Button } from 'react-bootstrap'
-import { okAlert, cancelAlert } from '../../actions/modal_actions'
+import { okConfirmDialog, cancelConfirmDialog } from '../../actions/modal_actions'
 import { connect } from 'react-redux'
 
-class AlertModal extends Component {
+class ConfirmDialogModal extends Component {
   static get propTypes() {
     return {
-      okAlert: PropTypes.func,
-      cancelAlert: PropTypes.func,
+      okConfirmDialog: PropTypes.func,
+      cancelConfirmDialog: PropTypes.func,
       modal: PropTypes.object,
     }
   }
@@ -19,10 +19,10 @@ class AlertModal extends Component {
   }
 
   handleOk() {
-    this.props.okAlert()
+    this.props.okConfirmDialog()
   }
   handleCancel() {
-    this.props.cancelAlert()
+    this.props.cancelConfirmDialog()
   }
 
   render() {
@@ -40,4 +40,4 @@ class AlertModal extends Component {
   }
 }
 
-export default connect(null, { okAlert, cancelAlert })(AlertModal)
+export default connect(null, { okConfirmDialog, cancelConfirmDialog })(ConfirmDialogModal)

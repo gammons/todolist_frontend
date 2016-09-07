@@ -5,14 +5,14 @@ import DatePicker from 'react-bootstrap-date-picker'
 import moment from 'moment'
 
 import { startUpdateTodo } from '../../actions/todo_actions'
-import { cancelAlert } from '../../actions/modal_actions'
+import { cancelConfirmDialog } from '../../actions/modal_actions'
 
 class EditTodoModal extends Component {
   static get propTypes() {
     return {
       modal: PropTypes.object,
       startUpdateTodo: PropTypes.func,
-      cancelAlert: PropTypes.func,
+      cancelConfirmDialog: PropTypes.func,
     }
   }
 
@@ -37,7 +37,7 @@ class EditTodoModal extends Component {
   }
 
   handleHide() {
-    this.props.cancelAlert()
+    this.props.cancelConfirmDialog()
   }
 
   isoDue(due) {
@@ -81,4 +81,4 @@ class EditTodoModal extends Component {
 
 }
 
-export default connect(null, { cancelAlert, startUpdateTodo })(EditTodoModal)
+export default connect(null, { cancelConfirmDialog, startUpdateTodo })(EditTodoModal)
