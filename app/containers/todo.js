@@ -24,7 +24,7 @@ class Todo extends Component {
   }
 
   formatDue(inDue) {
-    if (inDue === null) return ''
+    if (inDue === '' || inDue === null) return ''
     const due = moment(inDue).startOf('day')
     const today = moment().startOf('day')
     const tomorrow = moment().add(1, 'day').startOf('day')
