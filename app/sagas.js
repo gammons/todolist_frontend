@@ -8,10 +8,10 @@ import LocalBackend from './backends/LocalBackend'
 import * as constants from './constants'
 
 let backend
-if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-  backend = new LocalBackend()
-} else {
+if (window.location.hostname === 'demo.todolist.site') {
   backend = new TestBackend()
+} else {
+  backend = new LocalBackend()
 }
 
 const addTodoInBackend = todo => backend.add(todo)
