@@ -1,4 +1,4 @@
-Version = "0.5.1"
+Version = "0.5.2"
 
 desc "Builds the production app"
 task :build do
@@ -23,3 +23,5 @@ task :upload_demo do
     `aws s3 cp build/#{file} s3://todolist-demo/#{file} --acl public-read`
   end
 end
+
+task default: [:build, :upload]
