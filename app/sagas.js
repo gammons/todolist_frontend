@@ -14,17 +14,12 @@ if (window.location.hostname === 'demo.todolist.site') {
   backend = new LocalBackend()
 }
 
-const addTodoInBackend = todo => backend.add(todo)
-const updateTodoInBackend = todo => backend.update(todo)
-const deleteTodoInBackend = todo => backend.delete(todo)
-const fetchTodos = () => backend.fetchTodos()
-
 export function* runCreateTodo() {
   yield put(openModal(constants.ADD_TODO_MODAL))
   const ret = yield take(constants.CREATE_TODO)
   yield put(okConfirmDialog())
   try {
-    yield call(addTodoInBackend, ret.todo)
+    yield call(backend.add.bind(backend), ret.todo)
     yield put(addTodo(ret.todo))
     yield put(openAlert('The todo has been added.'))
   } catch (error) {
@@ -36,7 +31,7 @@ export function* runDeleteTodo(action) {
   yield put(openConfirmDialog('Are you sure you wish to delete this todo?'))
   yield take(constants.CONFIRM_DIALOG_OK)
   try {
-    yield call(deleteTodoInBackend, action.todo)
+    yield call(backend.delete.bind(backend), action.todo)
     yield put(deleteTodo(action.todo))
     yield put(openAlert('The todo has been deleted.'))
   } catch (error) {
@@ -48,7 +43,7 @@ export function* runArchiveTodo(action) {
   yield put(openConfirmDialog('Are you sure you wish to archive this todo?'))
   yield take(constants.CONFIRM_DIALOG_OK)
   try {
-    yield call(updateTodoInBackend, action.todo)
+    yield call(backend.update.bind(backend), action.todo)
     yield put(updateTodo(action.todo))
     yield put(openAlert('The todo has been archived.'))
   } catch (error) {
@@ -60,7 +55,7 @@ export function* runUnarchiveTodo(action) {
   yield put(openConfirmDialog('Are you sure you wish to un-archive this todo?'))
   yield take(constants.CONFIRM_DIALOG_OK)
   try {
-    yield call(updateTodoInBackend, action.todo)
+    yield call(backend.update.bind(backend), action.todo)
     yield put(updateTodo(action.todo))
     yield put(openAlert('The todo has been un-archived.'))
   } catch (error) {
@@ -70,7 +65,7 @@ export function* runUnarchiveTodo(action) {
 
 export function* runFetchTodos() {
   try {
-    const todos = yield call(fetchTodos)
+    const todos = yield call(backend.fetchTodos.bind(backend))
     yield put({ type: constants.TODOS_FETCHED, payload: todos })
   } catch (error) {
     yield put(openAlert('A backend failure occurred.'))
@@ -79,7 +74,7 @@ export function* runFetchTodos() {
 
 export function* runUpdateTodo(action) {
   try {
-    yield call(updateTodoInBackend, action.todo)
+    yield call(backend.update.bind(backend), action.todo)
     yield put(updateTodo(action.todo))
     yield put(openAlert('The todo has been updated.'))
   } catch (error) {

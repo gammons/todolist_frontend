@@ -22,6 +22,8 @@ export default class LocalBackend {
   }
 
   add(todo) {
+    const maxId = _.max(this.cachedTodos.map(t => t.id))
+    todo.id = maxId + 1
     return this.save([...this.cachedTodos, todo])
   }
 
