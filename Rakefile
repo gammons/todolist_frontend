@@ -8,8 +8,14 @@ end
 
 desc "Uploads to S3"
 task :upload do
+  `mv build/common*.js build/common.js`
+  `mv build/main*.js build/main.js`
+  `mv build/main*.css build/main.css`
+  `rm -rf build/appcache`
+
   Dir.foreach("./build") do |file|
     next if [".",".."].include?(file)
+    puts "uploading #{file}"
     `aws s3 cp build/#{file} s3://todolist-local/#{Version}/#{file} --acl public-read`
   end
 end
