@@ -1,4 +1,4 @@
-Version = "0.5.3"
+Version = "0.5.4"
 
 desc "Builds the production app"
 task :build do
